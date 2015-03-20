@@ -1,0 +1,144 @@
+CHANGELOG
+
+v 2.2.4
+  - Reduce compile times with Arduino 1.6 on second and subsequent compiles.
+
+v 2.2.3
+  - GZLL baseAddress enhancement (thanks waynek/jetty840)
+  - Check base address msb is not 0x55 or 0xaa
+  - Updated libRFduinoGZLL keywords.txt
+  - Added DeviceToHostSettings example GZLL sketch
+
+v 2.2.2
+  - Resolved race condition issue with analogRead.
+
+v 2.2.1
+  - Resolved power consumption issues with ULP and analogRead/GZLL.
+  - Update documentation with better specifics as to where you put folder
+    (thanks Helen Holmes).
+  
+v 2.2
+  - Support for nonconnectable advertisement
+  - Corrected temperature comments (thanks DasBasti).
+
+v 2.1.2
+  - Support for MIDI BaudRate of 31250 (thanks tolson)
+  - Fix so Servo can be moved from TIMER2 to TIMER1 for use with RFduinoGZLL
+
+v 2.1.1
+  - Fix an issue with RFduinoBLE.begin() not starting in an isolated case.
+  - Fix to case of include directory in boards.txt (thanks jrobeson).
+
+v 2.1
+  - Fixes required to support Arduino 1.5.7
+    (NOTE: Arduino 1.5.7 or higher is now required for RFduino 2.1 or above).
+  - Updated gcc compiler now generates smaller code sizes
+  - Sketch size information now includes RAM usage.
+
+v 2.0.3
+  - Added printf() support to Serial (see RFduinoNonBLE/Printf sketch)
+  - Fixed issue with Serial.flush()/Serial.end() when switching TX/RX pins
+
+v 2.0.2
+  - Added connection interval update support
+  - Added missing copyright notices to sketches
+
+v 2.0.1
+  - RFduinoGZLL enhancement for channel selection policy
+  - allow build.bat "run as administrator"
+
+v 2.0
+  - 128-bit custom UUID enhancement
+  - raw advertisement packet access
+  - RFduinoBLE.begin() now truncates (instead of failing) if the advertisement
+    packet length is exceeded.  No more counting deviceName/advertisementData.
+    
+v 1.9
+  - i2c enhancements
+  - UART TX buffering
+  - Changed examples comment to indicate that Advertisement length and
+    deviceName length must be <= 15 bytes
+  - Added header to WString.h to so F() always available
+
+v 1.8.2
+  - Added support for modifying the iBeacon measured power level at 1 meter
+  - Fix for analogWrite and RFduinoGZLL (thanks tolson)
+
+v 1.8.1
+  - Fixed conflict between Analog to Digital Conversion and UART
+  - Cleaned up SPI library
+
+v 1.8
+  - iBeacon Enhancement
+
+v 1.7.2
+  - Enhancement to PPI channel selection to eliminate potential conflicts
+  - Added the ability to select I2C speed to Wire Library (100, 250 or 400 kbps)
+
+v 1.7.1
+  - Fix for the UART stops receiving bytes after some time with BLE enabled
+
+v 1.7
+  - Added RFduino to RFduino wireless communication support
+  - Added pgmspace.h / PROGMEM support
+  - Added __RFduino__ constant
+  - Provided a 32-bit RFDLoader for 32-bit OSX support
+  - Cleaned up startup code and dependencies
+
+v 1.6.1
+  - Fixed issue with not being able to call RFduinoBLE.end() / 
+    RFduino_systemReset() from pinWakeCallback
+  - corrected return types from uint32_t to void for rfduino_ functions
+  - Corrected maximum sketch size.  The last 4 flash pages are reserved,
+
+v 1.6
+  - Added getDeviceId() to return the unique id for each device
+    (see DeviceInfo sketch)
+
+v 1.5.1
+  - Added support for OSX (contributed by nitsky)
+  - RFDLoader now supports 32-bit and 64-bit osx snow leopard through mavericks
+  - fix for i2c not working when BLE stack is active
+
+v 1.5
+  - Added support for Flash Memory.  See the RFduinoNonBLE flash example
+    sketches for use.  More documentation is also available in
+    cores/arduino/Memory.h
+  - Added a ProximityMovingAverage sketch for investigating RSSI to distance
+    calculations
+  - Fix for iOS SDK 7.0 issue with the disconnect characteristic
+
+v 1.4
+  - Integrated RFDLoader
+
+v 1.3.2
+  - Fixed issue with the send characteristic always sending 20 bytes
+  - Increased send characteristic payload size from 12 to the maximum of 20
+    bytes
+  - Added sketch and iPhone demonstrating lossless bulk data transfer
+
+v 1.3.1
+  - Fixed issue with on_rssi() only working for the first connect
+
+v 1.3.0
+  - Added support for radio active notification to support sketches with
+    critical timing requirements.
+
+v 1.2.0
+  - Restructured the RFduino repository to allow a git clone directly into the
+    Arduino directory structure.
+
+v 1.1.2
+  - Corrected the name of a missing extern.
+  - UART_DEFAULT_RX_PIN and UART_DEFAULT_TX_PIN and multiply defined (and
+    conflicting).  Removed the erroneous definitions.
+
+v 1.1.1
+  - Added support for OSX Snow Leopard.
+
+v 1.1.0
+  - Support for OSX.
+  - equivalent to RFduino305.zip.
+
+v 1.0.0
+  - equivalent to RFduino289.zip.
