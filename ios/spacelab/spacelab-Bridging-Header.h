@@ -7,3 +7,8 @@
 //
 
 #import "SLSecurityManager.h"
+
+#import "RFduino.h"
+#import "RFduinoDelegate.h"
+#import "RFduinoManager.h"
+#import "RFduinoManagerDelegate.h"

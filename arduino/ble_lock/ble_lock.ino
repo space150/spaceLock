@@ -16,14 +16,6 @@ byte key[] =
   0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44,
 };
 
-byte encrypted[] = 
-{
-  0x3b, 0x7f, 0x27, 0x3a, 0xb9, 0x2d, 0x5d, 0xbd, 0xb7, 0x8c, 0xc7, 0x10, 0xdd, 0x77, 0x06, 0xa3, 
-  0x8b, 0x0b, 0x0e, 0x41, 0x07, 0xbc, 0xf1, 0xe8, 0x61, 0x68, 0xce, 0x6f, 0x3e, 0x00, 0x15, 0xd2
-};
-
-byte out[32];
-
 void setup() 
 {
   // for testing only, RFDuino prefers 9600 baud for performance reasons
@@ -32,23 +24,6 @@ void setup()
   
   // production
   //Serial.begin(9600);
-  
-  Serial.println("testng mode");
-
-  byte success = aes.set_key (key, 128);
-  Serial.print("set key success: ");
-  Serial.println( success );
-  
-  success = aes.decrypt( encrypted, out );
-  Serial.print("descrypt success: ");
-  Serial.println( success );
-  
-  Serial.print("Descrypted string: ");
-  for (byte i = 0 ; i < 32 ; i++)
-  {
-    byte val = out[i];
-    Serial.print( (char)val );
-  }
   
   // setup the leds for output
   pinMode(led1, OUTPUT);
@@ -89,6 +64,50 @@ void RFduinoBLE_onDisconnect()
 
 void RFduinoBLE_onReceive(char *data, int len) 
 {
+  if ( len >= 16 )
+  {
+    Serial.print("data received! "); 
+    Serial.print("len: "); Serial.println(len);
+    Serial.print("data: ");
+   
+    byte encrypted[len];
+    byte decrypted[len];
+    
+    for (byte i = 0 ; i < len ; i++)
+    {
+      byte val = (byte)data[i];
+      encrypted[i] = val;
+      Serial.print( (char)val );
+    }
+    
+    Serial.println(" ");
+  
+    byte success = aes.set_key( key, 128 );
+    if ( success == 0 )
+    {
+      success = aes.decrypt( encrypted, decrypted );
+      if ( success == 0 )
+      {
+        Serial.print("Decrypted string: ");
+        for (byte i = 0 ; i < len ; i++)
+        {
+          byte val = decrypted[i];
+          Serial.print( (char)val ); Serial.println(" ");
+        }
+      }
+      else
+      {
+        Serial.println("failed to decrypt string!");
+      }
+    }
+    else
+    {
+      Serial.println("failed to set key!");
+    }
+    
+  } // if len >= 16
+
+ 
   // each transmission should contain an RGB triple
   if ( len >= 3 )
   {

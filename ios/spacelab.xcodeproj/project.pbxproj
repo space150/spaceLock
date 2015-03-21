@@ -16,6 +16,8 @@
 		A9B7637F1ABC90120022A871 /* SLSecurityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7637E1ABC90120022A871 /* SLSecurityManager.m */; };
 		A9B763851ABC92760022A871 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B763841ABC92760022A871 /* NSData+Conversion.m */; };
 		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
+		A9B7638F1ABC9DD60022A871 /* RFduino.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638A1ABC9DD60022A871 /* RFduino.m */; };
+		A9B763901ABC9DD60022A871 /* RfduinoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,12 @@
 		A9B763831ABC92760022A871 /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Conversion.h"; path = "spacelab/Extensions/NSData+Conversion.h"; sourceTree = "<group>"; };
 		A9B763841ABC92760022A871 /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Conversion.m"; path = "spacelab/Extensions/NSData+Conversion.m"; sourceTree = "<group>"; };
 		A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockListViewController.swift; sourceTree = "<group>"; };
+		A9B763891ABC9DD60022A871 /* RFduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduino.h; sourceTree = "<group>"; };
+		A9B7638A1ABC9DD60022A871 /* RFduino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFduino.m; sourceTree = "<group>"; };
+		A9B7638B1ABC9DD60022A871 /* RFduinoDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoDelegate.h; sourceTree = "<group>"; };
+		A9B7638C1ABC9DD60022A871 /* RfduinoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RfduinoManager.h; sourceTree = "<group>"; };
+		A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RfduinoManager.m; sourceTree = "<group>"; };
+		A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoManagerDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +145,7 @@
 		A9B763741ABC89EA0022A871 /* Third Party Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A9B763881ABC9DD60022A871 /* rfduino */,
 			);
 			name = "Third Party Libraries";
 			sourceTree = "<group>";
@@ -165,6 +174,19 @@
 				A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A9B763881ABC9DD60022A871 /* rfduino */ = {
+			isa = PBXGroup;
+			children = (
+				A9B763891ABC9DD60022A871 /* RFduino.h */,
+				A9B7638A1ABC9DD60022A871 /* RFduino.m */,
+				A9B7638B1ABC9DD60022A871 /* RFduinoDelegate.h */,
+				A9B7638C1ABC9DD60022A871 /* RfduinoManager.h */,
+				A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */,
+				A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */,
+			);
+			path = rfduino;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,8 +290,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9B763851ABC92760022A871 /* NSData+Conversion.m in Sources */,
+				A9B763901ABC9DD60022A871 /* RfduinoManager.m in Sources */,
 				A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */,
 				A9B7637F1ABC90120022A871 /* SLSecurityManager.m in Sources */,
+				A9B7638F1ABC9DD60022A871 /* RFduino.m in Sources */,
 				A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */,
 				A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */,
 			);
