@@ -64,12 +64,12 @@ void RFduinoBLE_onDisconnect()
 
 void RFduinoBLE_onReceive(char *data, int len) 
 {
+  Serial.print("data received! "); 
+  Serial.print("len: "); Serial.println(len);
+  Serial.print("data: ");
+    
   if ( len >= 16 )
   {
-    Serial.print("data received! "); 
-    Serial.print("len: "); Serial.println(len);
-    Serial.print("data: ");
-   
     byte encrypted[len];
     byte decrypted[len];
     

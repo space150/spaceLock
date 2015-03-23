@@ -11,5 +11,6 @@
 @interface SLSecurityManager : NSObject
 
 - (NSData *)encryptString:(NSString *)text;
+- (NSString *)decryptData:(NSData *)input;
 
 @end

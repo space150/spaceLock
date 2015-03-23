@@ -28,7 +28,7 @@
 
 #import "RFduinoManager.h"
 
-static const int max_data = 16;
+static const int max_data = 32;
 
 // default NULL (NULL = previous fixed RFduino uuid)
 NSString *customUUID = NULL;

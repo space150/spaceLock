@@ -102,8 +102,15 @@ class SLLockViewController: UIViewController,
         println("didLoadServiceRFduino: \(rfduino)")
         
         var security = SLSecurityManager()
-        var data : NSData = security.encryptString("Swifthello!");
+        
+        var command = NSString(format: "%@%d", "u", Int(NSDate().timeIntervalSince1970))
+        println("command: \(command)")
+        
+        var data : NSData = security.encryptString(command);
         println("data: \(data)")
+        
+        var string : NSString = security.decryptData(data);
+        println("string: \(string), len: \(string.length)")
         
         rfduino.send(data)
         
