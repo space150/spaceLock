@@ -18,6 +18,8 @@
 		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
 		A9B7638F1ABC9DD60022A871 /* RFduino.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638A1ABC9DD60022A871 /* RFduino.m */; };
 		A9B763901ABC9DD60022A871 /* RfduinoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */; };
+		A9B9CF7C1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */; };
+		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		A9B7638C1ABC9DD60022A871 /* RfduinoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RfduinoManager.h; sourceTree = "<group>"; };
 		A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RfduinoManager.m; sourceTree = "<group>"; };
 		A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoManagerDelegate.h; sourceTree = "<group>"; };
+		A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLEncryptionUtilityViewController.swift; sourceTree = "<group>"; };
+		A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,8 @@
 			isa = PBXGroup;
 			children = (
 				A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */,
+				A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */,
+				A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -295,7 +301,9 @@
 				A9B7637F1ABC90120022A871 /* SLSecurityManager.m in Sources */,
 				A9B7638F1ABC9DD60022A871 /* RFduino.m in Sources */,
 				A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */,
+				A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */,
 				A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */,
+				A9B9CF7C1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

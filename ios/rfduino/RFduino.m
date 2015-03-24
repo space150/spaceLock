@@ -31,7 +31,7 @@
 static const int max_data = 32;
 
 // default NULL (NULL = previous fixed RFduino uuid)
-NSString *customUUID = NULL;
+NSString *customUUID = @"f2c8e796-c022-4fa9-a802-cc16963f362e";
 
 static CBUUID *service_uuid;
 static CBUUID *send_uuid;

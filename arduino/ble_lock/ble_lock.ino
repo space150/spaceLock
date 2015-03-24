@@ -7,6 +7,11 @@ byte key[] =
   0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44,
 };
 
+char hello[] =
+{
+  0xa3, 0xfe, 0x39, 0xfc, 0x7c, 0xc9, 0x30, 0xa9, 0x3c, 0x62, 0x4c, 0x4f, 0xf9, 0x66, 0xc0, 0x8a
+};
+
 #define COMMAND_NONE   0
 #define COMMAND_LOCK   1
 #define COMMAND_UNLOCK 2
@@ -21,6 +26,11 @@ bool locked = true;
 unsigned long last_command_millis = 0;
 int current_command = COMMAND_LOCK;
 
+#define MAX_HELLO_ATTEMPTS 10
+
+bool send_hello = false;
+int hello_attempts = 0;
+
 AES aes;
 
 void setup() 
@@ -32,11 +42,9 @@ void setup()
   pinMode(LED_PIN_G, OUTPUT);  
   pinMode(LED_PIN_B, OUTPUT);
 
-  // this is the data we want to appear in the advertisement
-  // (if the deviceName and advertisementData are too long to fix into the 31 byte
-  // ble advertisement packet, then the advertisementData is truncated first down to
-  // a single byte, then it will truncate the deviceName)
-  RFduinoBLE.advertisementData = "s150-msp-f3";
+  RFduinoBLE.deviceName = "s150-msp-f3";
+  RFduinoBLE.advertisementData = "lock";
+  RFduinoBLE.customUUID = "f2c8e796-c022-4fa9-a802-cc16963f362e";
   
   // start the BLE stack
   RFduinoBLE.begin();
@@ -44,6 +52,7 @@ void setup()
 
 void loop() 
 {  
+  attempt_send_hello();
   check_for_unlock_timeout();
   process_current_command();
   
@@ -52,6 +61,22 @@ void loop()
 }
 
 // COMMAND HANDLERS
+
+void attempt_send_hello()
+{
+  if ( send_hello == true ) 
+  {
+    Serial.print("sending hello, attempt #"); Serial.println(hello_attempts);
+    RFduinoBLE.send(hello, 16);
+    
+    hello_attempts += 1;
+    if ( hello_attempts >= MAX_HELLO_ATTEMPTS )
+    {
+      send_hello = false;
+      hello_attempts = 0;
+    }
+  }
+}
 
 void check_for_unlock_timeout()
 {
@@ -85,6 +110,8 @@ void lock_door()
   analogWrite(LED_PIN_R, 255);
   analogWrite(LED_PIN_G, 0);
   analogWrite(LED_PIN_B, 0);
+  
+  RFduinoBLE.send('l');
 }
 
 void unlock_door()
@@ -95,6 +122,8 @@ void unlock_door()
   analogWrite(LED_PIN_R, 0);
   analogWrite(LED_PIN_G, 255);
   analogWrite(LED_PIN_B, 0);
+  
+  RFduinoBLE.send('u');
 }
 
 void show_error()
@@ -177,16 +206,23 @@ int decrypt_command(char *data, int len)
 
 void RFduinoBLE_onConnect() 
 {
-  // nothing
+  send_hello = true;
+  hello_attempts = 0;
 }
 
 void RFduinoBLE_onDisconnect() 
 {
-  // nothing
+  // reset the hello handshake on disconnect, they don't want to talk to us anyway :(
+  send_hello = false;
+  hello_attempts = 0;
 }
 
 void RFduinoBLE_onReceive(char *data, int len) 
 {
+  // once we receive data, the hello handshake probably worked!
+  send_hello = false;
+  hello_attempts = 0;
+  
   if ( len >= 16 ) 
     current_command = decrypt_command(data, len);
 }

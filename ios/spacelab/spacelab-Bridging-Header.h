@@ -8,6 +8,8 @@
 
 #import "SLSecurityManager.h"
 
+#import "NSData+Conversion.h"
+
 #import "RFduino.h"
 #import "RFduinoDelegate.h"
 #import "RFduinoManager.h"

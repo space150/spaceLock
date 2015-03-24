@@ -11,21 +11,31 @@ import UIKit
 class SLLockViewController: UIViewController,
     UITableViewDelegate,
     UITableViewDataSource,
-    RFduinoManagerDelegate
+    RFduinoManagerDelegate,
+    RFduinoDelegate
 {
     @IBOutlet weak var tableView: UITableView!
     
     private var rfduinoManager : RFduinoManager!
+    private var connectedRfduino : RFduino!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //tableView.registerClass(SLLockViewCell.self, forCellReuseIdentifier: "cell")
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 160.0
         
         rfduinoManager = RFduinoManager.sharedRFduinoManager()
         rfduinoManager.delegate = self
+        
+        var security = SLSecurityManager()
+        var hello = "s150-msp-f3"
+        var data : NSData = security.encryptString(hello)
+        println("hello: \(data.hexadecimalString())")
     }
     
     override func didReceiveMemoryWarning()
@@ -43,11 +53,9 @@ class SLLockViewController: UIViewController,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
+        var cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as SLLockViewCell
         
         var rfduino = rfduinoManager.rfduinos.objectAtIndex(indexPath.row) as RFduino
-        
-        var uuid = rfduino.UUID
         
         var rssi = rfduino.advertisementRSSI.intValue;
         
@@ -62,12 +70,18 @@ class SLLockViewController: UIViewController,
             detail.appendString(" ")
         }
         detail.appendFormat("Packets: %d\n", rfduino.advertisementPackets)
-        detail.appendFormat("Advertising: %@\n", advertising)
-        detail.appendFormat("%@", uuid)
+        detail.appendFormat("%@", advertising)
         
-        cell.textLabel?.text = rfduino.name
-        cell.detailTextLabel?.text = detail
-        cell.detailTextLabel?.numberOfLines = 3
+        cell.titleLabel?.text = rfduino.name
+        cell.subtitleLabel?.text = detail
+        
+        if ( rfduino.outOfRange == 0 ) {
+            cell.titleLabel?.textColor = UIColor.blackColor()
+            cell.subtitleLabel?.textColor = UIColor.blackColor()
+        } else {
+            cell.titleLabel?.textColor = UIColor.grayColor()
+            cell.subtitleLabel?.textColor = UIColor.grayColor()
+        }
         
         return cell
     }
@@ -83,7 +97,7 @@ class SLLockViewController: UIViewController,
         }
     }
     
-    // MARK: - RFduino Delegate Methods
+    // MARK: - RFduino Manager Delegate Methods
     
     func didDiscoverRFduino(rfduino: RFduino!)
     {
@@ -100,21 +114,6 @@ class SLLockViewController: UIViewController,
     func didLoadServiceRFduino(rfduino: RFduino!)
     {
         println("didLoadServiceRFduino: \(rfduino)")
-        
-        var security = SLSecurityManager()
-        
-        var command = NSString(format: "%@%d", "u", Int(NSDate().timeIntervalSince1970))
-        println("command: \(command)")
-        
-        var data : NSData = security.encryptString(command);
-        println("data: \(data)")
-        
-        var string : NSString = security.decryptData(data);
-        println("string: \(string), len: \(string.length)")
-        
-        rfduino.send(data)
-        
-        rfduino.disconnect()
     }
     
     func didConnectRFduino(rfduino: RFduino!)
@@ -122,13 +121,44 @@ class SLLockViewController: UIViewController,
         println("didConnectRFduino: \(rfduino)")
         
         rfduinoManager.stopScan()
+        
+        connectedRfduino = rfduino
+        rfduino.delegate = self
     }
     
     func didDisconnectRFduino(rfduino: RFduino!)
     {
         println("didDisconnectRFduino: \(rfduino)")
         
+        if ( connectedRfduino != nil )
+        {
+            connectedRfduino.delegate = nil
+        }
+        
         rfduinoManager.startScan()
+    }
+    
+    // MARK: - RFduino Delegate Methods
+    
+    func didReceive(data: NSData!)
+    {
+        println("received data: \(data)")
+        
+        if ( data.length == 16 )
+        {
+            // we got a handshake, descrypt it!
+            var security = SLSecurityManager()
+            var lockId : NSString = security.decryptData(data)
+            println("lockId: \(lockId)")
+            
+            var command = NSString(format: "%@%d", "u", Int(NSDate().timeIntervalSince1970))
+            var data : NSData = security.encryptString(command)
+            
+            connectedRfduino.send(data)
+            
+            // force disconnection, in the future we could listen for the lock status and disconnect later?
+            connectedRfduino.disconnect()
+        }
     }
     
 }
