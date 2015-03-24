@@ -7,6 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A922B8201AC20742007BE266 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
+		A922B8221AC20746007BE266 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
+		A922B8241AC2074D007BE266 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
+		A922B8261AC20752007BE266 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8251AC20752007BE266 /* CoreLocation.framework */; };
+		A922B8281AC20757007BE266 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8271AC20757007BE266 /* CoreMotion.framework */; };
+		A922B82A1AC2075E007BE266 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8291AC2075E007BE266 /* CoreGraphics.framework */; };
+		A922B82C1AC20763007BE266 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82B1AC20763007BE266 /* CoreText.framework */; };
+		A922B82E1AC20768007BE266 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82D1AC20768007BE266 /* MediaPlayer.framework */; };
+		A922B8301AC2076E007BE266 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82F1AC2076E007BE266 /* Security.framework */; };
+		A922B8321AC20775007BE266 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8311AC20775007BE266 /* SystemConfiguration.framework */; };
+		A922B8341AC2077B007BE266 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8331AC2077B007BE266 /* UIKit.framework */; };
+		A922B8391AC2083E007BE266 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
+		A922B83D1AC20861007BE266 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */; };
+		A922B83E1AC20861007BE266 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83C1AC20861007BE266 /* GooglePlus.framework */; };
+		A922B83F1AC20873007BE266 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */; };
+		A922B8401AC20876007BE266 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83C1AC20861007BE266 /* GooglePlus.framework */; };
+		A922B8411AC20881007BE266 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8331AC2077B007BE266 /* UIKit.framework */; };
+		A922B8421AC20884007BE266 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8311AC20775007BE266 /* SystemConfiguration.framework */; };
+		A922B8431AC20886007BE266 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82F1AC2076E007BE266 /* Security.framework */; };
+		A922B8441AC20889007BE266 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82D1AC20768007BE266 /* MediaPlayer.framework */; };
+		A922B8451AC2088B007BE266 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82B1AC20763007BE266 /* CoreText.framework */; };
+		A922B8461AC2088D007BE266 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8291AC2075E007BE266 /* CoreGraphics.framework */; };
+		A922B8471AC20890007BE266 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8271AC20757007BE266 /* CoreMotion.framework */; };
+		A922B8481AC20892007BE266 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8251AC20752007BE266 /* CoreLocation.framework */; };
+		A922B8491AC20895007BE266 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
+		A922B84A1AC20897007BE266 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
+		A922B84B1AC2089A007BE266 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
+		A922B84D1AC20C72007BE266 /* SLLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */; };
 		A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763501ABC88A80022A871 /* AppDelegate.swift */; };
 		A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
 		A9B763591ABC88A80022A871 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9B763571ABC88A80022A871 /* Main.storyboard */; };
@@ -33,6 +61,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A922B81F1AC20742007BE266 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		A922B8211AC20746007BE266 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		A922B8231AC2074D007BE266 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A922B8251AC20752007BE266 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A922B8271AC20757007BE266 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A922B8291AC2075E007BE266 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A922B82B1AC20763007BE266 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		A922B82D1AC20768007BE266 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		A922B82F1AC2076E007BE266 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A922B8311AC20775007BE266 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A922B8331AC2077B007BE266 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A922B8361AC2083E007BE266 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = "google-plus-ios-sdk/GooglePlus.bundle"; sourceTree = "<group>"; };
+		A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "google-plus-ios-sdk/GoogleOpenSource.framework"; sourceTree = "<group>"; };
+		A922B83C1AC20861007BE266 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "google-plus-ios-sdk/GooglePlus.framework"; sourceTree = "<group>"; };
+		A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLoginViewController.swift; sourceTree = "<group>"; };
 		A9B7634B1ABC88A80022A871 /* spacelab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spacelab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B7634F1ABC88A80022A871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9B763501ABC88A80022A871 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +107,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A922B83D1AC20861007BE266 /* GoogleOpenSource.framework in Frameworks */,
+				A922B83E1AC20861007BE266 /* GooglePlus.framework in Frameworks */,
+				A922B8341AC2077B007BE266 /* UIKit.framework in Frameworks */,
+				A922B8321AC20775007BE266 /* SystemConfiguration.framework in Frameworks */,
+				A922B8301AC2076E007BE266 /* Security.framework in Frameworks */,
+				A922B82E1AC20768007BE266 /* MediaPlayer.framework in Frameworks */,
+				A922B82C1AC20763007BE266 /* CoreText.framework in Frameworks */,
+				A922B82A1AC2075E007BE266 /* CoreGraphics.framework in Frameworks */,
+				A922B8281AC20757007BE266 /* CoreMotion.framework in Frameworks */,
+				A922B8261AC20752007BE266 /* CoreLocation.framework in Frameworks */,
+				A922B8241AC2074D007BE266 /* Foundation.framework in Frameworks */,
+				A922B8221AC20746007BE266 /* AssetsLibrary.framework in Frameworks */,
+				A922B8201AC20742007BE266 /* AddressBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,12 +127,44 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A922B83F1AC20873007BE266 /* GoogleOpenSource.framework in Frameworks */,
+				A922B8471AC20890007BE266 /* CoreMotion.framework in Frameworks */,
+				A922B8431AC20886007BE266 /* Security.framework in Frameworks */,
+				A922B84A1AC20897007BE266 /* AssetsLibrary.framework in Frameworks */,
+				A922B8411AC20881007BE266 /* UIKit.framework in Frameworks */,
+				A922B8421AC20884007BE266 /* SystemConfiguration.framework in Frameworks */,
+				A922B8461AC2088D007BE266 /* CoreGraphics.framework in Frameworks */,
+				A922B8481AC20892007BE266 /* CoreLocation.framework in Frameworks */,
+				A922B8451AC2088B007BE266 /* CoreText.framework in Frameworks */,
+				A922B8441AC20889007BE266 /* MediaPlayer.framework in Frameworks */,
+				A922B84B1AC2089A007BE266 /* AddressBook.framework in Frameworks */,
+				A922B8401AC20876007BE266 /* GooglePlus.framework in Frameworks */,
+				A922B8491AC20895007BE266 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A922B8181AC202A5007BE266 /* GooglePlus */ = {
+			isa = PBXGroup;
+			children = (
+				A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */,
+				A922B83C1AC20861007BE266 /* GooglePlus.framework */,
+				A922B8361AC2083E007BE266 /* GooglePlus.bundle */,
+			);
+			name = GooglePlus;
+			sourceTree = "<group>";
+		};
+		A922B84E1AC20FD5007BE266 /* Lock List */ = {
+			isa = PBXGroup;
+			children = (
+				A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */,
+				A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */,
+			);
+			name = "Lock List";
+			sourceTree = "<group>";
+		};
 		A9B763421ABC88A80022A871 = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +230,17 @@
 		A9B763731ABC89E50022A871 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A922B8331AC2077B007BE266 /* UIKit.framework */,
+				A922B8311AC20775007BE266 /* SystemConfiguration.framework */,
+				A922B82F1AC2076E007BE266 /* Security.framework */,
+				A922B82D1AC20768007BE266 /* MediaPlayer.framework */,
+				A922B82B1AC20763007BE266 /* CoreText.framework */,
+				A922B8291AC2075E007BE266 /* CoreGraphics.framework */,
+				A922B8271AC20757007BE266 /* CoreMotion.framework */,
+				A922B8251AC20752007BE266 /* CoreLocation.framework */,
+				A922B8231AC2074D007BE266 /* Foundation.framework */,
+				A922B8211AC20746007BE266 /* AssetsLibrary.framework */,
+				A922B81F1AC20742007BE266 /* AddressBook.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -149,6 +248,7 @@
 		A9B763741ABC89EA0022A871 /* Third Party Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A922B8181AC202A5007BE266 /* GooglePlus */,
 				A9B763881ABC9DD60022A871 /* rfduino */,
 			);
 			name = "Third Party Libraries";
@@ -175,9 +275,9 @@
 		A9B763821ABC91580022A871 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */,
+				A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */,
+				A922B84E1AC20FD5007BE266 /* Lock List */,
 				A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */,
-				A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -277,6 +377,7 @@
 			files = (
 				A9B763591ABC88A80022A871 /* Main.storyboard in Resources */,
 				A9B7635E1ABC88A80022A871 /* LaunchScreen.xib in Resources */,
+				A922B8391AC2083E007BE266 /* GooglePlus.bundle in Resources */,
 				A9B7635B1ABC88A80022A871 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +401,7 @@
 				A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */,
 				A9B7637F1ABC90120022A871 /* SLSecurityManager.m in Sources */,
 				A9B7638F1ABC9DD60022A871 /* RFduino.m in Sources */,
+				A922B84D1AC20C72007BE266 /* SLLoginViewController.swift in Sources */,
 				A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */,
 				A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */,
 				A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */,
@@ -382,6 +484,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "spacelab/spacelab-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -418,6 +521,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "spacelab/spacelab-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
@@ -428,6 +532,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
 				INFOPLIST_FILE = spacelab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -438,6 +546,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
 				INFOPLIST_FILE = spacelab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -451,6 +563,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -470,6 +583,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
 				);
 				INFOPLIST_FILE = spacelabTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

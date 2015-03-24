@@ -12,30 +12,42 @@ class SLLockViewController: UIViewController,
     UITableViewDelegate,
     UITableViewDataSource,
     RFduinoManagerDelegate,
-    RFduinoDelegate
+    RFduinoDelegate,
+    GPPSignInDelegate
 {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerNameLabel: UILabel!
+    @IBOutlet weak var headerEmailLabel: UILabel!
+    @IBOutlet weak var headerImageView: UIImageView!
     
     private var rfduinoManager : RFduinoManager!
     private var connectedRfduino : RFduino!
     
+    private let clientId = "743774015347-4qc7he8nbpccqca59lh004ojr7a94kia.apps.googleusercontent.com";
+    private var signIn : GPPSignIn?
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        //tableView.registerClass(SLLockViewCell.self, forCellReuseIdentifier: "cell")
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 160.0
+        tableView.estimatedRowHeight = 120.0
         
         rfduinoManager = RFduinoManager.sharedRFduinoManager()
         rfduinoManager.delegate = self
         
-        var security = SLSecurityManager()
-        var hello = "s150-msp-f3"
-        var data : NSData = security.encryptString(hello)
-        println("hello: \(data.hexadecimalString())")
+        configureGooglePlus()
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        
+        var success: Bool? = signIn?.trySilentAuthentication()
+        if ( success == false )
+        {
+            performSegueWithIdentifier("showLogin", sender: self)
+        }
     }
     
     override func didReceiveMemoryWarning()
@@ -91,10 +103,7 @@ class SLLockViewController: UIViewController,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         var rfduino = rfduinoManager.rfduinos.objectAtIndex(indexPath.row) as RFduino
-        println("rfduino.outOfRange: \(rfduino.outOfRange)")
-        if ( rfduino.outOfRange == 0 ) {
-            rfduinoManager.connectRFduino(rfduino)
-        }
+        initHandshake(rfduino)
     }
     
     // MARK: - RFduino Manager Delegate Methods
@@ -144,6 +153,23 @@ class SLLockViewController: UIViewController,
     {
         println("received data: \(data)")
         
+        verifyHandshake(data)
+    }
+    
+    // MARK: - Security methods
+    
+    func initHandshake(rfduino: RFduino!)
+    {
+        var backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        dispatch_async(backgroundQueue, { () -> Void in
+            if ( rfduino.outOfRange == 0 ) {
+                self.rfduinoManager.connectRFduino(rfduino)
+            }
+        })
+    }
+    
+    func verifyHandshake(data: NSData!)
+    {
         if ( data.length == 16 )
         {
             // we got a handshake, descrypt it!
@@ -161,4 +187,118 @@ class SLLockViewController: UIViewController,
         }
     }
     
+    // MARK: - GPPSignInDelegate Methods
+    
+    func configureGooglePlus()
+    {
+        signIn = GPPSignIn.sharedInstance()
+        signIn?.clientID = clientId
+        
+        signIn?.shouldFetchGooglePlusUser = true
+        signIn?.shouldFetchGoogleUserID = true
+        signIn?.shouldFetchGoogleUserEmail = true
+        
+        signIn?.scopes = [ kGTLAuthScopePlusLogin ];  // "https://www.googleapis.com/auth/plus.login" scope
+        //signIn.scopes = @[ @"profile" ];            // "profile" scope
+
+        signIn?.delegate = self;
+    }
+    
+    @IBAction func doLogout(sender: AnyObject)
+    {
+        signIn?.signOut()
+        checkAuthState()
+    }
+    
+    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!)
+    {
+        if ( error != nil )
+        {
+            println("google+ connect failure - finishedWithAuth: \(error.localizedDescription)")
+        }
+        
+        checkAuthState()
+    }
+    
+    func didDisconnectWithError(error: NSError!)
+    {
+        if ( error != nil )
+        {
+            println("google+ connect failure - didDisconnectWithError: \(error.localizedDescription)")
+        }
+        
+        checkAuthState()
+    }
+    
+    func checkAuthState()
+    {
+        if ( signIn?.authentication != nil )
+        {
+            var email = signIn?.authentication.userEmail
+            
+            // check to ensure the email is on the space150.com domain!
+            if ( validateEmail(email) == false )
+            {
+                signIn?.signOut()
+            }
+        }
+        
+        if ( signIn?.authentication != nil )
+        {
+            // if we have a google plus user object
+            var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
+            if ( plusUser != nil )
+            {
+                // use the display name
+                headerNameLabel.text = plusUser.displayName
+                
+                // and avatar image
+                var backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                dispatch_async(backgroundQueue, { () -> Void in
+                    if ( plusUser?.image.url != nil )
+                    {
+                        var avatarUrl = NSURL(string: plusUser.image.url)!
+                        var avatarData = NSData(contentsOfURL: avatarUrl)
+                        if ( avatarData != nil )
+                        {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.headerImageView.image = UIImage(data: avatarData!)
+                            })
+                        }
+                        
+                    }
+                })
+            }
+            else
+            {
+                // otherwise clear out the existing info
+                headerNameLabel.text = "Unknown"
+                headerImageView.image = nil
+            }
+            
+            headerEmailLabel.text = signIn?.authentication.userEmail
+            
+            // if the login view controller is showing, hide it
+            dismissViewControllerAnimated(true, completion: { () -> Void in
+                // nothing
+            })
+        }
+        else
+        {
+            // clear out the header info
+            headerNameLabel.text = ""
+            headerEmailLabel.text = ""
+            headerImageView.image = nil
+            
+            // present the login view controller
+            performSegueWithIdentifier("showLogin", sender: self)
+        }
+    }
+    
+    func validateEmail(email: NSString!) -> Bool
+    {
+        var predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")!
+        return predicate.evaluateWithObject(email)
+    }
+
 }

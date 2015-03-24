@@ -14,3 +14,6 @@
 #import "RFduinoDelegate.h"
 #import "RFduinoManager.h"
 #import "RFduinoManagerDelegate.h"
+
+#import "GooglePlus/GooglePlus.h"
+#import "GoogleOpenSource/GoogleOpenSource.h"
