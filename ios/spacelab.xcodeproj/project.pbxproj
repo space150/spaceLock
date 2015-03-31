@@ -35,6 +35,29 @@
 		A922B84A1AC20897007BE266 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
 		A922B84B1AC2089A007BE266 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
 		A922B84D1AC20C72007BE266 /* SLLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */; };
+		A94F5F711AC3034400279E9D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5F701AC3034400279E9D /* InterfaceController.swift */; };
+		A94F5F731AC3034400279E9D /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5F721AC3034400279E9D /* NotificationController.swift */; };
+		A94F5F751AC3034400279E9D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A94F5F741AC3034400279E9D /* Images.xcassets */; };
+		A94F5F791AC3034400279E9D /* spacelab WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = A94F5F781AC3034400279E9D /* spacelab WatchKit App.app */; };
+		A94F5F811AC3034400279E9D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A94F5F7F1AC3034400279E9D /* Interface.storyboard */; };
+		A94F5F831AC3034400279E9D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A94F5F821AC3034400279E9D /* Images.xcassets */; };
+		A94F5F861AC3034400279E9D /* spacelab WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A94F5F6B1AC3034400279E9D /* spacelab WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A94F5F8E1AC3036A00279E9D /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */; };
+		A94F5F8F1AC3036F00279E9D /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83C1AC20861007BE266 /* GooglePlus.framework */; };
+		A94F5F901AC3037200279E9D /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
+		A94F5F911AC3037300279E9D /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
+		A94F5F921AC303B600279E9D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8331AC2077B007BE266 /* UIKit.framework */; };
+		A94F5F931AC303B900279E9D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8311AC20775007BE266 /* SystemConfiguration.framework */; };
+		A94F5F941AC303BC00279E9D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82F1AC2076E007BE266 /* Security.framework */; };
+		A94F5F951AC303C000279E9D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82D1AC20768007BE266 /* MediaPlayer.framework */; };
+		A94F5F961AC303C300279E9D /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82B1AC20763007BE266 /* CoreText.framework */; };
+		A94F5F971AC303C600279E9D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8291AC2075E007BE266 /* CoreGraphics.framework */; };
+		A94F5F981AC303C900279E9D /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8271AC20757007BE266 /* CoreMotion.framework */; };
+		A94F5F991AC303CC00279E9D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8251AC20752007BE266 /* CoreLocation.framework */; };
+		A94F5F9A1AC303CF00279E9D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
+		A94F5F9B1AC303D200279E9D /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
+		A94F5F9C1AC303D500279E9D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
+		A94F5F9E1AC3528B00279E9D /* SLLockRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */; };
 		A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763501ABC88A80022A871 /* AppDelegate.swift */; };
 		A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
 		A9B763591ABC88A80022A871 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9B763571ABC88A80022A871 /* Main.storyboard */; };
@@ -51,6 +74,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A94F5F7A1AC3034400279E9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A94F5F771AC3034400279E9D;
+			remoteInfo = "spacelab WatchKit App";
+		};
+		A94F5F841AC3034400279E9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A94F5F6A1AC3034400279E9D;
+			remoteInfo = "spacelab WatchKit Extension";
+		};
 		A9B763641ABC88A80022A871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
@@ -59,6 +96,30 @@
 			remoteInfo = spacelab;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A94F5F8D1AC3034400279E9D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A94F5F861AC3034400279E9D /* spacelab WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A99F66051AC9FCDB0052D927 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A922B81F1AC20742007BE266 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -76,6 +137,19 @@
 		A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "google-plus-ios-sdk/GoogleOpenSource.framework"; sourceTree = "<group>"; };
 		A922B83C1AC20861007BE266 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "google-plus-ios-sdk/GooglePlus.framework"; sourceTree = "<group>"; };
 		A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLoginViewController.swift; sourceTree = "<group>"; };
+		A94F5F6B1AC3034400279E9D /* spacelab WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "spacelab WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A94F5F6E1AC3034400279E9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A94F5F6F1AC3034400279E9D /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		A94F5F701AC3034400279E9D /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		A94F5F721AC3034400279E9D /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		A94F5F741AC3034400279E9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A94F5F781AC3034400279E9D /* spacelab WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spacelab WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A94F5F7E1AC3034400279E9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A94F5F801AC3034400279E9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		A94F5F821AC3034400279E9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockRowType.swift; sourceTree = "<group>"; };
+		A99F66081ACA0EC00052D927 /* spacelab.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = spacelab.entitlements; sourceTree = "<group>"; };
+		A99F66091ACA0EF80052D927 /* spacelab WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "spacelab WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		A9B7634B1ABC88A80022A871 /* spacelab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spacelab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B7634F1ABC88A80022A871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9B763501ABC88A80022A871 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +177,26 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A94F5F681AC3034400279E9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A94F5F8E1AC3036A00279E9D /* GoogleOpenSource.framework in Frameworks */,
+				A94F5F981AC303C900279E9D /* CoreMotion.framework in Frameworks */,
+				A94F5F941AC303BC00279E9D /* Security.framework in Frameworks */,
+				A94F5F9B1AC303D200279E9D /* AssetsLibrary.framework in Frameworks */,
+				A94F5F921AC303B600279E9D /* UIKit.framework in Frameworks */,
+				A94F5F931AC303B900279E9D /* SystemConfiguration.framework in Frameworks */,
+				A94F5F971AC303C600279E9D /* CoreGraphics.framework in Frameworks */,
+				A94F5F991AC303CC00279E9D /* CoreLocation.framework in Frameworks */,
+				A94F5F961AC303C300279E9D /* CoreText.framework in Frameworks */,
+				A94F5F951AC303C000279E9D /* MediaPlayer.framework in Frameworks */,
+				A94F5F9C1AC303D500279E9D /* AddressBook.framework in Frameworks */,
+				A94F5F8F1AC3036F00279E9D /* GooglePlus.framework in Frameworks */,
+				A94F5F9A1AC303CF00279E9D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9B763481ABC88A80022A871 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -165,13 +259,54 @@
 			name = "Lock List";
 			sourceTree = "<group>";
 		};
+		A94F5F6C1AC3034400279E9D /* spacelab WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A94F5F701AC3034400279E9D /* InterfaceController.swift */,
+				A94F5F721AC3034400279E9D /* NotificationController.swift */,
+				A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */,
+				A94F5F741AC3034400279E9D /* Images.xcassets */,
+				A94F5F6D1AC3034400279E9D /* Supporting Files */,
+			);
+			path = "spacelab WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		A94F5F6D1AC3034400279E9D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A99F66091ACA0EF80052D927 /* spacelab WatchKit Extension.entitlements */,
+				A94F5F6E1AC3034400279E9D /* Info.plist */,
+				A94F5F6F1AC3034400279E9D /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A94F5F7C1AC3034400279E9D /* spacelab WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				A94F5F7F1AC3034400279E9D /* Interface.storyboard */,
+				A94F5F821AC3034400279E9D /* Images.xcassets */,
+				A94F5F7D1AC3034400279E9D /* Supporting Files */,
+			);
+			path = "spacelab WatchKit App";
+			sourceTree = "<group>";
+		};
+		A94F5F7D1AC3034400279E9D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A94F5F7E1AC3034400279E9D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		A9B763421ABC88A80022A871 = {
 			isa = PBXGroup;
 			children = (
 				A9B763751ABC89F30022A871 /* Extensions */,
-				A9B763741ABC89EA0022A871 /* Third Party Libraries */,
-				A9B763731ABC89E50022A871 /* Frameworks */,
 				A9B7634D1ABC88A80022A871 /* spacelab */,
+				A94F5F6C1AC3034400279E9D /* spacelab WatchKit Extension */,
+				A94F5F7C1AC3034400279E9D /* spacelab WatchKit App */,
+				A9B763731ABC89E50022A871 /* Frameworks */,
 				A9B763661ABC88A80022A871 /* spacelabTests */,
 				A9B7634C1ABC88A80022A871 /* Products */,
 			);
@@ -182,6 +317,8 @@
 			children = (
 				A9B7634B1ABC88A80022A871 /* spacelab.app */,
 				A9B763631ABC88A80022A871 /* spacelabTests.xctest */,
+				A94F5F6B1AC3034400279E9D /* spacelab WatchKit Extension.appex */,
+				A94F5F781AC3034400279E9D /* spacelab WatchKit App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -189,6 +326,7 @@
 		A9B7634D1ABC88A80022A871 /* spacelab */ = {
 			isa = PBXGroup;
 			children = (
+				A9B763741ABC89EA0022A871 /* Third Party Libraries */,
 				A9B763811ABC914E0022A871 /* Security */,
 				A9B763821ABC91580022A871 /* Controllers */,
 				A9B763501ABC88A80022A871 /* AppDelegate.swift */,
@@ -204,6 +342,7 @@
 		A9B7634E1ABC88A80022A871 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A99F66081ACA0EC00052D927 /* spacelab.entitlements */,
 				A9B763801ABC90A30022A871 /* spacelab-Bridging-Header.h */,
 				A9B7634F1ABC88A80022A871 /* Info.plist */,
 			);
@@ -252,6 +391,7 @@
 				A9B763881ABC9DD60022A871 /* rfduino */,
 			);
 			name = "Third Party Libraries";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		A9B763751ABC89F30022A871 /* Extensions */ = {
@@ -298,6 +438,39 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A94F5F6A1AC3034400279E9D /* spacelab WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A94F5F8C1AC3034400279E9D /* Build configuration list for PBXNativeTarget "spacelab WatchKit Extension" */;
+			buildPhases = (
+				A94F5F671AC3034400279E9D /* Sources */,
+				A94F5F681AC3034400279E9D /* Frameworks */,
+				A94F5F691AC3034400279E9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A94F5F7B1AC3034400279E9D /* PBXTargetDependency */,
+			);
+			name = "spacelab WatchKit Extension";
+			productName = "spacelab WatchKit Extension";
+			productReference = A94F5F6B1AC3034400279E9D /* spacelab WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit-extension";
+		};
+		A94F5F771AC3034400279E9D /* spacelab WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A94F5F8B1AC3034400279E9D /* Build configuration list for PBXNativeTarget "spacelab WatchKit App" */;
+			buildPhases = (
+				A94F5F761AC3034400279E9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "spacelab WatchKit App";
+			productName = "spacelab WatchKit App";
+			productReference = A94F5F781AC3034400279E9D /* spacelab WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp";
+		};
 		A9B7634A1ABC88A80022A871 /* spacelab */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9B7636D1ABC88A80022A871 /* Build configuration list for PBXNativeTarget "spacelab" */;
@@ -305,10 +478,13 @@
 				A9B763471ABC88A80022A871 /* Sources */,
 				A9B763481ABC88A80022A871 /* Frameworks */,
 				A9B763491ABC88A80022A871 /* Resources */,
+				A94F5F8D1AC3034400279E9D /* Embed App Extensions */,
+				A99F66051AC9FCDB0052D927 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A94F5F851AC3034400279E9D /* PBXTargetDependency */,
 			);
 			name = spacelab;
 			productName = spacelab;
@@ -342,8 +518,26 @@
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = space150;
 				TargetAttributes = {
+					A94F5F6A1AC3034400279E9D = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CH5DCD7T87;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					A94F5F771AC3034400279E9D = {
+						CreatedOnToolsVersion = 6.2;
+					};
 					A9B7634A1ABC88A80022A871 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CH5DCD7T87;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					A9B763621ABC88A80022A871 = {
 						CreatedOnToolsVersion = 6.2;
@@ -366,11 +560,32 @@
 			targets = (
 				A9B7634A1ABC88A80022A871 /* spacelab */,
 				A9B763621ABC88A80022A871 /* spacelabTests */,
+				A94F5F6A1AC3034400279E9D /* spacelab WatchKit Extension */,
+				A94F5F771AC3034400279E9D /* spacelab WatchKit App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A94F5F691AC3034400279E9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A94F5F751AC3034400279E9D /* Images.xcassets in Resources */,
+				A94F5F901AC3037200279E9D /* GooglePlus.bundle in Resources */,
+				A94F5F791AC3034400279E9D /* spacelab WatchKit App.app in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A94F5F761AC3034400279E9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A94F5F811AC3034400279E9D /* Interface.storyboard in Resources */,
+				A94F5F831AC3034400279E9D /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9B763491ABC88A80022A871 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,12 +601,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A94F5F911AC3037300279E9D /* GooglePlus.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A94F5F671AC3034400279E9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A94F5F9E1AC3528B00279E9D /* SLLockRowType.swift in Sources */,
+				A94F5F731AC3034400279E9D /* NotificationController.swift in Sources */,
+				A94F5F711AC3034400279E9D /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9B763471ABC88A80022A871 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -420,6 +646,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A94F5F7B1AC3034400279E9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A94F5F771AC3034400279E9D /* spacelab WatchKit App */;
+			targetProxy = A94F5F7A1AC3034400279E9D /* PBXContainerItemProxy */;
+		};
+		A94F5F851AC3034400279E9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A94F5F6A1AC3034400279E9D /* spacelab WatchKit Extension */;
+			targetProxy = A94F5F841AC3034400279E9D /* PBXContainerItemProxy */;
+		};
 		A9B763651ABC88A80022A871 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A9B7634A1ABC88A80022A871 /* spacelab */;
@@ -428,6 +664,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A94F5F7F1AC3034400279E9D /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A94F5F801AC3034400279E9D /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 		A9B763571ABC88A80022A871 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -447,6 +691,76 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A94F5F871AC3034400279E9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "spacelab WatchKit Extension/spacelab WatchKit Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "spacelab WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A94F5F881AC3034400279E9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "spacelab WatchKit Extension/spacelab WatchKit Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				INFOPLIST_FILE = "spacelab WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A94F5F891AC3034400279E9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IBSC_MODULE = spacelab_WatchKit_Extension;
+				INFOPLIST_FILE = "spacelab WatchKit App/Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Debug;
+		};
+		A94F5F8A1AC3034400279E9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				IBSC_MODULE = spacelab_WatchKit_Extension;
+				INFOPLIST_FILE = "spacelab WatchKit App/Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Release;
+		};
 		A9B7636B1ABC88A80022A871 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -532,6 +846,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = spacelab/spacelab.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/google-plus-ios-sdk",
@@ -539,6 +857,7 @@
 				INFOPLIST_FILE = spacelab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -546,6 +865,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = spacelab/spacelab.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/google-plus-ios-sdk",
@@ -553,6 +876,7 @@
 				INFOPLIST_FILE = spacelab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -595,6 +919,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A94F5F8B1AC3034400279E9D /* Build configuration list for PBXNativeTarget "spacelab WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A94F5F891AC3034400279E9D /* Debug */,
+				A94F5F8A1AC3034400279E9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A94F5F8C1AC3034400279E9D /* Build configuration list for PBXNativeTarget "spacelab WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A94F5F871AC3034400279E9D /* Debug */,
+				A94F5F881AC3034400279E9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A9B763461ABC88A80022A871 /* Build configuration list for PBXProject "spacelab" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

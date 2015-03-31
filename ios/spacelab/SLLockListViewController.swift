@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import LockKit
 
 class SLLockViewController: UIViewController,
     UITableViewDelegate,
@@ -37,6 +38,8 @@ class SLLockViewController: UIViewController,
         rfduinoManager.delegate = self
         
         configureGooglePlus()
+        
+        //var repo = LKLockRepository()
     }
     
     override func viewDidAppear(animated: Bool)

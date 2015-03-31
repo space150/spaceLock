@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A94F5F771AC3034400279E9D"
+               BuildableName = "spacelab WatchKit App.app"
+               BlueprintName = "spacelab WatchKit App"
+               ReferencedContainer = "container:spacelab.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "A9B7634A1ABC88A80022A871"
                BuildableName = "spacelab.app"
                BlueprintName = "spacelab"
@@ -23,14 +37,14 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9B763621ABC88A80022A871"
-               BuildableName = "spacelabTests.xctest"
-               BlueprintName = "spacelabTests"
+               BlueprintIdentifier = "A94F5F6A1AC3034400279E9D"
+               BuildableName = "spacelab WatchKit Extension.appex"
+               BlueprintName = "spacelab WatchKit Extension"
                ReferencedContainer = "container:spacelab.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -60,16 +74,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9B763621ABC88A80022A871"
-               BuildableName = "spacelabTests.xctest"
-               BlueprintName = "spacelabTests"
-               ReferencedContainer = "container:spacelab.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "A99F65F01AC9FCDA0052D927"
                BuildableName = "LockKitTests.xctest"
                BlueprintName = "LockKitTests"
@@ -80,9 +84,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9B7634A1ABC88A80022A871"
-            BuildableName = "spacelab.app"
-            BlueprintName = "spacelab"
+            BlueprintIdentifier = "A94F5F771AC3034400279E9D"
+            BuildableName = "spacelab WatchKit App.app"
+            BlueprintName = "spacelab WatchKit App"
             ReferencedContainer = "container:spacelab.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -96,16 +100,27 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.springboard"
+         RemotePath = "/spacelab">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9B7634A1ABC88A80022A871"
-            BuildableName = "spacelab.app"
-            BlueprintName = "spacelab"
+            BlueprintIdentifier = "A94F5F771AC3034400279E9D"
+            BuildableName = "spacelab WatchKit App.app"
+            BlueprintName = "spacelab WatchKit App"
             ReferencedContainer = "container:spacelab.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A94F5F771AC3034400279E9D"
+            BuildableName = "spacelab WatchKit App.app"
+            BlueprintName = "spacelab WatchKit App"
+            ReferencedContainer = "container:spacelab.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -115,16 +130,27 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.springboard"
+         RemotePath = "/spacelab">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A9B7634A1ABC88A80022A871"
-            BuildableName = "spacelab.app"
-            BlueprintName = "spacelab"
+            BlueprintIdentifier = "A94F5F771AC3034400279E9D"
+            BuildableName = "spacelab WatchKit App.app"
+            BlueprintName = "spacelab WatchKit App"
             ReferencedContainer = "container:spacelab.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A94F5F771AC3034400279E9D"
+            BuildableName = "spacelab WatchKit App.app"
+            BlueprintName = "spacelab WatchKit App"
+            ReferencedContainer = "container:spacelab.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
