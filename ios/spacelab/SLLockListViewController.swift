@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import LockKit
+import LockKit
 
 class SLLockViewController: UIViewController,
     UITableViewDelegate,
@@ -39,7 +39,7 @@ class SLLockViewController: UIViewController,
         
         configureGooglePlus()
         
-        //var repo = LKLockRepository()
+        var repo = LKLockRepository()
     }
     
     override func viewDidAppear(animated: Bool)
