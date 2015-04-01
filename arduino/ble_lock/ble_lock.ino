@@ -18,6 +18,7 @@ char hello[] =
 
 #define UNLOCK_COOLDOWN_MILLIS 7000
 
+#define LOCK_PIN  6
 #define LED_PIN_R 2
 #define LED_PIN_G 3
 #define LED_PIN_B 4
@@ -41,6 +42,7 @@ void setup()
   pinMode(LED_PIN_R, OUTPUT);
   pinMode(LED_PIN_G, OUTPUT);  
   pinMode(LED_PIN_B, OUTPUT);
+  pinMode(LOCK_PIN, OUTPUT);
 
   RFduinoBLE.deviceName = "s150-msp-f3";
   RFduinoBLE.advertisementData = "lock";
@@ -55,7 +57,7 @@ void loop()
   attempt_send_hello();
   check_for_unlock_timeout();
   process_current_command();
-  
+    
   // switch to lower power mode
   RFduino_ULPDelay(350);
 }
@@ -112,6 +114,8 @@ void lock_door()
   analogWrite(LED_PIN_B, 0);
   
   RFduinoBLE.send('l');
+  
+  digitalWrite(LOCK_PIN, LOW);
 }
 
 void unlock_door()
@@ -124,6 +128,8 @@ void unlock_door()
   analogWrite(LED_PIN_B, 0);
   
   RFduinoBLE.send('u');
+  
+  digitalWrite(LOCK_PIN, HIGH);
 }
 
 void show_error()
