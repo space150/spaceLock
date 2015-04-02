@@ -12,8 +12,7 @@ import LockKit
 class SLLockViewController: UIViewController,
     UITableViewDelegate,
     UITableViewDataSource,
-    RFduinoManagerDelegate,
-    RFduinoDelegate,
+    NSFetchedResultsControllerDelegate,
     GPPSignInDelegate
 {
     @IBOutlet weak var tableView: UITableView!
@@ -21,8 +20,9 @@ class SLLockViewController: UIViewController,
     @IBOutlet weak var headerEmailLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     
-    private var rfduinoManager : RFduinoManager!
-    private var connectedRfduino : RFduino!
+    private var fetchedResultsController : NSFetchedResultsController!
+    
+    private var discoveryManager : LKLockDiscoveryManager!
     
     private let clientId = "743774015347-4qc7he8nbpccqca59lh004ojr7a94kia.apps.googleusercontent.com";
     private var signIn : GPPSignIn?
@@ -34,12 +34,14 @@ class SLLockViewController: UIViewController,
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120.0
         
-        rfduinoManager = RFduinoManager.sharedRFduinoManager()
-        rfduinoManager.delegate = self
-        
         configureGooglePlus()
         
-        var repo = LKLockRepository()
+        discoveryManager = LKLockDiscoveryManager()
+        discoveryManager.startDiscovery()
+        
+        fetchedResultsController = getFetchedResultsController()
+        fetchedResultsController.delegate = self
+        fetchedResultsController.performFetch(nil)
     }
     
     override func viewDidAppear(animated: Bool)
@@ -61,133 +63,89 @@ class SLLockViewController: UIViewController,
     
     // MARK: - UITableViewDataSource Methods
     
+    func numberOfSectionsInTableView(tableView: UITableView!) -> Int
+    {
+        return fetchedResultsController.sections!.count
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return rfduinoManager.rfduinos.count
+        return fetchedResultsController.sections![section].numberOfObjects
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         var cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as SLLockViewCell
-        
-        var rfduino = rfduinoManager.rfduinos.objectAtIndex(indexPath.row) as RFduino
-        
-        var rssi = rfduino.advertisementRSSI.intValue;
-        
-        var advertising = "";
-        if ( rfduino.advertisementData != nil ) {
-            advertising = NSString(data: rfduino.advertisementData, encoding: NSUTF8StringEncoding)!
-        }
-        
-        var detail : NSMutableString = NSMutableString(capacity: 100)
-        detail.appendFormat("RSSI: %d dBm", rssi);
-        while ( detail.length < 25 ) {
-            detail.appendString(" ")
-        }
-        detail.appendFormat("Packets: %d\n", rfduino.advertisementPackets)
-        detail.appendFormat("%@", advertising)
-        
-        cell.titleLabel?.text = rfduino.name
-        cell.subtitleLabel?.text = detail
-        
-        if ( rfduino.outOfRange == 0 ) {
-            cell.titleLabel?.textColor = UIColor.blackColor()
-            cell.subtitleLabel?.textColor = UIColor.blackColor()
-        } else {
-            cell.titleLabel?.textColor = UIColor.grayColor()
-            cell.subtitleLabel?.textColor = UIColor.grayColor()
-        }
-        
+        configureCell(cell, atIndexPath: indexPath)
         return cell
+    }
+    
+    func configureCell(cell: SLLockViewCell, atIndexPath indexPath: NSIndexPath)
+    {
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
+        cell.titleLabel.text = lock.name
+        cell.subtitleLabel.text = NSString(format: "uuid: %@\nproximity: %@", lock.uuid, lock.proximityString)
+    }
+    
+    // MARK: - NSFetchedResultsController methods
+    
+    func getFetchedResultsController() -> NSFetchedResultsController
+    {
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext,
+            sectionNameKeyPath: nil, cacheName: nil)
+        return fetchedResultsController
+    }
+    
+    func taskFetchRequest() -> NSFetchRequest
+    {
+        let fetchRequest = NSFetchRequest(entityName: "LKLock")
+        let sortDescriptor = NSSortDescriptor(key: "proximity", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        return fetchRequest
+    }
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController)
+    {
+        self.tableView.beginUpdates()
+    }
+
+    func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath,
+        forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath)
+    {
+            switch type
+            {
+            case .Insert:
+                self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+            case .Update:
+                let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as SLLockViewCell
+                self.configureCell(cell, atIndexPath: indexPath)
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            case .Move:
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+            case .Delete:
+                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            default:
+                return
+            }
+    }
+
+    func controllerDidChangeContent(controller: NSFetchedResultsController)
+    {
+        self.tableView.endUpdates()
     }
     
     // MARK: - UITableViewDelegate Methods
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        var rfduino = rfduinoManager.rfduinos.objectAtIndex(indexPath.row) as RFduino
-        initHandshake(rfduino)
-    }
-    
-    // MARK: - RFduino Manager Delegate Methods
-    
-    func didDiscoverRFduino(rfduino: RFduino!)
-    {
-        //println("didDiscoverRFDuino: \(rfduino)")
-        tableView.reloadData()
-    }
-    
-    func didUpdateDiscoveredRFduino(rfduino: RFduino!)
-    {
-        //println("didUpdateDiscoveredRFduino: \(rfduino)")
-        tableView.reloadData()
-    }
-    
-    func didLoadServiceRFduino(rfduino: RFduino!)
-    {
-        println("didLoadServiceRFduino: \(rfduino)")
-    }
-    
-    func didConnectRFduino(rfduino: RFduino!)
-    {
-        println("didConnectRFduino: \(rfduino)")
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
+        discoveryManager.openLock(lock, complete: { () -> Bool in
+            // TODO
+            return false
+        });
         
-        rfduinoManager.stopScan()
-        
-        connectedRfduino = rfduino
-        rfduino.delegate = self
-    }
-    
-    func didDisconnectRFduino(rfduino: RFduino!)
-    {
-        println("didDisconnectRFduino: \(rfduino)")
-        
-        if ( connectedRfduino != nil )
-        {
-            connectedRfduino.delegate = nil
-        }
-        
-        rfduinoManager.startScan()
-    }
-    
-    // MARK: - RFduino Delegate Methods
-    
-    func didReceive(data: NSData!)
-    {
-        println("received data: \(data)")
-        
-        verifyHandshake(data)
-    }
-    
-    // MARK: - Security methods
-    
-    func initHandshake(rfduino: RFduino!)
-    {
-        var backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        dispatch_async(backgroundQueue, { () -> Void in
-            if ( rfduino.outOfRange == 0 ) {
-                self.rfduinoManager.connectRFduino(rfduino)
-            }
-        })
-    }
-    
-    func verifyHandshake(data: NSData!)
-    {
-        if ( data.length == 16 )
-        {
-            // we got a handshake, descrypt it!
-            var security = SLSecurityManager()
-            var lockId : NSString = security.decryptData(data)
-            println("lockId: \(lockId)")
-            
-            var command = NSString(format: "%@%d", "u", Int(NSDate().timeIntervalSince1970))
-            var data : NSData = security.encryptString(command)
-            
-            connectedRfduino.send(data)
-            
-            // force disconnection, in the future we could listen for the lock status and disconnect later?
-            connectedRfduino.disconnect()
-        }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     // MARK: - GPPSignInDelegate Methods

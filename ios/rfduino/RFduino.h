@@ -33,8 +33,17 @@
 #endif
 
 #import "RFduinoDelegate.h"
+#import "EasedValue.h"
 
 @class RFduinoManager;
+
+typedef enum {
+    RFduinoRangeUnknown = 0,
+    RFduinoRangeFar,
+    RFduinoRangeNear,
+    RFduinoRangeImmediate,
+} RFduinoProximity;
+
 
 char data(NSData *data);
 uint8_t dataByte(NSData *data);
@@ -46,6 +55,7 @@ extern NSString *customUUID;
 
 @interface RFduino : NSObject<CBPeripheralDelegate>
 {
+    EasedValue *easedProximity;
 }
 
 @property(assign, nonatomic) id<RFduinoDelegate> delegate;
@@ -58,6 +68,7 @@ extern NSString *customUUID;
 @property(strong, nonatomic) NSString *UUID;
 @property(strong, nonatomic) NSData *advertisementData;
 @property(strong, nonatomic) NSNumber *advertisementRSSI;
+@property(assign, nonatomic) RFduinoProximity proximity;
 @property(assign, nonatomic) NSInteger advertisementPackets;
 @property(strong, nonatomic) NSDate *lastAdvertisement;
 @property(assign, nonatomic) NSInteger outOfRange;

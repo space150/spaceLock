@@ -8,7 +8,7 @@
 
 import WatchKit
 import Foundation
-
+import LockKit
 
 class InterfaceController: WKInterfaceController
 {
@@ -18,7 +18,32 @@ class InterfaceController: WKInterfaceController
     {
         super.awakeWithContext(context)
         
+        fetchLocks()
+        
         configureTableWithData(["F3", "spacelab", "Roske", "Roske", "Roske"]);
+    }
+    
+    func fetchLocks()
+    {
+        var request = NSFetchRequest()
+        var entity = NSEntityDescription.entityForName("LKLock", inManagedObjectContext: LKLockRepository.sharedInstance().managedObjectContext!)
+        request.entity = entity
+        
+        let sortDescriptor = NSSortDescriptor(key: "lastActionAt", ascending: false)
+        let sortDescriptors = [sortDescriptor]
+        
+        request.sortDescriptors = sortDescriptors
+        
+        var error: NSError? = nil
+        let results = LKLockRepository.sharedInstance().managedObjectContext?.executeFetchRequest(request, error: &error)
+        
+        LKLockRepository.sharedInstance().saveContext()
+
+        var count : Int! = results?.count
+        for index in 0...count-1 {
+            var lock : LKLock = results?[index] as LKLock!
+            println("lock, name: \(lock.name), uuid: \(lock.uuid)")
+        }
     }
     
     func configureTableWithData(array: NSArray)

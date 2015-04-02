@@ -1,20 +1,18 @@
 //
-//  SLSecurityManager.m
+//  LKSecurityManager.m
 //  spacelab
 //
-//  Created by Shawn Roske on 3/20/15.
+//  Created by Shawn Roske on 3/31/15.
 //  Copyright (c) 2015 space150. All rights reserved.
 //
 
-#import "SLSecurityManager.h"
+#import "LKSecurityManager.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import "NSData+Conversion.h"
 
+#define kCryptoErrorDomain @"LKSecurityManager"
 
-
-#define kCryptoErrorDomain @"SLSecurityManager"
-
-@implementation SLSecurityManager
+@implementation LKSecurityManager
 
 const char privateKey[] = { 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44,
     0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44 };
@@ -43,7 +41,7 @@ const char privateKey[] = { 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44
         NSLog(@"Unable to descrypt string: %@", [error localizedDescription]);
         return nil;
     }
-
+    
     return [NSString stringWithUTF8String:[output bytes]];
 }
 
@@ -80,3 +78,4 @@ const char privateKey[] = { 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44
 }
 
 @end
+

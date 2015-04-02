@@ -45,6 +45,17 @@
 		A94F5F901AC3037200279E9D /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
 		A94F5F911AC3037300279E9D /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
 		A94F5F9E1AC3528B00279E9D /* SLLockRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */; };
+		A965CB8B1ACC71C8003C8B94 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
+		A969D0811ACC995C009E1FC6 /* LockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */; };
+		A969D0851ACCA43C009E1FC6 /* EasedValue.h in Headers */ = {isa = PBXBuildFile; fileRef = A969D0831ACCA43C009E1FC6 /* EasedValue.h */; };
+		A969D0861ACCA43C009E1FC6 /* EasedValue.m in Sources */ = {isa = PBXBuildFile; fileRef = A969D0841ACCA43C009E1FC6 /* EasedValue.m */; };
+		A969D08A1ACCC638009E1FC6 /* LKLock.h in Headers */ = {isa = PBXBuildFile; fileRef = A969D0881ACCC638009E1FC6 /* LKLock.h */; };
+		A969D08B1ACCC638009E1FC6 /* LKLock.m in Sources */ = {isa = PBXBuildFile; fileRef = A969D0891ACCC638009E1FC6 /* LKLock.m */; };
+		A9787A3D1ACB6E0F002F54AC /* RFduino.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638A1ABC9DD60022A871 /* RFduino.m */; };
+		A9787A3E1ACB6E0F002F54AC /* RfduinoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */; };
+		A9787A3F1ACB6E18002F54AC /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B763841ABC92760022A871 /* NSData+Conversion.m */; };
+		A9787A421ACB6E36002F54AC /* LKSecurityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9787A401ACB6E36002F54AC /* LKSecurityManager.h */; };
+		A9787A431ACB6E36002F54AC /* LKSecurityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9787A411ACB6E36002F54AC /* LKSecurityManager.m */; };
 		A99383741ACA1ED200ECA0D0 /* LockKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A99383731ACA1ED200ECA0D0 /* LockKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A993837A1ACA1ED200ECA0D0 /* LockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */; };
 		A99383831ACA1ED300ECA0D0 /* LockKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99383821ACA1ED300ECA0D0 /* LockKitTests.swift */; };
@@ -52,17 +63,15 @@
 		A99383871ACA1ED300ECA0D0 /* LockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9A1740A1ACA2015003C2E32 /* LKLockRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = A9A174081ACA2015003C2E32 /* LKLockRepository.h */; };
 		A9A1740B1ACA2015003C2E32 /* LKLockRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A174091ACA2015003C2E32 /* LKLockRepository.m */; };
+		A9A174471ACA3097003C2E32 /* LKLockDiscoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */; };
+		A9A174481ACA3097003C2E32 /* LKLockDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */; };
 		A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763501ABC88A80022A871 /* AppDelegate.swift */; };
 		A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
 		A9B763591ABC88A80022A871 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9B763571ABC88A80022A871 /* Main.storyboard */; };
 		A9B7635B1ABC88A80022A871 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9B7635A1ABC88A80022A871 /* Images.xcassets */; };
 		A9B7635E1ABC88A80022A871 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B7635C1ABC88A80022A871 /* LaunchScreen.xib */; };
 		A9B7636A1ABC88A80022A871 /* spacelabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763691ABC88A80022A871 /* spacelabTests.swift */; };
-		A9B7637F1ABC90120022A871 /* SLSecurityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7637E1ABC90120022A871 /* SLSecurityManager.m */; };
-		A9B763851ABC92760022A871 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B763841ABC92760022A871 /* NSData+Conversion.m */; };
 		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
-		A9B7638F1ABC9DD60022A871 /* RFduino.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638A1ABC9DD60022A871 /* RFduino.m */; };
-		A9B763901ABC9DD60022A871 /* RfduinoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */; };
 		A9B9CF7C1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */; };
 		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -138,6 +147,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3CA37988310B949396AA6619 /* Pods_spacelab_WatchKit_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spacelab_WatchKit_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A922B81F1AC20742007BE266 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		A922B8211AC20746007BE266 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A922B8231AC2074D007BE266 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -164,6 +174,13 @@
 		A94F5F801AC3034400279E9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		A94F5F821AC3034400279E9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockRowType.swift; sourceTree = "<group>"; };
+		A969D0831ACCA43C009E1FC6 /* EasedValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasedValue.h; sourceTree = "<group>"; };
+		A969D0841ACCA43C009E1FC6 /* EasedValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasedValue.m; sourceTree = "<group>"; };
+		A969D0871ACCC522009E1FC6 /* LKLockProximity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKLockProximity.h; sourceTree = "<group>"; };
+		A969D0881ACCC638009E1FC6 /* LKLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKLock.h; path = LockKit/LKLock.h; sourceTree = SOURCE_ROOT; };
+		A969D0891ACCC638009E1FC6 /* LKLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKLock.m; path = LockKit/LKLock.m; sourceTree = SOURCE_ROOT; };
+		A9787A401ACB6E36002F54AC /* LKSecurityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKSecurityManager.h; path = LockKit/LKSecurityManager.h; sourceTree = SOURCE_ROOT; };
+		A9787A411ACB6E36002F54AC /* LKSecurityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKSecurityManager.m; path = LockKit/LKSecurityManager.m; sourceTree = SOURCE_ROOT; };
 		A993836F1ACA1ED200ECA0D0 /* LockKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LockKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A99383721ACA1ED200ECA0D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A99383731ACA1ED200ECA0D0 /* LockKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LockKit.h; sourceTree = "<group>"; };
@@ -174,6 +191,8 @@
 		A99F66091ACA0EF80052D927 /* spacelab WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "spacelab WatchKit Extension.entitlements"; sourceTree = "<group>"; };
 		A9A174081ACA2015003C2E32 /* LKLockRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLockRepository.h; sourceTree = "<group>"; };
 		A9A174091ACA2015003C2E32 /* LKLockRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLockRepository.m; sourceTree = "<group>"; };
+		A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLockDiscoveryManager.h; sourceTree = "<group>"; };
+		A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLockDiscoveryManager.m; sourceTree = "<group>"; };
 		A9B7634B1ABC88A80022A871 /* spacelab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spacelab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B7634F1ABC88A80022A871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9B763501ABC88A80022A871 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -184,8 +203,6 @@
 		A9B763631ABC88A80022A871 /* spacelabTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = spacelabTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B763681ABC88A80022A871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9B763691ABC88A80022A871 /* spacelabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spacelabTests.swift; sourceTree = "<group>"; };
-		A9B7637D1ABC90120022A871 /* SLSecurityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLSecurityManager.h; sourceTree = "<group>"; };
-		A9B7637E1ABC90120022A871 /* SLSecurityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLSecurityManager.m; sourceTree = "<group>"; };
 		A9B763801ABC90A30022A871 /* spacelab-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spacelab-Bridging-Header.h"; sourceTree = "<group>"; };
 		A9B763831ABC92760022A871 /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Conversion.h"; path = "spacelab/Extensions/NSData+Conversion.h"; sourceTree = "<group>"; };
 		A9B763841ABC92760022A871 /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Conversion.m"; path = "spacelab/Extensions/NSData+Conversion.m"; sourceTree = "<group>"; };
@@ -198,6 +215,8 @@
 		A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoManagerDelegate.h; sourceTree = "<group>"; };
 		A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLEncryptionUtilityViewController.swift; sourceTree = "<group>"; };
 		A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockViewCell.swift; sourceTree = "<group>"; };
+		E41D6F384C32891610EE140F /* Pods_LockKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LockKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5E2B76C6BD13FA10BC967FD /* Pods_spacelab.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spacelab.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +224,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A969D0811ACC995C009E1FC6 /* LockKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +295,7 @@
 				A922B8361AC2083E007BE266 /* GooglePlus.bundle */,
 			);
 			name = GooglePlus;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		A922B84E1AC20FD5007BE266 /* Lock List */ = {
@@ -329,10 +350,19 @@
 		A99383701ACA1ED200ECA0D0 /* LockKit */ = {
 			isa = PBXGroup;
 			children = (
+				A969D0831ACCA43C009E1FC6 /* EasedValue.h */,
+				A969D0841ACCA43C009E1FC6 /* EasedValue.m */,
+				A9B763881ABC9DD60022A871 /* rfduino */,
+				A9B763811ABC914E0022A871 /* Security */,
 				A99383731ACA1ED200ECA0D0 /* LockKit.h */,
-				A99383711ACA1ED200ECA0D0 /* Supporting Files */,
+				A969D0881ACCC638009E1FC6 /* LKLock.h */,
+				A969D0891ACCC638009E1FC6 /* LKLock.m */,
+				A969D0871ACCC522009E1FC6 /* LKLockProximity.h */,
 				A9A174081ACA2015003C2E32 /* LKLockRepository.h */,
 				A9A174091ACA2015003C2E32 /* LKLockRepository.m */,
+				A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */,
+				A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */,
+				A99383711ACA1ED200ECA0D0 /* Supporting Files */,
 			);
 			path = LockKit;
 			sourceTree = "<group>";
@@ -365,15 +395,13 @@
 		A9B763421ABC88A80022A871 = {
 			isa = PBXGroup;
 			children = (
-				A9B763751ABC89F30022A871 /* Extensions */,
-				A9B763741ABC89EA0022A871 /* Third Party Libraries */,
+				A99383701ACA1ED200ECA0D0 /* LockKit */,
 				A9B7634D1ABC88A80022A871 /* spacelab */,
 				A94F5F6C1AC3034400279E9D /* spacelab WatchKit Extension */,
 				A94F5F7C1AC3034400279E9D /* spacelab WatchKit App */,
-				A99383701ACA1ED200ECA0D0 /* LockKit */,
-				A993837F1ACA1ED200ECA0D0 /* LockKitTests */,
 				A9B763731ABC89E50022A871 /* Frameworks */,
 				A9B763661ABC88A80022A871 /* spacelabTests */,
+				A993837F1ACA1ED200ECA0D0 /* LockKitTests */,
 				A9B7634C1ABC88A80022A871 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -394,7 +422,7 @@
 		A9B7634D1ABC88A80022A871 /* spacelab */ = {
 			isa = PBXGroup;
 			children = (
-				A9B763811ABC914E0022A871 /* Security */,
+				A922B8181AC202A5007BE266 /* GooglePlus */,
 				A9B763821ABC91580022A871 /* Controllers */,
 				A9B763501ABC88A80022A871 /* AppDelegate.swift */,
 				A9B763571ABC88A80022A871 /* Main.storyboard */,
@@ -447,17 +475,11 @@
 				A922B8231AC2074D007BE266 /* Foundation.framework */,
 				A922B8211AC20746007BE266 /* AssetsLibrary.framework */,
 				A922B81F1AC20742007BE266 /* AddressBook.framework */,
+				E5E2B76C6BD13FA10BC967FD /* Pods_spacelab.framework */,
+				3CA37988310B949396AA6619 /* Pods_spacelab_WatchKit_Extension.framework */,
+				E41D6F384C32891610EE140F /* Pods_LockKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A9B763741ABC89EA0022A871 /* Third Party Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				A922B8181AC202A5007BE266 /* GooglePlus */,
-				A9B763881ABC9DD60022A871 /* rfduino */,
-			);
-			name = "Third Party Libraries";
 			sourceTree = "<group>";
 		};
 		A9B763751ABC89F30022A871 /* Extensions */ = {
@@ -467,15 +489,18 @@
 				A9B763841ABC92760022A871 /* NSData+Conversion.m */,
 			);
 			name = Extensions;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		A9B763811ABC914E0022A871 /* Security */ = {
 			isa = PBXGroup;
 			children = (
-				A9B7637D1ABC90120022A871 /* SLSecurityManager.h */,
-				A9B7637E1ABC90120022A871 /* SLSecurityManager.m */,
+				A9B763751ABC89F30022A871 /* Extensions */,
+				A9787A401ACB6E36002F54AC /* LKSecurityManager.h */,
+				A9787A411ACB6E36002F54AC /* LKSecurityManager.m */,
 			);
 			name = Security;
+			path = ../spacelab;
 			sourceTree = "<group>";
 		};
 		A9B763821ABC91580022A871 /* Controllers */ = {
@@ -498,7 +523,8 @@
 				A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */,
 				A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */,
 			);
-			path = rfduino;
+			name = rfduino;
+			path = ../rfduino;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -508,8 +534,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9A174471ACA3097003C2E32 /* LKLockDiscoveryManager.h in Headers */,
 				A9A1740A1ACA2015003C2E32 /* LKLockRepository.h in Headers */,
+				A969D08A1ACCC638009E1FC6 /* LKLock.h in Headers */,
+				A969D0851ACCA43C009E1FC6 /* EasedValue.h in Headers */,
 				A99383741ACA1ED200ECA0D0 /* LockKit.h in Headers */,
+				A9787A421ACB6E36002F54AC /* LKSecurityManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,6 +782,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A965CB8B1ACC71C8003C8B94 /* spacelab.xcdatamodeld in Sources */,
 				A94F5F9E1AC3528B00279E9D /* SLLockRowType.swift in Sources */,
 				A94F5F731AC3034400279E9D /* NotificationController.swift in Sources */,
 				A94F5F711AC3034400279E9D /* InterfaceController.swift in Sources */,
@@ -762,6 +793,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9787A3F1ACB6E18002F54AC /* NSData+Conversion.m in Sources */,
+				A9787A3D1ACB6E0F002F54AC /* RFduino.m in Sources */,
+				A9787A3E1ACB6E0F002F54AC /* RfduinoManager.m in Sources */,
+				A969D08B1ACCC638009E1FC6 /* LKLock.m in Sources */,
+				A9A174481ACA3097003C2E32 /* LKLockDiscoveryManager.m in Sources */,
+				A9787A431ACB6E36002F54AC /* LKSecurityManager.m in Sources */,
+				A969D0861ACCA43C009E1FC6 /* EasedValue.m in Sources */,
 				A9A1740B1ACA2015003C2E32 /* LKLockRepository.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -778,11 +816,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9B763851ABC92760022A871 /* NSData+Conversion.m in Sources */,
-				A9B763901ABC9DD60022A871 /* RfduinoManager.m in Sources */,
 				A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */,
-				A9B7637F1ABC90120022A871 /* SLSecurityManager.m in Sources */,
-				A9B7638F1ABC9DD60022A871 /* RFduino.m in Sources */,
 				A922B84D1AC20C72007BE266 /* SLLoginViewController.swift in Sources */,
 				A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */,
 				A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */,
@@ -935,6 +969,7 @@
 		A99383891ACA1ED300ECA0D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -966,6 +1001,7 @@
 		A993838A1ACA1ED300ECA0D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
