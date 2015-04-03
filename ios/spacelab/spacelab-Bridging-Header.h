@@ -13,3 +13,5 @@
 #import "LKLock.h"
 #import "LKLockRepository.h"
 #import "LKLockDiscoveryManager.h"
+
+#import "MBProgressHUD.h"

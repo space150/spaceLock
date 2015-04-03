@@ -20,9 +20,12 @@ class SLLockViewController: UIViewController,
     @IBOutlet weak var headerEmailLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     
-    private var fetchedResultsController : NSFetchedResultsController!
+    private var fetchedResultsController: NSFetchedResultsController!
     
-    private var discoveryManager : LKLockDiscoveryManager!
+    private var HUD: MBProgressHUD!
+    private var HUDImageView: UIImageView!
+    
+    private var discoveryManager: LKLockDiscoveryManager!
     
     private let clientId = "743774015347-4qc7he8nbpccqca59lh004ojr7a94kia.apps.googleusercontent.com";
     private var signIn : GPPSignIn?
@@ -37,11 +40,15 @@ class SLLockViewController: UIViewController,
         configureGooglePlus()
         
         discoveryManager = LKLockDiscoveryManager()
-        discoveryManager.startDiscovery()
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
+        
+        HUD = MBProgressHUD(view: view)
+        view.addSubview(HUD)
+        
+        HUDImageView = UIImageView(image: UIImage(named: "37x-Checkmark.png"))
     }
     
     override func viewDidAppear(animated: Bool)
@@ -53,6 +60,15 @@ class SLLockViewController: UIViewController,
         {
             performSegueWithIdentifier("showLogin", sender: self)
         }
+        
+        discoveryManager.startDiscovery()
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        
+        discoveryManager.stopDiscovery()
     }
     
     override func didReceiveMemoryWarning()
@@ -140,11 +156,35 @@ class SLLockViewController: UIViewController,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
-        discoveryManager.openLock(lock, complete: { () -> Bool in
-            // TODO
-            return false
-        });
         
+        HUD.mode = .Indeterminate
+        HUD.labelText = "Unlocking"
+        HUD.show(true)
+
+        self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
+            if ( success )
+            {
+                self.HUD.customView = self.HUDImageView
+                self.HUD.mode = .CustomView
+                self.HUD.labelText = "UNLOCKED"
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+                    self.HUD.hide(true)
+                }
+            }
+            else
+            {
+                println("ERROR opening lock: \(error.localizedDescription)")
+                
+                self.HUD.mode = .Text
+                self.HUD.labelText = "Error opening lock!"
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+                    self.HUD.hide(true)
+                }
+            }
+        })
+
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     

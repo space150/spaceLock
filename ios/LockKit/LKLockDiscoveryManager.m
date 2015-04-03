@@ -16,10 +16,16 @@
 #import "RFduino.h"
 #import "RFduinoManager.h"
 
+#define kErrorDomain @"LKLockDiscoveryManager"
+
 @interface LKLockDiscoveryManager ()
 {
     RFduino *connectedRFduino;
+    NSString *testLockUUID;
+    NSTimer *testUpdateTimer;
 }
+
+@property (copy) void (^openCompletionCallback)(bool, NSError *);
 
 @end
 
@@ -35,29 +41,76 @@
         self.rfduinoManager.delegate = self;
         
         connectedRFduino = nil;
+        
+        testLockUUID = @"f2c8e796-c022-4fa9-a802-cc16963f362e";
+        testUpdateTimer = nil;
     }
     return self;
 }
 
-#pragma mark - Public methods
+#pragma mark - Testing (in Simulator)
 
 - (void)loadTestingData
 {
     NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
+
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", testLockUUID]];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
-    LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
-    lock.uuid = @"test-uuid";
-    lock.name = @"test-name";
-    lock.lastActionAt = [NSDate date];
-    
-    [[LKLockRepository sharedInstance] saveContext];
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    if ( results != nil && [results count] == 0 )
+    {
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
+        LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
+        lock.uuid = testLockUUID;
+        lock.name = @"space150-msp-f3";
+        lock.proximity = [NSNumber numberWithInt:(int)LKLockProximityImmediate];
+        lock.proximityString = [self proximityString:[lock.proximity intValue]];
+        lock.lastActionAt = [NSDate date];
+        
+        [[LKLockRepository sharedInstance] saveContext];
+    }
 }
+
+- (void)testUpdate:(NSTimer *)timer
+{
+    NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", testLockUUID]];
+    
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    if ( results != nil && [results count] > 0 )
+    {
+        LKLock *lock = (LKLock *)[results objectAtIndex:0];
+        
+        int proximity = [lock.proximity intValue];
+        proximity += 1;
+        if ( proximity > LKLockProximityImmediate )
+            proximity = LKLockProximityFar;
+        
+        lock.proximity = [NSNumber numberWithInt:proximity];
+        lock.proximityString = [self proximityString:(LKLockProximity)proximity];
+        lock.lastActionAt = [NSDate date];
+        
+    }
+}
+
+#pragma mark - Public methods
 
 - (void)startDiscovery
 {
     // if we are in simulator mode, load up the testing data!
-    // TODO
+#if TARGET_IPHONE_SIMULATOR
+    [self loadTestingData];
+    testUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(testUpdate:) userInfo:nil repeats:YES];
+#endif
+    
+    [self clearExpiredLocks];
     
     // otherwise start scanning
     [self.rfduinoManager startScan];
@@ -65,34 +118,64 @@
 
 - (void)stopDiscovery
 {
+#if TARGET_IPHONE_SIMULATOR
+    [testUpdateTimer invalidate];
+    testUpdateTimer = nil;
+#endif
+    
     [self.rfduinoManager stopScan];
 }
 
-- (void)openLock:(LKLock *)lock complete:(bool (^)(void))completionCallback;
+- (void)openLock:(LKLock *)lock complete:(void (^)(bool success, NSError *error))completionCallback
 {
     [self openLockWithUUID:lock.uuid complete:completionCallback];
 }
 
-- (void)openLockWithUUID:(NSString *)uuid complete:(bool (^)(void))completionCallback
+- (void)openLockWithUUID:(NSString *)uuid complete:(void (^)(bool success, NSError *error))completionCallback
 {
+    self.openCompletionCallback = completionCallback;
+    
     // find the rfduino!
     RFduino *foundRFDuino = nil;
     for ( RFduino *rfduino in self.rfduinoManager.rfduinos )
-        if ( [uuid isEqualToString:rfduino.UUID] )
+        if ( [[uuid lowercaseString] isEqualToString:[rfduino.UUID lowercaseString]] )
             foundRFDuino = rfduino;
     
     if ( foundRFDuino != nil )
+    {
         [self initHandshake:foundRFDuino];
+    }
+    else if ( self.openCompletionCallback != nil )
+    {
+        self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
+                                                            code:42
+                                                        userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unable to find active Lock by that UUID!", nil)}]);
+    }
 }
 
 // MARK: - Security methods
 
 - (void)initHandshake:(RFduino *)rfduino
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if ( !rfduino.outOfRange )
+    if ( !rfduino.outOfRange )
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self.rfduinoManager connectRFduino:rfduino];
-    });
+        });
+        
+        // start a timeout timer here, if we don't hear back in X seconds we should
+        // disconnect, cancel and throw an error
+        // TODO
+    }
+    else
+    {
+        if ( self.openCompletionCallback != nil )
+        {
+            self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
+                                                                code:42
+                                                            userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Lock is out of range", nil)}]);
+        }
+    }
 }
 
 - (void)verifyHandshake:(NSData *)data
@@ -112,10 +195,56 @@
         
         // force disconnection, in the future we could listen for the lock status and disconnect later?
         [connectedRFduino disconnect];
+        
+        if ( self.openCompletionCallback != nil )
+        {
+            self.openCompletionCallback(YES, nil);
+            self.openCompletionCallback = nil;
+        }
     }
 }
 
 #pragma mark - RfduinoDiscoveryDelegate methods
+
+- (void)clearExpiredLocks
+{
+    NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
+    
+    NSDate *now = [NSDate date];
+    
+    // if we have a nil rfduino, then loop through and collect the UUIDs with "out of range" arduinos
+    NSMutableArray *expiredLocks = [[NSMutableArray alloc] init];
+    for ( RFduino *rfduino in self.rfduinoManager.rfduinos )
+    {
+        if ( rfduino.outOfRange || [now timeIntervalSinceDate:rfduino.lastAdvertisement] > 10 )
+            [expiredLocks addObject:rfduino.UUID];
+    }
+    
+    NSLog(@"found expired locks: %@", expiredLocks);
+    
+    // delete the expired locks
+    for ( int i = 0; i < [expiredLocks count]; i++ )
+    {
+        NSString *uuid = (NSString *)[expiredLocks objectAtIndex:i];
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", uuid]];
+        
+        NSError *error = nil;
+        NSArray *results = [context executeFetchRequest:request error:&error];
+        if ( results != nil && [results count] > 0 )
+        {
+            for ( int j = 0; j < [results count]; j++ )
+            {
+                LKLock *lock = (LKLock *)[results objectAtIndex:j];
+                [context deleteObject:lock];
+            }
+        }
+    }
+    
+    [[LKLockRepository sharedInstance] saveContext];
+}
 
 - (void)didDiscoverRFduino:(RFduino *)rfduino
 {
@@ -162,11 +291,10 @@
         {
             LKLock *lock = (LKLock *)[results objectAtIndex:0];
             
-            // if this rfduino has a new range of unknown and we haven't updated it in quite some time delete it!
-            // TODO
-            if ( rfduino.proximity == RFduinoRangeUnknown )
+            // if this lock is out of range, remove it
+            if ( rfduino.outOfRange )
             {
-                //[context deleteObject:lock];
+                [context deleteObject:lock];
             }
             // otherwise update the proximity if it has changed
             else if ( [lock.proximity intValue] != (int)rfduino.proximity )
@@ -180,6 +308,10 @@
         {
             NSLog(@"error in searching for lock with UUID: %@ -- %@", rfduino.UUID, [error localizedDescription]);
         }
+    }
+    else if ( rfduino == nil )
+    {
+        [self clearExpiredLocks];
     }
 }
 
@@ -204,6 +336,9 @@
     
     if ( connectedRFduino != nil )
         [connectedRFduino setDelegate:nil];
+    
+    if ( self.openCompletionCallback != nil )
+        self.openCompletionCallback = nil;
     
     [self.rfduinoManager startScan];
 }

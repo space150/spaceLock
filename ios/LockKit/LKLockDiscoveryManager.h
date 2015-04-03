@@ -20,11 +20,9 @@
 
 @property (nonatomic, strong) RFduinoManager *rfduinoManager;
 
-- (void)loadTestingData;
-
 - (void)startDiscovery;
 - (void)stopDiscovery;
-- (void)openLock:(LKLock *)lock complete:(bool (^)(void))completionCallback;
-- (void)openLockWithUUID:(NSString *)uuid complete:(bool (^)(void))completionCallback;
+- (void)openLock:(LKLock *)lock complete:(void (^)(bool success, NSError *error))completionCallback;
+- (void)openLockWithUUID:(NSString *)uuid complete:(void (^)(bool success, NSError *error))completionCallback;
 
 @end

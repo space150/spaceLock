@@ -65,6 +65,7 @@
 		A9A1740B1ACA2015003C2E32 /* LKLockRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A174091ACA2015003C2E32 /* LKLockRepository.m */; };
 		A9A174471ACA3097003C2E32 /* LKLockDiscoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */; };
 		A9A174481ACA3097003C2E32 /* LKLockDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */; };
+		A9AB41B61ACD8BDB00357365 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AB41B51ACD8BDB00357365 /* MBProgressHUD.m */; };
 		A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763501ABC88A80022A871 /* AppDelegate.swift */; };
 		A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
 		A9B763591ABC88A80022A871 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9B763571ABC88A80022A871 /* Main.storyboard */; };
@@ -193,6 +194,8 @@
 		A9A174091ACA2015003C2E32 /* LKLockRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLockRepository.m; sourceTree = "<group>"; };
 		A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLockDiscoveryManager.h; sourceTree = "<group>"; };
 		A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLockDiscoveryManager.m; sourceTree = "<group>"; };
+		A9AB41B41ACD8BDB00357365 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = SOURCE_ROOT; };
+		A9AB41B51ACD8BDB00357365 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = SOURCE_ROOT; };
 		A9B7634B1ABC88A80022A871 /* spacelab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spacelab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B7634F1ABC88A80022A871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9B763501ABC88A80022A871 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -392,6 +395,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A9AB41B31ACD8BC700357365 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				A9AB41B41ACD8BDB00357365 /* MBProgressHUD.h */,
+				A9AB41B51ACD8BDB00357365 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		A9B763421ABC88A80022A871 = {
 			isa = PBXGroup;
 			children = (
@@ -422,6 +434,7 @@
 		A9B7634D1ABC88A80022A871 /* spacelab */ = {
 			isa = PBXGroup;
 			children = (
+				A9AB41B31ACD8BC700357365 /* MBProgressHUD */,
 				A922B8181AC202A5007BE266 /* GooglePlus */,
 				A9B763821ABC91580022A871 /* Controllers */,
 				A9B763501ABC88A80022A871 /* AppDelegate.swift */,
@@ -823,6 +836,7 @@
 				A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */,
 				A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */,
 				A9B9CF7C1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift in Sources */,
+				A9AB41B61ACD8BDB00357365 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -941,6 +955,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -948,6 +964,7 @@
 				IBSC_MODULE = spacelab_WatchKit_Extension;
 				INFOPLIST_FILE = "spacelab WatchKit App/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
@@ -958,9 +975,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				IBSC_MODULE = spacelab_WatchKit_Extension;
 				INFOPLIST_FILE = "spacelab WatchKit App/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
