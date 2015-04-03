@@ -153,7 +153,7 @@
     }
 }
 
-// MARK: - Security methods
+#pragma mark - Security Methods
 
 - (void)initHandshake:(RFduino *)rfduino
 {
@@ -204,7 +204,7 @@
     }
 }
 
-#pragma mark - RfduinoDiscoveryDelegate methods
+#pragma mark - Lock Management
 
 - (void)clearExpiredLocks
 {
@@ -246,73 +246,78 @@
     [[LKLockRepository sharedInstance] saveContext];
 }
 
-- (void)didDiscoverRFduino:(RFduino *)rfduino
+- (void)createLock:(RFduino *)rfduino
 {
-    // we need a UUID and a "known" range to even care about this one
-    if ( rfduino.UUID != nil )
+    NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", rfduino.UUID]];
+    
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    if ( results != nil && [results count] == 0 )
     {
-        NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
+        LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
+        lock.uuid = rfduino.UUID;
+        lock.name = rfduino.name;
+        lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
+        lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
+        lock.lastActionAt = [NSDate date];
         
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
-        [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", rfduino.UUID]];
+        [[LKLockRepository sharedInstance] saveContext];
+    }
+}
+
+- (void)updateLock:(RFduino *)rfduino
+{
+    NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", rfduino.UUID]];
+    
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    if ( results != nil && [results count] > 0 )
+    {
+        LKLock *lock = (LKLock *)[results objectAtIndex:0];
         
-        NSError *error = nil;
-        NSArray *results = [context executeFetchRequest:request error:&error];
-        if ( results != nil && [results count] == 0 )
+        // if this lock is out of range, remove it
+        if ( rfduino.outOfRange )
         {
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
-            LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
-            lock.uuid = rfduino.UUID;
-            lock.name = rfduino.name;
+            [context deleteObject:lock];
+        }
+        // otherwise update the proximity if it has changed
+        else if ( [lock.proximity intValue] != (int)rfduino.proximity )
+        {
             lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
             lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
             lock.lastActionAt = [NSDate date];
-            
-            [[LKLockRepository sharedInstance] saveContext];
         }
     }
+    else
+    {
+        [self createLock:rfduino];
+    }
+}
+
+#pragma mark - RfduinoDiscoveryDelegate methods
+
+- (void)didDiscoverRFduino:(RFduino *)rfduino
+{
+    if ( rfduino.UUID != nil )
+        [self createLock:rfduino];
     
 }
 
 - (void)didUpdateDiscoveredRFduino:(RFduino *)rfduino
 {
     if ( rfduino.UUID != nil )
-    {
-        NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
-        [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", rfduino.UUID]];
-        
-        NSError *error = nil;
-        NSArray *results = [context executeFetchRequest:request error:&error];
-        if ( results != nil && [results count] > 0 )
-        {
-            LKLock *lock = (LKLock *)[results objectAtIndex:0];
-            
-            // if this lock is out of range, remove it
-            if ( rfduino.outOfRange )
-            {
-                [context deleteObject:lock];
-            }
-            // otherwise update the proximity if it has changed
-            else if ( [lock.proximity intValue] != (int)rfduino.proximity )
-            {
-                lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
-                lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
-                lock.lastActionAt = [NSDate date];
-            }
-        }
-        else
-        {
-            NSLog(@"error in searching for lock with UUID: %@ -- %@", rfduino.UUID, [error localizedDescription]);
-        }
-    }
+        [self updateLock:rfduino];
     else if ( rfduino == nil )
-    {
         [self clearExpiredLocks];
-    }
 }
 
 - (void)didConnectRFduino:(RFduino *)rfduino
