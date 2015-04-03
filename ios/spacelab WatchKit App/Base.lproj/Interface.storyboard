@@ -5,17 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
     </dependencies>
     <scenes>
-        <!--Interface Controller-->
+        <!--Locks-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="spacelab_WatchKit_App" customModuleProvider="target">
+                <controller identifier="Main" title="Locks" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="spacelab_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <group width="1" alignment="left" id="Nwr-oB-EoO">
-                            <items>
-                                <label alignment="center" verticalAlignment="center" text="Locks" textAlignment="center" id="KJE-CB-vSE"/>
-                            </items>
-                        </group>
-                        <separator alignment="left" id="zzo-Ji-n6g"/>
                         <table alignment="left" id="Obz-hf-ShK">
                             <items>
                                 <tableRow identifier="lockRowController" id="gLi-cq-tRE" customClass="SLLockRowType" customModule="spacelab_WatchKit_Extension">
@@ -47,6 +41,25 @@
             </objects>
             <point key="canvasLocation" x="-124" y="302"/>
         </scene>
+        <!--Error-->
+        <scene sceneID="ev2-dq-SA1">
+            <objects>
+                <controller identifier="Error" id="tOK-as-QlL" customClass="SLErrorInterfaceController" customModule="spacelab_WatchKit_Extension">
+                    <items>
+                        <label width="0.90000000000000002" height="1" heightAdjustment="-44" alignment="center" text="Error Message" textAlignment="center" numberOfLines="5" minimumScaleFactor="0.5" id="0vq-C4-F2V"/>
+                        <button width="1" alignment="center" verticalAlignment="bottom" title="OK" id="VHm-Fk-ZwU">
+                            <connections>
+                                <action selector="okPressed" destination="tOK-as-QlL" id="0VN-UI-x9M"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="errorLabel" destination="0vq-C4-F2V" id="SV8-wx-adc"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="85" y="303"/>
+        </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
             <objects>
@@ -71,5 +84,4 @@
             <point key="canvasLocation" x="124" y="600"/>
         </scene>
     </scenes>
-    <color key="tintColor" red="1" green="0.0" blue="0.010051519906341788" alpha="1" colorSpace="calibratedRGB"/>
 </document>

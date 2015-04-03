@@ -45,6 +45,7 @@
 		A94F5F901AC3037200279E9D /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
 		A94F5F911AC3037300279E9D /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
 		A94F5F9E1AC3528B00279E9D /* SLLockRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */; };
+		A95B82B51ACEE32D002F0EE8 /* SLErrorInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B82B41ACEE32D002F0EE8 /* SLErrorInterfaceController.swift */; };
 		A965CB8B1ACC71C8003C8B94 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
 		A969D0811ACC995C009E1FC6 /* LockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */; };
 		A969D0851ACCA43C009E1FC6 /* EasedValue.h in Headers */ = {isa = PBXBuildFile; fileRef = A969D0831ACCA43C009E1FC6 /* EasedValue.h */; };
@@ -175,6 +176,7 @@
 		A94F5F801AC3034400279E9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		A94F5F821AC3034400279E9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockRowType.swift; sourceTree = "<group>"; };
+		A95B82B41ACEE32D002F0EE8 /* SLErrorInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLErrorInterfaceController.swift; sourceTree = "<group>"; };
 		A969D0831ACCA43C009E1FC6 /* EasedValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasedValue.h; sourceTree = "<group>"; };
 		A969D0841ACCA43C009E1FC6 /* EasedValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasedValue.m; sourceTree = "<group>"; };
 		A969D0871ACCC522009E1FC6 /* LKLockProximity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKLockProximity.h; sourceTree = "<group>"; };
@@ -314,8 +316,9 @@
 			isa = PBXGroup;
 			children = (
 				A94F5F701AC3034400279E9D /* InterfaceController.swift */,
-				A94F5F721AC3034400279E9D /* NotificationController.swift */,
 				A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */,
+				A95B82B41ACEE32D002F0EE8 /* SLErrorInterfaceController.swift */,
+				A94F5F721AC3034400279E9D /* NotificationController.swift */,
 				A94F5F741AC3034400279E9D /* Images.xcassets */,
 				A94F5F6D1AC3034400279E9D /* Supporting Files */,
 			);
@@ -796,6 +799,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A95B82B51ACEE32D002F0EE8 /* SLErrorInterfaceController.swift in Sources */,
 				A965CB8B1ACC71C8003C8B94 /* spacelab.xcdatamodeld in Sources */,
 				A94F5F9E1AC3528B00279E9D /* SLLockRowType.swift in Sources */,
 				A94F5F731AC3034400279E9D /* NotificationController.swift in Sources */,

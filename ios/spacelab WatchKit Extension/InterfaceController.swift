@@ -59,7 +59,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
-        //discoveryManager.startDiscovery()
+        discoveryManager.startDiscovery()
     }
 
     override func didDeactivate()
@@ -67,7 +67,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
         
-        //discoveryManager.stopDiscovery()
+        discoveryManager.stopDiscovery()
     }
     
     // MARK: - NSFetchedResultsController methods
@@ -129,6 +129,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
             }
             else {
                 println("Error opening lock: \(error.localizedDescription)")
+                self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
             }
 
         })
