@@ -107,7 +107,7 @@
     // if we are in simulator mode, load up the testing data!
 #if TARGET_IPHONE_SIMULATOR
     [self loadTestingData];
-    testUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(testUpdate:) userInfo:nil repeats:YES];
+    testUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(testUpdate:) userInfo:nil repeats:YES];
 #endif
     
     [self clearExpiredLocks];

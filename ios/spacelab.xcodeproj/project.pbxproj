@@ -74,7 +74,6 @@
 		A9B7635E1ABC88A80022A871 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B7635C1ABC88A80022A871 /* LaunchScreen.xib */; };
 		A9B7636A1ABC88A80022A871 /* spacelabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763691ABC88A80022A871 /* spacelabTests.swift */; };
 		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
-		A9B9CF7C1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */; };
 		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -218,7 +217,6 @@
 		A9B7638C1ABC9DD60022A871 /* RfduinoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RfduinoManager.h; sourceTree = "<group>"; };
 		A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RfduinoManager.m; sourceTree = "<group>"; };
 		A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoManagerDelegate.h; sourceTree = "<group>"; };
-		A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLEncryptionUtilityViewController.swift; sourceTree = "<group>"; };
 		A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockViewCell.swift; sourceTree = "<group>"; };
 		E41D6F384C32891610EE140F /* Pods_LockKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LockKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E2B76C6BD13FA10BC967FD /* Pods_spacelab.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spacelab.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -524,7 +522,6 @@
 			children = (
 				A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */,
 				A922B84E1AC20FD5007BE266 /* Lock List */,
-				A9B9CF7B1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -839,7 +836,6 @@
 				A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */,
 				A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */,
 				A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */,
-				A9B9CF7C1AC0D09700664C8D /* SLEncryptionUtilityViewController.swift in Sources */,
 				A9AB41B61ACD8BDB00357365 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

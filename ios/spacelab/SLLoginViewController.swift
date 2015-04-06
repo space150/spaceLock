@@ -21,8 +21,14 @@ class SLLoginViewController: UIViewController
         signInButton.style = kGPPSignInButtonStyleWide
         signInButton.colorScheme = kGPPSignInButtonColorSchemeLight
     }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle
+    {
+        return .BlackOpaque
+    }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

@@ -2,13 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "37x-Checkmark.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "37x-Checkmark@2x.png"
+      "filename" : "button-lock-inactive@2x.png"
     },
     {
       "idiom" : "universal",

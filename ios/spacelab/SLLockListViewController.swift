@@ -13,11 +13,11 @@ class SLLockViewController: UIViewController,
     UITableViewDelegate,
     UITableViewDataSource,
     NSFetchedResultsControllerDelegate,
-    GPPSignInDelegate
+    GPPSignInDelegate,
+    SLLockViewCellDelegate
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerNameLabel: UILabel!
-    @IBOutlet weak var headerEmailLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     
     private var fetchedResultsController: NSFetchedResultsController!
@@ -34,9 +34,6 @@ class SLLockViewController: UIViewController,
     {
         super.viewDidLoad()
         
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 120.0
-        
         configureGooglePlus()
         
         discoveryManager = LKLockDiscoveryManager()
@@ -49,6 +46,23 @@ class SLLockViewController: UIViewController,
         view.addSubview(HUD)
         
         HUDImageView = UIImageView(image: UIImage(named: "37x-Checkmark.png"))
+        
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "background-normal.png")!)
+        tableView.backgroundColor = UIColor.clearColor()
+        
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle
+    {
+        return .BlackOpaque
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewDidAppear(animated: Bool)
@@ -99,8 +113,46 @@ class SLLockViewController: UIViewController,
     func configureCell(cell: SLLockViewCell, atIndexPath indexPath: NSIndexPath)
     {
         let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
-        cell.titleLabel.text = lock.name
-        cell.subtitleLabel.text = NSString(format: "uuid: %@\nproximity: %@", lock.uuid, lock.proximityString)
+        cell.delegate = self
+        cell.doorNameLabel.text = lock.name
+        cell.indexPath = indexPath
+    }
+    
+    // MARK: - SLLockViewCellDelegate methods
+    
+    func performUnlock(indexPath: NSIndexPath)
+    {
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
+        
+        HUD.mode = .Indeterminate
+        HUD.labelText = "Unlocking"
+        HUD.show(true)
+        
+        self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
+            if ( success )
+            {
+                self.HUD.customView = self.HUDImageView
+                self.HUD.mode = .CustomView
+                self.HUD.labelText = "UNLOCKED"
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+                    self.HUD.hide(true)
+                }
+            }
+            else
+            {
+                println("ERROR opening lock: \(error.localizedDescription)")
+                
+                self.HUD.mode = .Text
+                self.HUD.labelText = "Error opening lock!"
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+                    self.HUD.hide(true)
+                }
+            }
+        })
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     // MARK: - NSFetchedResultsController methods
@@ -155,37 +207,7 @@ class SLLockViewController: UIViewController,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
-        
-        HUD.mode = .Indeterminate
-        HUD.labelText = "Unlocking"
-        HUD.show(true)
-
-        self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
-            if ( success )
-            {
-                self.HUD.customView = self.HUDImageView
-                self.HUD.mode = .CustomView
-                self.HUD.labelText = "UNLOCKED"
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-                    self.HUD.hide(true)
-                }
-            }
-            else
-            {
-                println("ERROR opening lock: \(error.localizedDescription)")
-                
-                self.HUD.mode = .Text
-                self.HUD.labelText = "Error opening lock!"
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-                    self.HUD.hide(true)
-                }
-            }
-        })
-
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        // nothing, deprecated!
     }
     
     // MARK: - GPPSignInDelegate Methods
@@ -276,9 +298,7 @@ class SLLockViewController: UIViewController,
                 headerNameLabel.text = "Unknown"
                 headerImageView.image = nil
             }
-            
-            headerEmailLabel.text = signIn?.authentication.userEmail
-            
+
             // if the login view controller is showing, hide it
             dismissViewControllerAnimated(true, completion: { () -> Void in
                 // nothing
@@ -287,9 +307,9 @@ class SLLockViewController: UIViewController,
         else
         {
             // clear out the header info
-            headerNameLabel.text = ""
-            headerEmailLabel.text = ""
-            headerImageView.image = nil
+            //headerNameLabel.text = ""
+            //headerEmailLabel.text = ""
+            //headerImageView.image = nil
             
             // present the login view controller
             performSegueWithIdentifier("showLogin", sender: self)
