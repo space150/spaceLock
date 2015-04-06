@@ -33,7 +33,7 @@ class SLLockViewCell: UITableViewCell
     
     func setLock(lock: LKLock, indexPath newIndexPath: NSIndexPath)
     {
-        doorNameLabel.text = lock.name
+        doorNameLabel.text = lock.name.uppercaseString
         indexPath = newIndexPath
         proximity = lock.proximity
         
@@ -132,12 +132,12 @@ class SLLockViewCell: UITableViewCell
         super.awakeFromNib()
         // Initialization code
         
-        println("awakeFromNib called")
-        
         backgroundColor = UIColor.clearColor()
         
         insetBackgroundView.layer.cornerRadius = 10
         insetBackgroundView.layer.masksToBounds = true
+        
+        doorNameLabel.font = UIFont(name: "DINPro-CondLight", size: 30)
         
         lockTimer = nil
         lockTimerSecondsRemaining = 0

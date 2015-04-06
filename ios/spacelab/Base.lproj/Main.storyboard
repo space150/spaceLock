@@ -20,13 +20,13 @@
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WBW-zO-TbT">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTH-3R-PBt">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTH-3R-PBt">
                                         <rect key="frame" x="318" y="33" width="78" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="o0I-RM-HYt"/>
-                                            <constraint firstAttribute="width" constant="78" id="w40-x4-UG4"/>
+                                            <constraint firstAttribute="height" constant="32" id="o0I-RM-HYt"/>
+                                            <constraint firstAttribute="width" constant="70" id="w40-x4-UG4"/>
                                         </constraints>
-                                        <state key="normal" title="LOGOUT">
+                                        <state key="normal" title="LOG OUT">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -57,8 +57,8 @@
                                     <constraint firstItem="wCc-cE-szv" firstAttribute="top" secondItem="WBW-zO-TbT" secondAttribute="top" constant="37" id="3iL-kD-v45"/>
                                     <constraint firstItem="RKj-WI-4Bf" firstAttribute="leading" secondItem="WBW-zO-TbT" secondAttribute="leading" constant="8" id="7aD-y2-Ix1"/>
                                     <constraint firstItem="RKj-WI-4Bf" firstAttribute="top" secondItem="WBW-zO-TbT" secondAttribute="top" constant="32" id="DAS-r8-cYU"/>
-                                    <constraint firstItem="fTH-3R-PBt" firstAttribute="top" secondItem="WBW-zO-TbT" secondAttribute="top" constant="33" id="J95-J5-xW5"/>
-                                    <constraint firstAttribute="trailing" secondItem="fTH-3R-PBt" secondAttribute="trailing" constant="18" id="NvG-ga-eBH"/>
+                                    <constraint firstItem="fTH-3R-PBt" firstAttribute="top" secondItem="WBW-zO-TbT" secondAttribute="top" constant="35" id="J95-J5-xW5"/>
+                                    <constraint firstAttribute="trailing" secondItem="fTH-3R-PBt" secondAttribute="trailing" constant="10" id="NvG-ga-eBH"/>
                                     <constraint firstAttribute="height" constant="75" id="hUM-Bd-FFD"/>
                                     <constraint firstItem="wCc-cE-szv" firstAttribute="leading" secondItem="RKj-WI-4Bf" secondAttribute="trailing" constant="8" id="zaO-1X-Nsl"/>
                                 </constraints>
@@ -73,8 +73,11 @@
                                     <rect key="frame" x="0.0" y="64" width="414" height="75"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOCKS (1)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwo-Da-IWf">
-                                            <rect key="frame" x="22" y="19" width="370" height="37"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="LOCKS (1)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwo-Da-IWf">
+                                            <rect key="frame" x="18" y="23" width="378" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="PsI-Of-Bcl"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -88,13 +91,12 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ghJ-jO-tmB" firstAttribute="top" secondItem="cwo-Da-IWf" secondAttribute="bottom" constant="18" id="7WC-JT-bB5"/>
                                         <constraint firstItem="ghJ-jO-tmB" firstAttribute="leading" secondItem="rg3-i2-RE7" secondAttribute="leading" id="KRn-Be-P5z"/>
                                         <constraint firstAttribute="trailing" secondItem="ghJ-jO-tmB" secondAttribute="trailing" id="O4g-fi-KOa"/>
-                                        <constraint firstItem="cwo-Da-IWf" firstAttribute="centerX" secondItem="ghJ-jO-tmB" secondAttribute="centerX" id="aK2-wM-ocU"/>
-                                        <constraint firstItem="cwo-Da-IWf" firstAttribute="centerY" secondItem="rg3-i2-RE7" secondAttribute="centerY" id="b9v-wC-jep"/>
+                                        <constraint firstItem="cwo-Da-IWf" firstAttribute="leading" secondItem="rg3-i2-RE7" secondAttribute="leading" constant="18" id="VQN-Cy-Y0m"/>
+                                        <constraint firstAttribute="trailing" secondItem="cwo-Da-IWf" secondAttribute="trailing" constant="18" id="aWp-98-VKQ"/>
                                         <constraint firstAttribute="bottom" secondItem="ghJ-jO-tmB" secondAttribute="bottom" id="lxa-sR-iYG"/>
-                                        <constraint firstItem="cwo-Da-IWf" firstAttribute="leading" secondItem="rg3-i2-RE7" secondAttribute="leading" constant="22" id="sQG-Rs-yNW"/>
+                                        <constraint firstAttribute="centerY" secondItem="cwo-Da-IWf" secondAttribute="centerY" id="zPq-k0-pDS"/>
                                     </constraints>
                                 </view>
                                 <prototypes>
@@ -112,7 +114,7 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="DOOR NAME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4n-2j-kU8">
                                                                 <rect key="frame" x="141" y="21" width="249" height="31"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="21" id="1pX-XD-1LY"/>
+                                                                    <constraint firstAttribute="height" constant="30" id="1pX-XD-1LY"/>
                                                                     <constraint firstAttribute="width" constant="249" id="nb0-wd-XWV"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" name="DINCondensed-Bold" family="DIN Condensed" pointSize="22"/>
@@ -168,7 +170,7 @@
                                                             <constraint firstItem="POb-X5-LmI" firstAttribute="top" secondItem="kWB-L4-2GS" secondAttribute="top" constant="9" id="lj8-kP-8mw"/>
                                                             <constraint firstAttribute="bottom" secondItem="jgc-cm-lNf" secondAttribute="bottom" constant="14" id="mHm-Ev-2vs"/>
                                                             <constraint firstItem="o4n-2j-kU8" firstAttribute="centerX" secondItem="oS7-8e-Qwu" secondAttribute="centerX" id="o7o-oQ-NRd"/>
-                                                            <constraint firstItem="o4n-2j-kU8" firstAttribute="top" secondItem="kWB-L4-2GS" secondAttribute="top" constant="21" id="qcW-qE-R5f"/>
+                                                            <constraint firstItem="o4n-2j-kU8" firstAttribute="top" secondItem="kWB-L4-2GS" secondAttribute="top" constant="15" id="qcW-qE-R5f"/>
                                                             <constraint firstAttribute="trailing" secondItem="oS7-8e-Qwu" secondAttribute="trailing" id="seY-Kl-aIM"/>
                                                             <constraint firstItem="o4n-2j-kU8" firstAttribute="leading" secondItem="POb-X5-LmI" secondAttribute="trailing" constant="28" id="tbG-Na-r2u"/>
                                                             <constraint firstItem="POb-X5-LmI" firstAttribute="top" secondItem="kWB-L4-2GS" secondAttribute="top" constant="13" id="zeS-f7-cbz"/>
@@ -262,6 +264,8 @@
                     <connections>
                         <outlet property="headerImageView" destination="RKj-WI-4Bf" id="Qcr-Cj-49s"/>
                         <outlet property="headerNameLabel" destination="wCc-cE-szv" id="11b-QQ-IRA"/>
+                        <outlet property="lockCountHeaderLabel" destination="cwo-Da-IWf" id="3HM-eA-hU5"/>
+                        <outlet property="logoutButton" destination="fTH-3R-PBt" id="GUX-gd-qny"/>
                         <outlet property="tableView" destination="ol3-4g-NlT" id="rTn-SO-rLW"/>
                         <segue destination="vCj-eN-fHz" kind="presentation" identifier="showLogin" animates="NO" id="kVe-Jm-I1B"/>
                     </connections>

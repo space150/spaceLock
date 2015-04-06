@@ -75,6 +75,8 @@
 		A9B7636A1ABC88A80022A871 /* spacelabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763691ABC88A80022A871 /* spacelabTests.swift */; };
 		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
 		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
+		A9BF05421AD2EC8A00628900 /* DIN Condensed Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9BF05401AD2EC8A00628900 /* DIN Condensed Bold.ttf */; };
+		A9BF05431AD2EC8A00628900 /* DINPro-CondLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9BF05411AD2EC8A00628900 /* DINPro-CondLight.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,6 +220,8 @@
 		A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RfduinoManager.m; sourceTree = "<group>"; };
 		A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoManagerDelegate.h; sourceTree = "<group>"; };
 		A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockViewCell.swift; sourceTree = "<group>"; };
+		A9BF05401AD2EC8A00628900 /* DIN Condensed Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DIN Condensed Bold.ttf"; path = "Assets/DIN Condensed Bold.ttf"; sourceTree = SOURCE_ROOT; };
+		A9BF05411AD2EC8A00628900 /* DINPro-CondLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DINPro-CondLight.ttf"; path = "Assets/DINPro-CondLight.ttf"; sourceTree = SOURCE_ROOT; };
 		E41D6F384C32891610EE140F /* Pods_LockKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LockKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E2B76C6BD13FA10BC967FD /* Pods_spacelab.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spacelab.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -451,6 +455,7 @@
 		A9B7634E1ABC88A80022A871 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A9BF053F1AD2EC7C00628900 /* Fonts */,
 				A99F66081ACA0EC00052D927 /* spacelab.entitlements */,
 				A9B763801ABC90A30022A871 /* spacelab-Bridging-Header.h */,
 				A9B7634F1ABC88A80022A871 /* Info.plist */,
@@ -538,6 +543,15 @@
 			);
 			name = rfduino;
 			path = ../rfduino;
+			sourceTree = "<group>";
+		};
+		A9BF053F1AD2EC7C00628900 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A9BF05401AD2EC8A00628900 /* DIN Condensed Bold.ttf */,
+				A9BF05411AD2EC8A00628900 /* DINPro-CondLight.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -774,10 +788,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9BF05421AD2EC8A00628900 /* DIN Condensed Bold.ttf in Resources */,
 				A9B763591ABC88A80022A871 /* Main.storyboard in Resources */,
 				A9B7635E1ABC88A80022A871 /* LaunchScreen.xib in Resources */,
 				A922B8391AC2083E007BE266 /* GooglePlus.bundle in Resources */,
 				A9B7635B1ABC88A80022A871 /* Images.xcassets in Resources */,
+				A9BF05431AD2EC8A00628900 /* DINPro-CondLight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

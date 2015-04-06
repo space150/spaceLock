@@ -19,6 +19,8 @@ class SLLockViewController: UIViewController,
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerNameLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var lockCountHeaderLabel: UILabel!
     
     private var fetchedResultsController: NSFetchedResultsController!
     
@@ -41,13 +43,8 @@ class SLLockViewController: UIViewController,
         
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background-normal.png")!)
         tableView.backgroundColor = UIColor.clearColor()
-        
-        setNeedsStatusBarAppearanceUpdate()
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle
-    {
-        return .BlackOpaque
+        logoutButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
+        lockCountHeaderLabel.font = UIFont(name: "DINPro-CondLight", size: 46)
     }
     
     override func viewDidAppear(animated: Bool)
