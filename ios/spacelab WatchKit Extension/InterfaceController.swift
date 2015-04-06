@@ -50,8 +50,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         var objects: NSArray = fetchedResultsController.fetchedObjects!
         var lock: LKLock = objects.objectAtIndex(index) as LKLock
         
-        var displayString: NSString = NSString(format: "%@\n%@", "f3", lock.proximityString)
-        row.rowTitleLabel.setText(displayString)
+        row.setLock(lock)
     }
 
     override func willActivate()
@@ -123,12 +122,21 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     {
         var objects: NSArray = fetchedResultsController.fetchedObjects!
         var lock: LKLock = objects.objectAtIndex(rowIndex) as LKLock
+        var row = table.rowControllerAtIndex(rowIndex) as SLLockRowType
+        
+        row.showInProgress()
+        
         discoveryManager.openLock(lock, complete: { (success, error) -> Void in
-            if ( success ) {
-                println("lock opened!")
+            if ( success )
+            {
+                row.showUnlocked()
             }
-            else {
+            else
+            {
                 println("Error opening lock: \(error.localizedDescription)")
+                
+                row.resetUnlocked()
+                
                 self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
             }
 
