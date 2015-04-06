@@ -39,7 +39,7 @@
                 <constraint firstItem="Z7u-by-YKA" firstAttribute="centerX" secondItem="R6p-XL-ve0" secondAttribute="centerX" id="ceT-9s-M49"/>
                 <constraint firstItem="R6p-XL-ve0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="enh-QV-7iA"/>
             </constraints>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
             <point key="canvasLocation" x="548" y="455"/>
         </view>

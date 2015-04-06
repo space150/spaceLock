@@ -22,9 +22,6 @@ class SLLockViewController: UIViewController,
     
     private var fetchedResultsController: NSFetchedResultsController!
     
-    private var HUD: MBProgressHUD!
-    private var HUDImageView: UIImageView!
-    
     private var discoveryManager: LKLockDiscoveryManager!
     
     private let clientId = "743774015347-4qc7he8nbpccqca59lh004ojr7a94kia.apps.googleusercontent.com";
@@ -42,11 +39,6 @@ class SLLockViewController: UIViewController,
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
         
-        HUD = MBProgressHUD(view: view)
-        view.addSubview(HUD)
-        
-        HUDImageView = UIImageView(image: UIImage(named: "37x-Checkmark.png"))
-        
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background-normal.png")!)
         tableView.backgroundColor = UIColor.clearColor()
         
@@ -56,13 +48,6 @@ class SLLockViewController: UIViewController,
     override func preferredStatusBarStyle() -> UIStatusBarStyle
     {
         return .BlackOpaque
-    }
-    
-    override func viewWillAppear(animated: Bool)
-    {
-        super.viewWillAppear(animated)
-
-        setNeedsStatusBarAppearanceUpdate()
     }
     
     override func viewDidAppear(animated: Bool)
@@ -114,8 +99,7 @@ class SLLockViewController: UIViewController,
     {
         let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
         cell.delegate = self
-        cell.doorNameLabel.text = lock.name
-        cell.indexPath = indexPath
+        cell.setLock(lock, indexPath: indexPath)
     }
     
     // MARK: - SLLockViewCellDelegate methods
@@ -123,32 +107,20 @@ class SLLockViewController: UIViewController,
     func performUnlock(indexPath: NSIndexPath)
     {
         let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
-        
-        HUD.mode = .Indeterminate
-        HUD.labelText = "Unlocking"
-        HUD.show(true)
+        let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as SLLockViewCell
+
+        cell.showInProgress()
         
         self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
             if ( success )
             {
-                self.HUD.customView = self.HUDImageView
-                self.HUD.mode = .CustomView
-                self.HUD.labelText = "UNLOCKED"
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-                    self.HUD.hide(true)
-                }
+                cell.showUnlocked()
             }
             else
             {
                 println("ERROR opening lock: \(error.localizedDescription)")
-                
-                self.HUD.mode = .Text
-                self.HUD.labelText = "Error opening lock!"
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-                    self.HUD.hide(true)
-                }
+
+                cell.resetUnlocked()
             }
         })
         
@@ -307,9 +279,8 @@ class SLLockViewController: UIViewController,
         else
         {
             // clear out the header info
-            //headerNameLabel.text = ""
-            //headerEmailLabel.text = ""
-            //headerImageView.image = nil
+            headerNameLabel.text = "Unknown"
+            headerImageView.image = nil
             
             // present the login view controller
             performSegueWithIdentifier("showLogin", sender: self)

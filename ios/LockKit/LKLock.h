@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import "LKLockProximity.h"
 
 @interface LKLock : NSManagedObject
 
@@ -17,5 +17,7 @@
 @property (nonatomic, retain) NSString * uuid;
 @property (nonatomic, retain) NSNumber * proximity;
 @property (nonatomic, retain) NSString * proximityString;
+
+- (LKLockProximity)proximityEnum;
 
 @end

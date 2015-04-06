@@ -17,4 +17,9 @@
 @dynamic proximity;
 @dynamic proximityString;
 
+- (LKLockProximity)proximityEnum
+{
+    return (LKLockProximity)[self.proximity intValue];
+}
+
 @end

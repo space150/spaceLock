@@ -91,7 +91,7 @@
         int proximity = [lock.proximity intValue];
         proximity += 1;
         if ( proximity > LKLockProximityImmediate )
-            proximity = LKLockProximityFar;
+            proximity = LKLockProximityUnknown;
         
         lock.proximity = [NSNumber numberWithInt:proximity];
         lock.proximityString = [self proximityString:(LKLockProximity)proximity];
@@ -210,15 +210,46 @@
 {
     NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
     
+    NSMutableArray *expiredLocks = [[NSMutableArray alloc] init];
+    
     NSDate *now = [NSDate date];
     
-    // if we have a nil rfduino, then loop through and collect the UUIDs with "out of range" arduinos
-    NSMutableArray *expiredLocks = [[NSMutableArray alloc] init];
+    // grab all the existing locks and set them as "possibly expired"
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    if ( results != nil && [results count] > 0 )
+    {
+        for ( int j = 0; j < [results count]; j++ )
+        {
+            LKLock *lock = (LKLock *)[results objectAtIndex:j];
+            [expiredLocks addObject:lock.uuid];
+        }
+    }
+    
+    // now remove the locks from the "possibly expired" list if we find them and they have been updated recently
     for ( RFduino *rfduino in self.rfduinoManager.rfduinos )
     {
-        if ( rfduino.outOfRange || [now timeIntervalSinceDate:rfduino.lastAdvertisement] > 10 )
-            [expiredLocks addObject:rfduino.UUID];
+        if ( !rfduino.outOfRange && [now timeIntervalSinceDate:rfduino.lastAdvertisement] < 10 )
+        {
+            NSInteger foundIndex = -1;
+            for ( int j = 0; j < [expiredLocks count]; j++ )
+            {
+                NSString *uuid = (NSString *)[expiredLocks objectAtIndex:j];
+                if ( [[uuid lowercaseString] isEqualToString:[rfduino.UUID lowercaseString]] )
+                {
+                    foundIndex = j;
+                }
+            }
+            if ( foundIndex > -1 )
+                [expiredLocks removeObjectAtIndex:foundIndex];
+        }
     }
+    
+#if TARGET_IPHONE_SIMULATOR
+    [expiredLocks removeAllObjects];
+#endif
     
     NSLog(@"found expired locks: %@", expiredLocks);
     
@@ -324,7 +355,7 @@
 {
     NSLog(@"didConnectRFduino");
     
-    [self.rfduinoManager stopScan];
+    //[self.rfduinoManager stopScan];
     
     connectedRFduino = rfduino;
     connectedRFduino.delegate = self;
@@ -345,7 +376,7 @@
     if ( self.openCompletionCallback != nil )
         self.openCompletionCallback = nil;
     
-    [self.rfduinoManager startScan];
+    //[self.rfduinoManager startScan];
 }
 
 #pragma mark - RFduinoDelegate Methods
