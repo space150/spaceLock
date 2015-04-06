@@ -74,9 +74,9 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="LOCKS (1)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwo-Da-IWf">
-                                            <rect key="frame" x="18" y="23" width="378" height="40"/>
+                                            <rect key="frame" x="18" y="23" width="378" height="44"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="PsI-Of-Bcl"/>
+                                                <constraint firstAttribute="height" constant="44" id="PsI-Of-Bcl"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

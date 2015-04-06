@@ -65,6 +65,8 @@ class SLLockViewController: UIViewController,
         super.viewWillDisappear(animated)
         
         discoveryManager.stopDiscovery()
+        
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.BlackOpaque, animated: true)
     }
     
     override func didReceiveMemoryWarning()
@@ -169,6 +171,7 @@ class SLLockViewController: UIViewController,
 
     func controllerDidChangeContent(controller: NSFetchedResultsController)
     {
+        lockCountHeaderLabel.text = NSString(format: "LOCKS (%d)", fetchedResultsController.sections![0].numberOfObjects)
         self.tableView.endUpdates()
     }
     
