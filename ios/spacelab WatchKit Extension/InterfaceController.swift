@@ -124,23 +124,26 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         var lock: LKLock = objects.objectAtIndex(rowIndex) as LKLock
         var row = table.rowControllerAtIndex(rowIndex) as SLLockRowType
         
-        row.showInProgress()
-        
-        discoveryManager.openLock(lock, complete: { (success, error) -> Void in
-            if ( success )
-            {
-                row.showUnlocked()
-            }
-            else
-            {
-                println("Error opening lock: \(error.localizedDescription)")
+        if ( row.unlockable == true )
+        {
+            row.showInProgress()
+            
+            discoveryManager.openLock(lock, complete: { (success, error) -> Void in
+                if ( success )
+                {
+                    row.showUnlocked()
+                }
+                else
+                {
+                    println("Error opening lock: \(error.localizedDescription)")
+                    
+                    row.resetUnlocked()
+                    
+                    self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
+                }
                 
-                row.resetUnlocked()
-                
-                self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
-            }
-
-        })
+            })
+        }
     }
 
 }
