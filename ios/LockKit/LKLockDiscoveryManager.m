@@ -29,6 +29,7 @@
     NSTimer *testUpdateTimer;
     NSString *instanceContext;
     MMWormhole *wormhole;
+    NSTimer *handshakeTimer;
 }
 
 @property (copy) void (^openCompletionCallback)(bool, NSError *);
@@ -66,6 +67,8 @@
                     [self stopDiscovery];
             }
         }];
+        
+        handshakeTimer = nil;
     }
     return self;
 }
@@ -202,7 +205,7 @@
         
         // start a timeout timer here, if we don't hear back in X seconds we should
         // disconnect, cancel and throw an error
-        // TODO
+        handshakeTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(handshakeTimeout:) userInfo:nil repeats:NO];
     }
     else
     {
@@ -213,6 +216,19 @@
                                                             userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Lock is out of range", nil)}]);
         }
     }
+}
+
+- (void)handshakeTimeout:(NSTimer *)timer
+{
+    if ( self.openCompletionCallback != nil )
+    {
+        self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
+                                                            code:42
+                                                        userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Handshake timed out!", nil)}]);
+    }
+    
+    [handshakeTimer invalidate];
+    handshakeTimer = nil;
 }
 
 - (void)verifyHandshake:(NSData *)data
