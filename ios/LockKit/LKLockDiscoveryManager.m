@@ -261,7 +261,7 @@
         for ( int j = 0; j < [results count]; j++ )
         {
             LKLock *lock = (LKLock *)[results objectAtIndex:j];
-            [expiredLocks addObject:lock.uuid];
+            [expiredLocks addObject:lock];
         }
     }
     
@@ -273,8 +273,8 @@
             NSInteger foundIndex = -1;
             for ( int j = 0; j < [expiredLocks count]; j++ )
             {
-                NSString *uuid = (NSString *)[expiredLocks objectAtIndex:j];
-                if ( [[uuid lowercaseString] isEqualToString:[rfduino.UUID lowercaseString]] )
+                LKLock *lock = (LKLock *)[expiredLocks objectAtIndex:j];
+                if ( [[lock.uuid lowercaseString] isEqualToString:[rfduino.UUID lowercaseString]] )
                 {
                     foundIndex = j;
                 }
@@ -290,25 +290,13 @@
     
     NSLog(@"found expired locks: %@", expiredLocks);
     
-    // delete the expired locks
+    // update the proxmity on expired locks to "unknown"
     for ( int i = 0; i < [expiredLocks count]; i++ )
     {
-        NSString *uuid = (NSString *)[expiredLocks objectAtIndex:i];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
-        [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", uuid]];
-        
-        NSError *error = nil;
-        NSArray *results = [context executeFetchRequest:request error:&error];
-        if ( results != nil && [results count] > 0 )
-        {
-            for ( int j = 0; j < [results count]; j++ )
-            {
-                LKLock *lock = (LKLock *)[results objectAtIndex:j];
-                [context deleteObject:lock];
-            }
-        }
+        LKLock *lock = (LKLock *)[expiredLocks objectAtIndex:i];
+        lock.proximity = [NSNumber numberWithInt:RFduinoRangeUnknown];
+        lock.proximityString = [self proximityString:(LKLockProximity)[lock.proximity intValue]];
+        lock.lastActionAt = [NSDate date];
     }
     
     [[LKLockRepository sharedInstance] saveContext];

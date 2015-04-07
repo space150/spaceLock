@@ -125,7 +125,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oS7-8e-Qwu">
-                                                                <rect key="frame" x="123" y="45" width="275" height="82"/>
+                                                                <rect key="frame" x="123" y="47" width="275" height="82"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="275" id="FqX-ma-gwa"/>
                                                                     <constraint firstAttribute="height" constant="82" id="dzf-1O-Fx2"/>
@@ -164,7 +164,7 @@
                                                             <constraint firstItem="jgc-cm-lNf" firstAttribute="trailing" secondItem="POb-X5-LmI" secondAttribute="trailing" id="KbP-CM-8gg"/>
                                                             <constraint firstAttribute="bottom" secondItem="oS7-8e-Qwu" secondAttribute="bottom" constant="3" id="O1P-SO-6GV"/>
                                                             <constraint firstItem="POb-X5-LmI" firstAttribute="centerX" secondItem="jgc-cm-lNf" secondAttribute="centerX" id="Qob-I5-I9B"/>
-                                                            <constraint firstAttribute="bottom" secondItem="oS7-8e-Qwu" secondAttribute="bottom" constant="2" id="VjL-i7-bqA"/>
+                                                            <constraint firstAttribute="bottom" secondItem="oS7-8e-Qwu" secondAttribute="bottom" id="VjL-i7-bqA"/>
                                                             <constraint firstItem="o4n-2j-kU8" firstAttribute="top" secondItem="kWB-L4-2GS" secondAttribute="top" constant="23" id="Xqw-Zd-B1F"/>
                                                             <constraint firstItem="jgc-cm-lNf" firstAttribute="top" secondItem="POb-X5-LmI" secondAttribute="bottom" constant="4" id="YZ7-gl-pcb"/>
                                                             <constraint firstAttribute="trailing" secondItem="oS7-8e-Qwu" secondAttribute="trailing" id="d1h-Ag-wZ3"/>

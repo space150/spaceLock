@@ -63,7 +63,7 @@ class SLLockViewController: UIViewController,
     {
         super.viewWillDisappear(animated)
         
-        //discoveryManager.stopDiscovery()
+        discoveryManager.stopDiscovery()
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.BlackOpaque, animated: true)
     }
