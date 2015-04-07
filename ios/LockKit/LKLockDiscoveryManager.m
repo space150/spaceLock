@@ -16,13 +16,19 @@
 #import "RFduino.h"
 #import "RFduinoManager.h"
 
-#define kErrorDomain @"LKLockDiscoveryManager"
+#import "MMWormhole.h"
+
+#define kErrorDomain                @"LKLockDiscoveryManager"
+#define kGroupIdentifier            @"group.com.s150.ent.spacelab"
+#define kLockActiveContextName      @"lockDiscoveryActiveContext"
 
 @interface LKLockDiscoveryManager ()
 {
     RFduino *connectedRFduino;
     NSString *testLockUUID;
     NSTimer *testUpdateTimer;
+    NSString *instanceContext;
+    MMWormhole *wormhole;
 }
 
 @property (copy) void (^openCompletionCallback)(bool, NSError *);
@@ -31,11 +37,13 @@
 
 @implementation LKLockDiscoveryManager
 
-- (id)init
+- (id)initWithContext:(NSString *)context
 {
     self = [super init];
     if ( self != nil )
     {
+        instanceContext = context;
+        
         self.rfduinoManager = [RFduinoManager sharedRFduinoManager];
         [self.rfduinoManager stopScan];
         self.rfduinoManager.delegate = self;
@@ -44,6 +52,20 @@
         
         testLockUUID = @"f2c8e796-c022-4fa9-a802-cc16963f362e";
         testUpdateTimer = nil;
+        
+        wormhole = [[MMWormhole alloc] initWithApplicationGroupIdentifier:kGroupIdentifier
+                                                        optionalDirectory:@"wormhole"];
+        
+        [wormhole listenForMessageWithIdentifier:kLockActiveContextName listener:^(id messageObject)
+        {
+            NSString *activeContext = (NSString *)messageObject;
+            NSLog(@"instanceContext: %@, received active context update: %@", instanceContext, activeContext);
+            if ( ![activeContext isEqualToString:@""] )
+            {
+                if ( ![activeContext isEqualToString:instanceContext] )
+                    [self stopDiscovery];
+            }
+        }];
     }
     return self;
 }
@@ -104,6 +126,14 @@
 
 - (void)startDiscovery
 {
+    // when attempting to setup discovery, first see if another context is active
+    NSString *activeContext = (NSString *)[wormhole messageWithIdentifier:kLockActiveContextName];
+    if ( ![activeContext isEqualToString:instanceContext] )
+    {
+        // if another context is not active, then start it up and set this context as active
+        [wormhole passMessageObject:instanceContext identifier:kLockActiveContextName];
+    }
+    
     // if we are in simulator mode, load up the testing data!
 #if TARGET_IPHONE_SIMULATOR
     [self loadTestingData];
@@ -118,11 +148,18 @@
 
 - (void)stopDiscovery
 {
+    // when halting discovery, set this context as inactive if it is the currently active context
+    NSString *activeContext = (NSString *)[wormhole messageWithIdentifier:kLockActiveContextName];
+    if ( [activeContext isEqualToString:instanceContext] )
+    {
+        [wormhole passMessageObject:@"" identifier:kLockActiveContextName];
+    }
+    
 #if TARGET_IPHONE_SIMULATOR
     [testUpdateTimer invalidate];
     testUpdateTimer = nil;
 #endif
-    
+
     [self.rfduinoManager stopScan];
 }
 

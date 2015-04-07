@@ -21,13 +21,15 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     {
         super.awakeWithContext(context)
         
-        discoveryManager = LKLockDiscoveryManager()
+        discoveryManager = LKLockDiscoveryManager(context: "watchkit-ext")
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
         
         configureTableWithLocks()
+        
+        discoveryManager.startDiscovery()
     }
     
     func configureTableWithLocks()
@@ -57,16 +59,12 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        
-        discoveryManager.startDiscovery()
     }
 
     override func didDeactivate()
     {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
-        
-        discoveryManager.stopDiscovery()
     }
     
     // MARK: - NSFetchedResultsController methods

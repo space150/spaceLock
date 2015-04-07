@@ -103,7 +103,7 @@ class SLLockRowType: NSObject
     {
         lockTimerSecondsRemaining = lockTimerSecondsRemaining - 1
         
-        statusLabel.setText(NSString(format: "Unlocked: %ds", lockTimerSecondsRemaining))
+        statusLabel?.setText(NSString(format: "Unlocked: %ds", lockTimerSecondsRemaining))
         
         if ( lockTimerSecondsRemaining <= 0 )
         {

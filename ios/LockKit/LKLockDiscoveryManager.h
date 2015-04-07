@@ -20,6 +20,7 @@
 
 @property (nonatomic, strong) RFduinoManager *rfduinoManager;
 
+- (id)initWithContext:(NSString *)context;
 - (void)startDiscovery;
 - (void)stopDiscovery;
 - (void)openLock:(LKLock *)lock complete:(void (^)(bool success, NSError *error))completionCallback;

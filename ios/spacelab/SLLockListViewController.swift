@@ -35,7 +35,7 @@ class SLLockViewController: UIViewController,
         
         configureGooglePlus()
         
-        discoveryManager = LKLockDiscoveryManager()
+        discoveryManager = LKLockDiscoveryManager(context: "ios-client")
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
@@ -64,7 +64,7 @@ class SLLockViewController: UIViewController,
     {
         super.viewWillDisappear(animated)
         
-        discoveryManager.stopDiscovery()
+        //discoveryManager.stopDiscovery()
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.BlackOpaque, animated: true)
     }
