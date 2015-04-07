@@ -228,12 +228,18 @@ class SLLockViewController: UIViewController,
     {
         if ( signIn?.authentication != nil )
         {
-            var email = signIn?.authentication.userEmail
-            
-            // check to ensure the email is on the space150.com domain!
-            if ( validateEmail(email) == false )
+            var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
+            // first check to see if the domain matches
+            if ( plusUser == nil || plusUser.domain != "space150.com" )
             {
-                signIn?.signOut()
+                // fallback to verifying the email addres? Might want to disable this
+                var email = signIn?.authentication.userEmail
+                
+                // check to ensure the email is on the space150.com domain!
+                if ( validateEmail(email) == false )
+                {
+                    signIn?.signOut()
+                }
             }
         }
         
@@ -241,6 +247,7 @@ class SLLockViewController: UIViewController,
         {
             // if we have a google plus user object
             var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
+            println("domain: \(plusUser.domain), url: \(plusUser.url)")
             if ( plusUser != nil )
             {
                 // use the display name
