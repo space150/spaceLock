@@ -41,7 +41,6 @@ class SLLockViewController: UIViewController,
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
         
-        view.backgroundColor = UIColor(patternImage: UIImage(named: "background-normal.png")!)
         tableView.backgroundColor = UIColor.clearColor()
         logoutButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
         lockCountHeaderLabel.font = UIFont(name: "DINPro-CondLight", size: 46)
