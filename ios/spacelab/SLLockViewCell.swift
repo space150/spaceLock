@@ -119,7 +119,7 @@ class SLLockViewCell: UITableViewCell
     {
         lockTimerSecondsRemaining = lockTimerSecondsRemaining - 1
         
-        statusLabel.text = NSString(format: "%ds", lockTimerSecondsRemaining)
+        statusLabel.text = NSString(format: "%ds", lockTimerSecondsRemaining) as String
 
         if ( lockTimerSecondsRemaining <= 0 )
         {

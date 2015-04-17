@@ -24,7 +24,7 @@ class SLLockRowType: NSObject
     func setLock(lock: LKLock)
     {
         var components: NSArray = lock.name.uppercaseString.componentsSeparatedByString("-")
-        doorNameLabel.setText(components.lastObject as NSString)
+        doorNameLabel.setText(components.lastObject as? String)
         proximity = lock.proximity
         
         updateViewState()
@@ -103,7 +103,7 @@ class SLLockRowType: NSObject
     {
         lockTimerSecondsRemaining = lockTimerSecondsRemaining - 1
         
-        statusLabel?.setText(NSString(format: "Unlocked: %ds", lockTimerSecondsRemaining))
+        statusLabel?.setText(NSString(format: "Unlocked: %ds", lockTimerSecondsRemaining) as String)
         
         if ( lockTimerSecondsRemaining <= 0 )
         {

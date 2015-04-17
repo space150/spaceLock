@@ -1,3 +1,4 @@
+
 //
 //  InterfaceController.swift
 //  spacelab WatchKit Extension
@@ -45,10 +46,10 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     
     func configureTableRow(index: Int!)
     {
-        var row = table.rowControllerAtIndex(index) as SLLockRowType
+        var row = table.rowControllerAtIndex(index) as! SLLockRowType
         
         var objects: NSArray = fetchedResultsController.fetchedObjects!
-        var lock: LKLock = objects.objectAtIndex(index) as LKLock
+        var lock: LKLock = objects.objectAtIndex(index) as! LKLock
         
         row.setLock(lock)
     }
@@ -92,22 +93,21 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         // nothing
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath,
-        forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath)
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
     {
         switch type
         {
         case .Insert:
-            table.insertRowsAtIndexes(NSIndexSet(index: newIndexPath.row), withRowType: "lockRowController")
-            configureTableRow(newIndexPath.row)
+            table.insertRowsAtIndexes(NSIndexSet(index: newIndexPath!.row), withRowType: "lockRowController")
+            configureTableRow(newIndexPath!.row)
         case .Update:
-            configureTableRow(indexPath.row)
+            configureTableRow(indexPath!.row)
         case .Move:
-            table.removeRowsAtIndexes(NSIndexSet(index: indexPath.row))
-            table.insertRowsAtIndexes(NSIndexSet(index: newIndexPath.row), withRowType: "lockRowController")
-            configureTableRow(newIndexPath.row)
+            table.removeRowsAtIndexes(NSIndexSet(index: indexPath!.row))
+            table.insertRowsAtIndexes(NSIndexSet(index: newIndexPath!.row), withRowType: "lockRowController")
+            configureTableRow(newIndexPath!.row)
         case .Delete:
-            table.removeRowsAtIndexes(NSIndexSet(index: indexPath.row))
+            table.removeRowsAtIndexes(NSIndexSet(index: indexPath!.row))
         default:
             return
         }
@@ -121,8 +121,8 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int)
     {
         var objects: NSArray = fetchedResultsController.fetchedObjects!
-        var lock: LKLock = objects.objectAtIndex(rowIndex) as LKLock
-        var row = table.rowControllerAtIndex(rowIndex) as SLLockRowType
+        var lock: LKLock = objects.objectAtIndex(rowIndex) as! LKLock
+        var row = table.rowControllerAtIndex(rowIndex) as! SLLockRowType
         
         if ( row.unlockable == true )
         {

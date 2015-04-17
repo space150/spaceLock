@@ -10,7 +10,8 @@
 
 @interface LKSecurityManager : NSObject
 
-- (NSData *)encryptString:(NSString *)text;
-- (NSString *)decryptData:(NSData *)input;
+- (void)generateKeyForLockName:(NSString *)lockName;
+- (NSData *)encryptString:(NSString *)text forLockName:(NSString *)lockName;
+- (NSString *)decryptData:(NSData *)input forLockName:(NSString *)lockName;
 
 @end

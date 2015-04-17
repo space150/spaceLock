@@ -26,8 +26,8 @@ class SLErrorInterfaceController: WKInterfaceController
         
         if ( context != nil )
         {
-            var c : NSDictionary = context as NSDictionary
-            var error : NSError = c["data"] as NSError!
+            var c : NSDictionary = context as! NSDictionary
+            var error : NSError = c["data"] as! NSError!
             errorLabel.setText(error.localizedDescription)
         }
     }

@@ -31,7 +31,8 @@
 static const int max_data = 32;
 
 // default NULL (NULL = previous fixed RFduino uuid)
-NSString *customUUID = @"f2c8e796-c022-4fa9-a802-cc16963f362e";
+NSString *customUUID = @"876d7008-890e-4d28-9b19-bfabee9f0e24";
+//NSString *customUUID = NULL;
 
 static CBUUID *service_uuid;
 static CBUUID *send_uuid;
@@ -115,7 +116,7 @@ static void incrementUuid16(CBUUID *uuid, unsigned char amount)
         advertisementRSSI = newAdvertisementRSSI;
         
         // calculate the proximity based on eased RSSI value
-        easedProximity.value = fabsf([newAdvertisementRSSI integerValue]);
+        easedProximity.value = labs([newAdvertisementRSSI integerValue]);
         [easedProximity update];
         NSInteger proximityResult = easedProximity.value * -1.0f;
         

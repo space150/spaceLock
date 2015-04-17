@@ -44,6 +44,10 @@ class SLLockViewController: UIViewController,
         tableView.backgroundColor = UIColor.clearColor()
         logoutButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
         lockCountHeaderLabel.font = UIFont(name: "DINPro-CondLight", size: 46)
+        
+        //var security = LKSecurityManager()
+        //security.generateKeyForLockName("s150-vault")
+        //security.generateKeyForLockName("s150-senate")
     }
     
     override func viewDidAppear(animated: Bool)
@@ -65,7 +69,7 @@ class SLLockViewController: UIViewController,
         
         discoveryManager.stopDiscovery()
         
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.BlackOpaque, animated: true)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
     }
     
     override func didReceiveMemoryWarning()
@@ -76,7 +80,7 @@ class SLLockViewController: UIViewController,
     
     // MARK: - UITableViewDataSource Methods
     
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return fetchedResultsController.sections!.count
     }
@@ -88,14 +92,14 @@ class SLLockViewController: UIViewController,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as SLLockViewCell
+        var cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! SLLockViewCell
         configureCell(cell, atIndexPath: indexPath)
         return cell
     }
     
     func configureCell(cell: SLLockViewCell, atIndexPath indexPath: NSIndexPath)
     {
-        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
         cell.delegate = self
         cell.setLock(lock, indexPath: indexPath)
     }
@@ -104,8 +108,8 @@ class SLLockViewController: UIViewController,
     
     func performUnlock(indexPath: NSIndexPath)
     {
-        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as LKLock
-        let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as SLLockViewCell
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! SLLockViewCell
 
         cell.showInProgress()
         
@@ -123,6 +127,16 @@ class SLLockViewController: UIViewController,
         })
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        /*
+        var localNotification:UILocalNotification = UILocalNotification()
+        localNotification.alertAction = "Testing"
+        localNotification.alertTitle = "F3"
+        localNotification.alertBody = "UNLOCKING"
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: 20)
+        localNotification.category = "lockNotification"
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        */
     }
     
     // MARK: - NSFetchedResultsController methods
@@ -147,22 +161,22 @@ class SLLockViewController: UIViewController,
         self.tableView.beginUpdates()
     }
 
-    func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath,
-        forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath)
+    func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath?,
+        forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
     {
             switch type
             {
             case .Insert:
-                self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Update:
-                let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as SLLockViewCell
-                self.configureCell(cell, atIndexPath: indexPath)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath!) as! SLLockViewCell
+                self.configureCell(cell, atIndexPath: indexPath!)
+                self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             case .Move:
-                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Fade)
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Delete:
-                self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             default:
                 return
             }
@@ -170,7 +184,7 @@ class SLLockViewController: UIViewController,
 
     func controllerDidChangeContent(controller: NSFetchedResultsController)
     {
-        lockCountHeaderLabel.text = NSString(format: "LOCKS (%d)", fetchedResultsController.sections![0].numberOfObjects)
+        lockCountHeaderLabel.text = NSString(format: "LOCKS (%d)", fetchedResultsController.sections![0].numberOfObjects) as String
         self.tableView.endUpdates()
     }
     
@@ -295,7 +309,7 @@ class SLLockViewController: UIViewController,
     
     func validateEmail(email: NSString!) -> Bool
     {
-        var predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")!
+        var predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")
         return predicate.evaluateWithObject(email)
     }
 

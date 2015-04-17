@@ -9,6 +9,7 @@
 #import "GooglePlus/GooglePlus.h"
 #import "GoogleOpenSource/GoogleOpenSource.h"
 
+#import "LKSecurityManager.h"
 #import "LKLockProximity.h"
 #import "LKLock.h"
 #import "LKLockRepository.h"

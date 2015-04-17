@@ -233,26 +233,65 @@
 
 - (void)verifyHandshake:(NSData *)data
 {
-    if ( [data length] == 16 )
+    if ( connectedRFduino != nil && [data length] == 16 )
     {
-        LKSecurityManager *security = [[LKSecurityManager alloc] init];
-        NSString *lockId = [security decryptData:data];
-        NSLog(@"lockId: %@", lockId);
+        // get the lock entry:
         
-        // TODO VERIFY LOCK ID!
+        NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
         
-        NSString *command = [NSString stringWithFormat:@"%@%d", @"u", (int)[[NSDate date] timeIntervalSince1970]];
-        NSData *data = [security encryptString:command];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", connectedRFduino.UUID]];
         
-        [connectedRFduino send:data];
-        
-        // force disconnection, in the future we could listen for the lock status and disconnect later?
-        [connectedRFduino disconnect];
-        
-        if ( self.openCompletionCallback != nil )
+        NSError *error = nil;
+        NSArray *results = [context executeFetchRequest:request error:&error];
+        if ( results != nil && [results count] > 0 )
         {
-            self.openCompletionCallback(YES, nil);
-            self.openCompletionCallback = nil;
+            LKLock *lock = (LKLock *)[results objectAtIndex:0];
+        
+            LKSecurityManager *security = [[LKSecurityManager alloc] init];
+            NSString *lockId = [security decryptData:data forLockName:lock.name];
+            NSLog(@"lockId: %@, lock: %@", lockId, lock.name);
+            
+            // verify the lock id!
+            if ( lockId != nil && [lockId isEqualToString:lock.name] )
+            {
+                NSString *command = [NSString stringWithFormat:@"%@%d", @"u", (int)[[NSDate date] timeIntervalSince1970]];
+                NSData *data = [security encryptString:command forLockName:lock.name];
+                
+                [connectedRFduino send:data];
+                
+                // force disconnection, in thetu fure we could listen for the lock status and disconnect later?
+                [connectedRFduino disconnect];
+                
+                if ( self.openCompletionCallback != nil )
+                {
+                    self.openCompletionCallback(YES, nil);
+                    self.openCompletionCallback = nil;
+                }
+            }
+            else
+            {
+                [connectedRFduino disconnect];
+                
+                if ( self.openCompletionCallback != nil )
+                {
+                    self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
+                                                                        code:42
+                                                                    userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Lock responded with an invalid lock ID", nil)}]);
+                }
+            }
+        }
+        else
+        {
+            [connectedRFduino disconnect];
+            
+            if ( self.openCompletionCallback != nil )
+            {
+                self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
+                                                                    code:42
+                                                                userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"No connected lock", nil)}]);
+            }
         }
     }
 }
@@ -332,8 +371,11 @@
     {
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
         LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
+        
+        NSString* lockName = [NSString stringWithUTF8String:[rfduino.advertisementData bytes]];
+        NSLog(@"lockName: %@", lockName);
         lock.uuid = rfduino.UUID;
-        lock.name = rfduino.name;
+        lock.name = lockName;
         lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
         lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
         lock.lastActionAt = [NSDate date];

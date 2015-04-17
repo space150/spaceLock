@@ -18,12 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.BlackOpaque, animated: true)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        
+        //registerNotifications()
         
         return true
     }
-    
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String, annotation: AnyObject?) -> Bool {
+
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         return GPPURLHandler.handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
@@ -50,6 +52,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Saves changes in the application's managed object context before the application terminates.
 
         LKLockRepository.sharedInstance().saveContext()
+    }
+    
+    // MARK: - Notifications
+    
+    func registerNotifications()
+    {
+        var categories = NSMutableSet()
+        
+        var unlockAction = UIMutableUserNotificationAction()
+        unlockAction.title = NSLocalizedString("Unlock", comment: "Unlock Door")
+        unlockAction.identifier = "unlock"
+        unlockAction.activationMode = UIUserNotificationActivationMode.Foreground
+        unlockAction.authenticationRequired = true
+        
+        var doorCategory = UIMutableUserNotificationCategory()
+        doorCategory.setActions([unlockAction], forContext: UIUserNotificationActionContext.Default)
+        doorCategory.identifier = "lockNotification"
+        
+        categories.addObject(doorCategory)
+
+        var settings = UIUserNotificationSettings(forTypes: (.Alert | .Badge | .Sound), categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
     }
 
 }
