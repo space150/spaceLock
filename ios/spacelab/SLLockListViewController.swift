@@ -13,14 +13,12 @@ class SLLockViewController: UIViewController,
     UITableViewDelegate,
     UITableViewDataSource,
     NSFetchedResultsControllerDelegate,
-    GPPSignInDelegate,
-    SLLockViewCellDelegate
+    GPPSignInDelegate
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerNameLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var logoutButton: UIButton!
-    @IBOutlet weak var lockCountHeaderLabel: UILabel!
     
     private var fetchedResultsController: NSFetchedResultsController!
     
@@ -40,10 +38,6 @@ class SLLockViewController: UIViewController,
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
-        
-        tableView.backgroundColor = UIColor.clearColor()
-        logoutButton.titleLabel?.font = UIFont(name: "DINCondensed-Bold", size: 20)
-        lockCountHeaderLabel.font = UIFont(name: "DINPro-CondLight", size: 46)
         
         //var security = LKSecurityManager()
         //security.generateKeyForLockName("s150-vault")
@@ -100,43 +94,7 @@ class SLLockViewController: UIViewController,
     func configureCell(cell: SLLockViewCell, atIndexPath indexPath: NSIndexPath)
     {
         let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
-        cell.delegate = self
         cell.setLock(lock, indexPath: indexPath)
-    }
-    
-    // MARK: - SLLockViewCellDelegate methods
-    
-    func performUnlock(indexPath: NSIndexPath)
-    {
-        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
-        let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! SLLockViewCell
-
-        cell.showInProgress()
-        
-        self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
-            if ( success )
-            {
-                cell.showUnlocked()
-            }
-            else
-            {
-                println("ERROR opening lock: \(error.localizedDescription)")
-
-                cell.resetUnlocked()
-            }
-        })
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        /*
-        var localNotification:UILocalNotification = UILocalNotification()
-        localNotification.alertAction = "Testing"
-        localNotification.alertTitle = "F3"
-        localNotification.alertBody = "UNLOCKING"
-        localNotification.fireDate = NSDate(timeIntervalSinceNow: 20)
-        localNotification.category = "lockNotification"
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        */
     }
     
     // MARK: - NSFetchedResultsController methods
@@ -184,7 +142,6 @@ class SLLockViewController: UIViewController,
 
     func controllerDidChangeContent(controller: NSFetchedResultsController)
     {
-        lockCountHeaderLabel.text = NSString(format: "LOCKS (%d)", fetchedResultsController.sections![0].numberOfObjects) as String
         self.tableView.endUpdates()
     }
     
@@ -192,7 +149,50 @@ class SLLockViewController: UIViewController,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        // nothing, deprecated!
+        performUnlock(indexPath)
+    }
+    
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath?
+    {
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        if ( lock.proximity.integerValue == 2 || lock.proximity.integerValue == 3 )
+        {
+            return indexPath
+        }
+        return nil
+    }
+    
+    func performUnlock(indexPath: NSIndexPath)
+    {
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! SLLockViewCell
+        
+        cell.showInProgress()
+        
+        self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
+            if ( success )
+            {
+                cell.showUnlocked()
+            }
+            else
+            {
+                println("ERROR opening lock: \(error.localizedDescription)")
+                
+                cell.resetUnlocked()
+            }
+        })
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        /*
+        var localNotification:UILocalNotification = UILocalNotification()
+        localNotification.alertAction = "Testing"
+        localNotification.alertTitle = "F3"
+        localNotification.alertBody = "UNLOCKING"
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: 20)
+        localNotification.category = "lockNotification"
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        */
     }
     
     // MARK: - GPPSignInDelegate Methods

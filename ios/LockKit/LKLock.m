@@ -13,6 +13,8 @@
 
 @dynamic lastActionAt;
 @dynamic name;
+@dynamic lockId;
+@dynamic icon;
 @dynamic uuid;
 @dynamic proximity;
 @dynamic proximityString;

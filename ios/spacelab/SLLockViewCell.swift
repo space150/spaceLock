@@ -9,33 +9,32 @@
 import UIKit
 import QuartzCore
 import LockKit
-
-@objc protocol SLLockViewCellDelegate
-{
-    optional func performUnlock(indexPath: NSIndexPath)
-}
+import Darwin
 
 class SLLockViewCell: UITableViewCell
 {
-    @IBOutlet var doorNameLabel: UILabel!
-    @IBOutlet var statusLabel: UILabel!
-    @IBOutlet weak var actionButton: UIButton!
-    @IBOutlet weak var lockIcon: UIImageView!
-    @IBOutlet weak var insetBackgroundView: UIVisualEffectView!
-    @IBOutlet weak var insetContainerView: UIView!
-    
-    var delegate: SLLockViewCellDelegate?
+    @IBOutlet weak var lockIconImageView: UIImageView!
+    @IBOutlet weak var lockNameLabel: UILabel!
+    @IBOutlet weak var lockStatusLabel: UILabel!
     
     private var proximity: NSNumber!
     private var indexPath: NSIndexPath!
     private var lockTimer: NSTimer!
     private var lockTimerSecondsRemaining: Int!
     
+    private var maskLayer: CAShapeLayer!
+    private var outlineLayer: CAShapeLayer!
+    private var path: UIBezierPath!
+    
     func setLock(lock: LKLock, indexPath newIndexPath: NSIndexPath)
     {
-        doorNameLabel.text = lock.name.uppercaseString
         indexPath = newIndexPath
         proximity = lock.proximity
+        
+        lockNameLabel.text = lock.name
+        lockIconImageView.image = UIImage(named: lock.icon)
+    
+        stopInProgressAnimation();
         
         updateViewState()
     }
@@ -45,34 +44,21 @@ class SLLockViewCell: UITableViewCell
         if ( proximity.integerValue == 2
             || proximity.integerValue == 3 )
         {
-            statusLabel.text = "You're Good"
-            lockIcon.alpha = 1.0
-            doorNameLabel.alpha = 1.0
-            statusLabel.alpha = 1.0
-            
-            actionButton.hidden = false
-            actionButton.enabled = true
+            lockStatusLabel.text = "Ready to Unlock"
+            lockIconImageView.alpha = 1.0
+            outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 153.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
         }
         else if ( proximity.integerValue == 1 )
         {
-            statusLabel.text = "Get Closer"
-            lockIcon.alpha = 1.0
-            doorNameLabel.alpha = 1.0
-            statusLabel.alpha = 1.0
-            
-            actionButton.hidden = false
-            actionButton.enabled = false
+            lockStatusLabel.text = "Nearby"
+            lockIconImageView.alpha = 0.8
+            outlineLayer.strokeColor = UIColor(red: 153.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
         }
         else
         {
-            // fully disabled
-            statusLabel.text = "Not in Range"
-            lockIcon.alpha = 0.5
-            doorNameLabel.alpha = 0.5
-            statusLabel.alpha = 0.5
-            
-            actionButton.hidden = true
-            actionButton.enabled = false
+            lockStatusLabel.text = "Not in Range"
+            lockIconImageView.alpha = 0.5
+            outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
         }
         
         if ( lockTimer != nil )
@@ -84,17 +70,56 @@ class SLLockViewCell: UITableViewCell
         }
     }
     
+    func startInProgressAnimation()
+    {
+        outlineLayer.lineDashPattern = [10, 6]
+        
+        var anim = CABasicAnimation(keyPath: "lineDashPhase")
+        anim.fromValue = NSNumber(float: 0.0)
+        anim.toValue = NSNumber(float: 15.0)
+        anim.duration = 0.75
+        anim.repeatCount = 10000
+        outlineLayer.addAnimation(anim, forKey: "lineDashPhase")
+    }
+    
+    func stopInProgressAnimation()
+    {
+        if ( outlineLayer.animationForKey("lineDashPhase") != nil )
+        {
+            outlineLayer.removeAnimationForKey("lineDashPhase")
+        }
+        outlineLayer.lineDashPattern = nil
+    }
+    
+    func startCountdownAnimation()
+    {
+        var anim = CABasicAnimation(keyPath: "strokeEnd")
+        anim.fromValue = NSNumber(float: 1.0)
+        anim.toValue = NSNumber(float: 0.0)
+        anim.duration = 6.0
+        outlineLayer.addAnimation(anim, forKey: "strokeEnd")
+    }
+    
+    func stopCountdownAnimation()
+    {
+        if ( outlineLayer.animationForKey("strokeEnd") != nil )
+        {
+            outlineLayer.removeAnimationForKey("strokeEnd")
+        }
+    }
+    
     func showInProgress()
     {
-        statusLabel.text = "Trying"
-        actionButton.enabled = false
+        lockStatusLabel.text = "Negotiating"
+        
+        startInProgressAnimation()
     }
     
     func showUnlocked()
     {
-        lockIcon.image = UIImage(named: "lock-unlocked.png")
-        actionButton.setImage(UIImage(named: "button-lock-unlocked.png"), forState: .Disabled)
-        actionButton.enabled = false
+        lockStatusLabel.text = "Unlocked"
+        
+        stopInProgressAnimation()
         
         startCountdown()
     }
@@ -103,14 +128,15 @@ class SLLockViewCell: UITableViewCell
     {
         lockTimerSecondsRemaining = 7
         
+        startCountdownAnimation()
+        
         lockTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("timerTicked"), userInfo: nil, repeats: true)
     }
     
     func resetUnlocked()
     {
-        lockIcon.image = UIImage(named: "lock-normal.png")
-        actionButton.setImage(UIImage(named: "button-lock-inactive.png"), forState: .Disabled)
-        actionButton.enabled = true
+        stopInProgressAnimation()
+        stopCountdownAnimation()
         
         updateViewState()
     }
@@ -119,7 +145,7 @@ class SLLockViewCell: UITableViewCell
     {
         lockTimerSecondsRemaining = lockTimerSecondsRemaining - 1
         
-        statusLabel.text = NSString(format: "%ds", lockTimerSecondsRemaining) as String
+        lockStatusLabel.text = NSString(format: "%d seconds", lockTimerSecondsRemaining) as String
 
         if ( lockTimerSecondsRemaining <= 0 )
         {
@@ -132,15 +158,26 @@ class SLLockViewCell: UITableViewCell
         super.awakeFromNib()
         // Initialization code
         
-        backgroundColor = UIColor.clearColor()
-        
-        insetBackgroundView.layer.cornerRadius = 10
-        insetBackgroundView.layer.masksToBounds = true
-        
-        doorNameLabel.font = UIFont(name: "DINPro-CondLight", size: 30)
-        
         lockTimer = nil
         lockTimerSecondsRemaining = 0
+        
+        setupIconCircle()
+    }
+    
+    private func setupIconCircle()
+    {
+        path = UIBezierPath(ovalInRect: lockIconImageView.bounds)
+        
+        maskLayer = CAShapeLayer()
+        maskLayer.path = path.CGPath
+        lockIconImageView.layer.mask = maskLayer
+        
+        outlineLayer = CAShapeLayer()
+        outlineLayer.lineWidth = 10.0
+        outlineLayer.fillColor = UIColor.clearColor().CGColor
+        outlineLayer.strokeColor = UIColor.blackColor().CGColor
+        outlineLayer.path = path.CGPath
+        lockIconImageView.layer.addSublayer(outlineLayer)
     }
 
     override func setSelected(selected: Bool, animated: Bool)
@@ -148,10 +185,5 @@ class SLLockViewCell: UITableViewCell
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-
-    @IBAction func doUnlock(sender: AnyObject)
-    {
-        delegate?.performUnlock!(indexPath)
     }
 }

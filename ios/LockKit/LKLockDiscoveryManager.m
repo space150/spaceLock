@@ -30,6 +30,7 @@
     NSString *instanceContext;
     MMWormhole *wormhole;
     NSTimer *handshakeTimer;
+    NSDictionary *keys;
 }
 
 @property (copy) void (^openCompletionCallback)(bool, NSError *);
@@ -44,6 +45,8 @@
     if ( self != nil )
     {
         instanceContext = context;
+        
+        keys = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default-Keychain" ofType:@"plist"]];
         
         self.rfduinoManager = [RFduinoManager sharedRFduinoManager];
         [self.rfduinoManager stopScan];
@@ -90,7 +93,9 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
         LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
         lock.uuid = testLockUUID;
-        lock.name = @"space150-msp-f3";
+        lock.name = @"Vault";
+        lock.lockId = @"s150-vault";
+        lock.icon = @"icon-vault";
         lock.proximity = [NSNumber numberWithInt:(int)LKLockProximityImmediate];
         lock.proximityString = [self proximityString:[lock.proximity intValue]];
         lock.lastActionAt = [NSDate date];
@@ -250,14 +255,14 @@
             LKLock *lock = (LKLock *)[results objectAtIndex:0];
         
             LKSecurityManager *security = [[LKSecurityManager alloc] init];
-            NSString *lockId = [security decryptData:data forLockName:lock.name];
-            NSLog(@"lockId: %@, lock: %@", lockId, lock.name);
+            NSString *lockId = [security decryptData:data forLockName:lock.lockId];
+            NSLog(@"lockId: %@, lock: %@", lockId, lock.lockId);
             
             // verify the lock id!
-            if ( lockId != nil && [lockId isEqualToString:lock.name] )
+            if ( lockId != nil && [lockId isEqualToString:lock.lockId] )
             {
                 NSString *command = [NSString stringWithFormat:@"%@%d", @"u", (int)[[NSDate date] timeIntervalSince1970]];
-                NSData *data = [security encryptString:command forLockName:lock.name];
+                NSData *data = [security encryptString:command forLockName:lock.lockId];
                 
                 [connectedRFduino send:data];
                 
@@ -374,8 +379,14 @@
         
         NSString* lockName = [NSString stringWithUTF8String:[rfduino.advertisementData bytes]];
         NSLog(@"lockName: %@", lockName);
+        
+        // find this lock entry in the plist data
+        NSDictionary *entry = (NSDictionary *)[keys objectForKey:lockName];
+        lock.lockId = lockName;
+        lock.name = [entry objectForKey:@"name"];
+        lock.icon = [entry objectForKey:@"icon"];
+        
         lock.uuid = rfduino.UUID;
-        lock.name = lockName;
         lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
         lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
         lock.lastActionAt = [NSDate date];

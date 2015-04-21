@@ -20,9 +20,6 @@
 
 @implementation LKSecurityManager
 
-//const char privateKey[] = { 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44,
-//    0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44, 0x44 };
-
 - (id)init
 {
     self = [super init];
@@ -53,7 +50,6 @@
         
         // set the newly generated key
         [entry setValue:newKey forKey:@"key"];
-//        [entry setValue:[newKey hexadecimalString] forKey:@"keyHex"];
         
         NSMutableDictionary *keys = [self.keys mutableCopy];
         [keys setValue:entry forKey:lockName];
