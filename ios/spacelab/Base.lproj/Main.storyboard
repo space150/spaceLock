@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Lock View Controller-->
@@ -71,13 +70,13 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Door Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6F-0B-zhL">
                                                     <rect key="frame" x="160" y="38" width="246" height="42"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="26"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zo1-yV-acm">
-                                                    <rect key="frame" x="160" y="71" width="246" height="30"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="19"/>
+                                                    <rect key="frame" x="160" y="73" width="246" height="30"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -137,9 +136,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background-startup" translatesAutoresizingMaskIntoConstraints="NO" id="61P-7h-PYY">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9mf-1D-ylc">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startup-frame" translatesAutoresizingMaskIntoConstraints="NO" id="yb4-hS-Pd4">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" secondItem="yb4-hS-Pd4" secondAttribute="height" id="714-an-Zi0"/>
+                                    <constraint firstAttribute="centerX" secondItem="yb4-hS-Pd4" secondAttribute="centerX" id="gao-6c-XWk"/>
+                                    <constraint firstAttribute="width" secondItem="yb4-hS-Pd4" secondAttribute="width" id="iJq-CI-xbz"/>
+                                    <constraint firstAttribute="centerY" secondItem="yb4-hS-Pd4" secondAttribute="centerY" id="mNF-Rt-Zek"/>
+                                </constraints>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startup-spacelab-lockup" translatesAutoresizingMaskIntoConstraints="NO" id="kvr-x3-G4M">
                                 <rect key="frame" x="75" y="123" width="264" height="293"/>
                                 <constraints>
@@ -166,33 +177,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="S31-cK-han" firstAttribute="top" secondItem="61P-7h-PYY" secondAttribute="bottom" id="0Ky-4e-R1a"/>
-                            <constraint firstItem="61P-7h-PYY" firstAttribute="height" secondItem="gox-R3-0Yt" secondAttribute="height" id="5fP-Gr-vZz"/>
                             <constraint firstItem="kvr-x3-G4M" firstAttribute="top" secondItem="QKT-7H-yHd" secondAttribute="bottom" constant="103" id="66C-FI-1oO"/>
-                            <constraint firstAttribute="centerX" secondItem="61P-7h-PYY" secondAttribute="centerX" id="7sM-6E-XXi"/>
-                            <constraint firstItem="61P-7h-PYY" firstAttribute="leading" secondItem="gox-R3-0Yt" secondAttribute="leadingMargin" constant="-16" id="9oX-BU-7M1"/>
-                            <constraint firstItem="61P-7h-PYY" firstAttribute="top" secondItem="QKT-7H-yHd" secondAttribute="bottom" constant="-20" id="F8U-Ci-6yv"/>
                             <constraint firstAttribute="centerX" secondItem="kvr-x3-G4M" secondAttribute="centerX" id="I8l-F4-DHS"/>
-                            <constraint firstItem="61P-7h-PYY" firstAttribute="width" secondItem="gox-R3-0Yt" secondAttribute="width" id="OPD-kJ-q6e"/>
                             <constraint firstItem="kvr-x3-G4M" firstAttribute="leading" secondItem="vVw-wN-J5C" secondAttribute="trailing" constant="-286" id="X9w-9E-iYh"/>
-                            <constraint firstAttribute="centerY" secondItem="61P-7h-PYY" secondAttribute="centerY" id="aM5-0p-YuO"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="61P-7h-PYY" secondAttribute="trailing" constant="-16" id="dKQ-vn-rEe"/>
+                            <constraint firstItem="9mf-1D-ylc" firstAttribute="height" secondItem="gox-R3-0Yt" secondAttribute="height" id="bBB-YP-qE9"/>
                             <constraint firstAttribute="centerX" secondItem="vVw-wN-J5C" secondAttribute="centerX" id="f6Q-zO-s2m"/>
                             <constraint firstItem="pEY-C5-hK0" firstAttribute="top" secondItem="vVw-wN-J5C" secondAttribute="bottom" constant="92" id="iXH-uw-jZQ"/>
                             <constraint firstAttribute="centerX" secondItem="pEY-C5-hK0" secondAttribute="centerX" constant="-0.5" id="lQW-Nq-KDE"/>
+                            <constraint firstItem="9mf-1D-ylc" firstAttribute="width" secondItem="gox-R3-0Yt" secondAttribute="width" id="nAb-33-Vfs"/>
                             <constraint firstItem="S31-cK-han" firstAttribute="top" secondItem="pEY-C5-hK0" secondAttribute="bottom" constant="30" id="qCJ-o6-c4i"/>
+                            <constraint firstAttribute="centerX" secondItem="9mf-1D-ylc" secondAttribute="centerX" id="vpO-yA-Iam"/>
+                            <constraint firstAttribute="centerY" secondItem="9mf-1D-ylc" secondAttribute="centerY" id="wUl-rl-zMz"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="9oX-BU-7M1"/>
-                                <exclude reference="F8U-Ci-6yv"/>
-                                <exclude reference="dKQ-vn-rEe"/>
-                                <exclude reference="0Ky-4e-R1a"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="6iP-cz-Ati"/>
                     <connections>
+                        <outlet property="movieContainerView" destination="9mf-1D-ylc" id="BDw-dK-SPq"/>
                         <outlet property="signInButton" destination="vVw-wN-J5C" id="BTr-R9-Zly"/>
                     </connections>
                 </viewController>
@@ -202,8 +202,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background-startup" width="375" height="667"/>
         <image name="icon-lab" width="150" height="150"/>
+        <image name="startup-frame" width="456" height="810"/>
         <image name="startup-space150-logo" width="93" height="26"/>
         <image name="startup-spacelab-lockup" width="264" height="293"/>
     </resources>

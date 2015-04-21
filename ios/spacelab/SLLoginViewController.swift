@@ -10,7 +10,10 @@ import UIKit
 
 class SLLoginViewController: UIViewController
 {
+    @IBOutlet weak var movieContainerView: UIView!
     @IBOutlet weak var signInButton: GPPSignInButton!
+    
+    private var playerViewController : VideoPlayerViewController!
 
     override func viewDidLoad()
     {
@@ -20,6 +23,14 @@ class SLLoginViewController: UIViewController
 
         signInButton.style = kGPPSignInButtonStyleWide
         signInButton.colorScheme = kGPPSignInButtonColorSchemeLight
+        
+        // add the video for the face animation
+        playerViewController = VideoPlayerViewController()
+        playerViewController.playOnLoad = true
+        playerViewController.loopPlayback = true
+        playerViewController.URL = NSBundle.mainBundle().URLForResource("startup-movie.mp4", withExtension: nil)
+        playerViewController.view.frame = movieContainerView.frame
+        movieContainerView.addSubview(playerViewController.view)
     }
     
     override func viewWillAppear(animated: Bool)

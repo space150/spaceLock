@@ -15,6 +15,9 @@
 #import "LKLockRepository.h"
 #import "LKLockDiscoveryManager.h"
 
+#import "VideoPlayerView.h"
+#import "VideoPlayerViewController.h"
+
 #import "MBProgressHUD.h"
 
 #import "MMWormhole.h"
