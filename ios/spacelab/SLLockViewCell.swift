@@ -69,12 +69,12 @@ class SLLockViewCell: UITableViewCell
     
     func startInProgressAnimation()
     {
-        outlineLayer.lineDashPattern = [10, 6]
+        outlineLayer.lineDashPattern = [12, 6]
         
         var anim = CABasicAnimation(keyPath: "lineDashPhase")
         anim.fromValue = NSNumber(float: 0.0)
-        anim.toValue = NSNumber(float: 15.0)
-        anim.duration = 0.75
+        anim.toValue = NSNumber(float: 36.0)
+        anim.duration = 1.0
         anim.repeatCount = 10000
         outlineLayer.addAnimation(anim, forKey: "lineDashPhase")
     }
