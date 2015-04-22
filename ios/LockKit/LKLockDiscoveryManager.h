@@ -24,6 +24,6 @@
 - (void)startDiscovery;
 - (void)stopDiscovery;
 - (void)openLock:(LKLock *)lock complete:(void (^)(bool success, NSError *error))completionCallback;
-- (void)openLockWithUUID:(NSString *)uuid complete:(void (^)(bool success, NSError *error))completionCallback;
+- (void)openLockWithId:(NSString *)lockId complete:(void (^)(bool success, NSError *error))completionCallback;
 
 @end

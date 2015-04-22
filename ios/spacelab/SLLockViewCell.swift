@@ -11,11 +11,18 @@ import QuartzCore
 import LockKit
 import Darwin
 
+@objc protocol SLLockViewCellDelegate
+{
+    optional func lockCompleted()
+}
+
 class SLLockViewCell: UITableViewCell
 {
     @IBOutlet weak var lockIconImageView: UIImageView!
     @IBOutlet weak var lockNameLabel: UILabel!
     @IBOutlet weak var lockStatusLabel: UILabel!
+    
+    var delegate: SLLockViewCellDelegate?
     
     private var proximity: NSNumber!
     private var indexPath: NSIndexPath!
@@ -33,8 +40,6 @@ class SLLockViewCell: UITableViewCell
         
         lockNameLabel.text = lock.name
         lockIconImageView.image = UIImage(named: lock.icon)
-    
-        stopInProgressAnimation();
         
         updateViewState()
     }
@@ -50,23 +55,15 @@ class SLLockViewCell: UITableViewCell
         }
         else if ( proximity.integerValue == 1 )
         {
-            lockStatusLabel.text = "Nearby"
+            lockStatusLabel.text = "Not in Range"
             lockIconImageView.alpha = 0.8
             outlineLayer.strokeColor = UIColor(red: 153.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
         }
         else
         {
-            lockStatusLabel.text = "Not in Range"
+            lockStatusLabel.text = "Unavailable"
             lockIconImageView.alpha = 0.5
             outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
-        }
-        
-        if ( lockTimer != nil )
-        {
-            lockTimerSecondsRemaining = 0
-            
-            lockTimer.invalidate()
-            lockTimer = nil
         }
     }
     
@@ -139,6 +136,8 @@ class SLLockViewCell: UITableViewCell
         stopCountdownAnimation()
         
         updateViewState()
+        
+        delegate?.lockCompleted!()
     }
     
     @objc func timerTicked()
@@ -149,6 +148,14 @@ class SLLockViewCell: UITableViewCell
 
         if ( lockTimerSecondsRemaining <= 0 )
         {
+            if ( lockTimer != nil )
+            {
+                lockTimer.invalidate()
+                lockTimer = nil
+            }
+            
+            lockTimerSecondsRemaining = 0
+            
             resetUnlocked()
         }
     }

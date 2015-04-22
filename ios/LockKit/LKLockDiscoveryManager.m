@@ -63,7 +63,7 @@
         [wormhole listenForMessageWithIdentifier:kLockActiveContextName listener:^(id messageObject)
         {
             NSString *activeContext = (NSString *)messageObject;
-            NSLog(@"instanceContext: %@, received active context update: %@", instanceContext, activeContext);
+            NSLog(@"self: %@, instanceContext: %@, received active context update: %@", self, instanceContext, activeContext);
             if ( ![activeContext isEqualToString:@""] )
             {
                 if ( ![activeContext isEqualToString:instanceContext] )
@@ -134,57 +134,66 @@
 
 - (void)startDiscovery
 {
-    // when attempting to setup discovery, first see if another context is active
-    NSString *activeContext = (NSString *)[wormhole messageWithIdentifier:kLockActiveContextName];
-    if ( ![activeContext isEqualToString:instanceContext] )
+    if ( ![self.rfduinoManager isScanning] )
     {
-        // if another context is not active, then start it up and set this context as active
-        [wormhole passMessageObject:instanceContext identifier:kLockActiveContextName];
-    }
-    
-    // if we are in simulator mode, load up the testing data!
+        // when attempting to setup discovery, first see if another context is active
+        NSString *activeContext = (NSString *)[wormhole messageWithIdentifier:kLockActiveContextName];
+        if ( ![activeContext isEqualToString:instanceContext] )
+        {
+            // if another context is not active, then start it up and set this context as active
+            [wormhole passMessageObject:instanceContext identifier:kLockActiveContextName];
+        }
+        
+        // if we are in simulator mode, load up the testing data!
 #if TARGET_IPHONE_SIMULATOR
-    [self loadTestingData];
-    testUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(testUpdate:) userInfo:nil repeats:YES];
+        [self loadTestingData];
+        testUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(testUpdate:) userInfo:nil repeats:YES];
 #endif
-    
-    [self clearExpiredLocks];
-    
-    // otherwise start scanning
-    [self.rfduinoManager startScan];
+        
+        [self clearExpiredLocks];
+        
+        // otherwise start scanning
+        [self.rfduinoManager startScan];
+    }
 }
 
 - (void)stopDiscovery
 {
-    // when halting discovery, set this context as inactive if it is the currently active context
-    NSString *activeContext = (NSString *)[wormhole messageWithIdentifier:kLockActiveContextName];
-    if ( [activeContext isEqualToString:instanceContext] )
+    if ( [self.rfduinoManager isScanning] )
     {
-        [wormhole passMessageObject:@"" identifier:kLockActiveContextName];
-    }
-    
+        // when halting discovery, set this context as inactive if it is the currently active context
+        NSString *activeContext = (NSString *)[wormhole messageWithIdentifier:kLockActiveContextName];
+        if ( [activeContext isEqualToString:instanceContext] )
+        {
+            [wormhole passMessageObject:@"" identifier:kLockActiveContextName];
+        }
+        
 #if TARGET_IPHONE_SIMULATOR
-    [testUpdateTimer invalidate];
-    testUpdateTimer = nil;
+        [testUpdateTimer invalidate];
+        testUpdateTimer = nil;
 #endif
-
-    [self.rfduinoManager stopScan];
+        
+        [self.rfduinoManager stopScan];
+    }
 }
 
 - (void)openLock:(LKLock *)lock complete:(void (^)(bool success, NSError *error))completionCallback
 {
-    [self openLockWithUUID:lock.uuid complete:completionCallback];
+    [self openLockWithId:lock.lockId complete:completionCallback];
 }
 
-- (void)openLockWithUUID:(NSString *)uuid complete:(void (^)(bool success, NSError *error))completionCallback
+- (void)openLockWithId:(NSString *)lockId complete:(void (^)(bool success, NSError *error))completionCallback
 {
     self.openCompletionCallback = completionCallback;
     
     // find the rfduino!
     RFduino *foundRFDuino = nil;
     for ( RFduino *rfduino in self.rfduinoManager.rfduinos )
-        if ( [[uuid lowercaseString] isEqualToString:[rfduino.UUID lowercaseString]] )
+    {
+        NSString* thisLockId = [NSString stringWithUTF8String:[rfduino.advertisementData bytes]];
+        if ( [lockId isEqualToString:thisLockId] )
             foundRFDuino = rfduino;
+    }
     
     if ( foundRFDuino != nil )
     {
@@ -194,7 +203,7 @@
     {
         self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
                                                             code:42
-                                                        userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unable to find active Lock by that UUID!", nil)}]);
+                                                        userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unable to find active Lock with that lockId!", nil)}]);
     }
 }
 
@@ -241,12 +250,20 @@
     if ( connectedRFduino != nil && [data length] == 16 )
     {
         // get the lock entry:
+        NSString* lockId = [NSString stringWithUTF8String:[connectedRFduino.advertisementData bytes]];
+        if ( lockId == nil )
+        {
+            self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
+                                                                code:42
+                                                            userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Lock has no advertisement data!", nil)}]);
+            return;
+        }
         
         NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
         
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
-        [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", connectedRFduino.UUID]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"lockId == %@", lockId]];
         
         NSError *error = nil;
         NSArray *results = [context executeFetchRequest:request error:&error];
@@ -334,7 +351,8 @@
             for ( int j = 0; j < [expiredLocks count]; j++ )
             {
                 LKLock *lock = (LKLock *)[expiredLocks objectAtIndex:j];
-                if ( [[lock.uuid lowercaseString] isEqualToString:[rfduino.UUID lowercaseString]] )
+                NSString *thisLockId = [NSString stringWithUTF8String:[rfduino.advertisementData bytes]];
+                if ( [lock.lockId isEqualToString:thisLockId] )
                 {
                     foundIndex = j;
                 }
@@ -364,11 +382,18 @@
 
 - (void)createLock:(RFduino *)rfduino
 {
+    NSString* lockId = [NSString stringWithUTF8String:[rfduino.advertisementData bytes]];
+    if ( lockId == nil )
+    {
+        NSLog(@"ERROR: lock has no advertisement data/lock Id!");
+        return;
+    }
+    
     NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", rfduino.UUID]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"lockId == %@", lockId]];
     
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
@@ -376,13 +401,10 @@
     {
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
         LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
-        
-        NSString* lockName = [NSString stringWithUTF8String:[rfduino.advertisementData bytes]];
-        NSLog(@"lockName: %@", lockName);
-        
+
         // find this lock entry in the plist data
-        NSDictionary *entry = (NSDictionary *)[keys objectForKey:lockName];
-        lock.lockId = lockName;
+        NSDictionary *entry = (NSDictionary *)[keys objectForKey:lockId];
+        lock.lockId = lockId;
         lock.name = [entry objectForKey:@"name"];
         lock.icon = [entry objectForKey:@"icon"];
         
@@ -397,25 +419,27 @@
 
 - (void)updateLock:(RFduino *)rfduino
 {
+    NSString* lockId = [NSString stringWithUTF8String:[rfduino.advertisementData bytes]];
+    if ( lockId == nil )
+    {
+        NSLog(@"ERROR: lock has no advertisement data/lock Id!");
+        return;
+    }
+    
     NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"uuid LIKE[c] %@", rfduino.UUID]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"lockId == %@", lockId]];
     
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
     if ( results != nil && [results count] > 0 )
     {
         LKLock *lock = (LKLock *)[results objectAtIndex:0];
-        
-        // if this lock is out of range, remove it
-        if ( rfduino.outOfRange )
-        {
-            [context deleteObject:lock];
-        }
-        // otherwise update the proximity if it has changed
-        else if ( [lock.proximity intValue] != (int)rfduino.proximity )
+       
+        // if the proxmity value has changed, update it
+       if ( [lock.proximity intValue] != (int)rfduino.proximity )
         {
             lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
             lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
@@ -447,30 +471,22 @@
 
 - (void)didConnectRFduino:(RFduino *)rfduino
 {
-    NSLog(@"didConnectRFduino");
-    
-    //[self.rfduinoManager stopScan];
-    
     connectedRFduino = rfduino;
     connectedRFduino.delegate = self;
 }
 
 - (void)didLoadServiceRFduino:(RFduino *)rfduino
 {
-    NSLog(@"didLoadServiceRFduino");
+    // nothing
 }
 
 - (void)didDisconnectRFduino:(RFduino *)rfduino
 {
-    NSLog(@"didDisconnectRFduino");
-    
     if ( connectedRFduino != nil )
         [connectedRFduino setDelegate:nil];
     
     if ( self.openCompletionCallback != nil )
         self.openCompletionCallback = nil;
-    
-    //[self.rfduinoManager startScan];
 }
 
 #pragma mark - RFduinoDelegate Methods

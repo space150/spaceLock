@@ -13,7 +13,8 @@ class SLLockViewController: UIViewController,
     UITableViewDelegate,
     UITableViewDataSource,
     NSFetchedResultsControllerDelegate,
-    GPPSignInDelegate
+    GPPSignInDelegate,
+    SLLockViewCellDelegate
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerNameLabel: UILabel!
@@ -23,6 +24,7 @@ class SLLockViewController: UIViewController,
     private var fetchedResultsController: NSFetchedResultsController!
     
     private var discoveryManager: LKLockDiscoveryManager!
+    private var unlocking:Bool!
     
     private let clientId = "743774015347-4qc7he8nbpccqca59lh004ojr7a94kia.apps.googleusercontent.com";
     private var signIn : GPPSignIn?
@@ -34,6 +36,8 @@ class SLLockViewController: UIViewController,
         configureGooglePlus()
         
         discoveryManager = LKLockDiscoveryManager(context: "ios-client")
+        
+        unlocking = false
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
@@ -53,8 +57,10 @@ class SLLockViewController: UIViewController,
         {
             performSegueWithIdentifier("showLogin", sender: self)
         }
-        
-        discoveryManager.startDiscovery()
+        else
+        {
+            discoveryManager.startDiscovery()
+        }
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -94,6 +100,7 @@ class SLLockViewController: UIViewController,
     func configureCell(cell: SLLockViewCell, atIndexPath indexPath: NSIndexPath)
     {
         let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        cell.delegate = self
         cell.setLock(lock, indexPath: indexPath)
     }
     
@@ -116,12 +123,18 @@ class SLLockViewController: UIViewController,
     
     func controllerWillChangeContent(controller: NSFetchedResultsController)
     {
-        self.tableView.beginUpdates()
+        if ( !unlocking )
+        {
+            self.tableView.beginUpdates()
+        }
+        
     }
 
     func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath?,
         forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
     {
+        if ( !unlocking )
+        {
             switch type
             {
             case .Insert:
@@ -138,11 +151,15 @@ class SLLockViewController: UIViewController,
             default:
                 return
             }
+        }
     }
 
     func controllerDidChangeContent(controller: NSFetchedResultsController)
     {
-        self.tableView.endUpdates()
+        if ( !unlocking )
+        {
+            self.tableView.endUpdates()
+        }
     }
     
     // MARK: - UITableViewDelegate Methods
@@ -164,9 +181,11 @@ class SLLockViewController: UIViewController,
     
     func performUnlock(indexPath: NSIndexPath)
     {
+        unlocking = true
+        
         let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
         let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! SLLockViewCell
-        
+
         cell.showInProgress()
         
         self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
@@ -193,6 +212,14 @@ class SLLockViewController: UIViewController,
         localNotification.category = "lockNotification"
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
         */
+    }
+    
+    // MARK: - SLLockViewCellDelegate Methods
+    
+    func lockCompleted()
+    {
+        self.unlocking = false
+        tableView.reloadData()
     }
     
     // MARK: - GPPSignInDelegate Methods
