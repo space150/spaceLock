@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Lock View Controller-->
@@ -151,49 +153,65 @@
                                     <constraint firstAttribute="centerY" secondItem="yb4-hS-Pd4" secondAttribute="centerY" id="mNF-Rt-Zek"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startup-spacelab-lockup" translatesAutoresizingMaskIntoConstraints="NO" id="kvr-x3-G4M">
-                                <rect key="frame" x="75" y="123" width="264" height="293"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YxK-uZ-ty6">
+                                <rect key="frame" x="53" y="502" width="308" height="48"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="293" id="lcw-Mu-Pnp"/>
-                                    <constraint firstAttribute="width" constant="264" id="yA7-cl-GpU"/>
+                                    <constraint firstAttribute="height" constant="48" id="Nag-c6-Bu2"/>
                                 </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startup-space150-logo" translatesAutoresizingMaskIntoConstraints="NO" id="pEY-C5-hK0">
-                                <rect key="frame" x="161" y="680" width="93" height="26"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="93" id="EvN-xJ-LkF"/>
-                                    <constraint firstAttribute="height" constant="26" id="rT3-fm-Z2I"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vVw-wN-J5C" customClass="GPPSignInButton">
-                                <rect key="frame" x="53" y="540" width="308" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="5Lr-V5-mzl"/>
-                                </constraints>
-                                <state key="normal" title="Button">
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
+                                <state key="normal" title="space150 Login">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="doLogin:" destination="vCj-eN-fHz" eventType="touchUpInside" id="Te1-Tp-exF"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="spaceLab r&amp;d 2015" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X37-z0-gk4">
+                                <rect key="frame" x="8" y="684" width="398" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="398" id="IFc-My-sIp"/>
+                                    <constraint firstAttribute="height" constant="21" id="VBc-qr-a20"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startup-logo-v2" translatesAutoresizingMaskIntoConstraints="NO" id="8xY-fN-CrH">
+                                <rect key="frame" x="51" y="142" width="313" height="282"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="282" id="63I-H1-nMk"/>
+                                    <constraint firstAttribute="width" constant="313" id="VkS-TN-OPz"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="kvr-x3-G4M" firstAttribute="top" secondItem="QKT-7H-yHd" secondAttribute="bottom" constant="103" id="66C-FI-1oO"/>
-                            <constraint firstAttribute="centerX" secondItem="kvr-x3-G4M" secondAttribute="centerX" id="I8l-F4-DHS"/>
-                            <constraint firstItem="kvr-x3-G4M" firstAttribute="leading" secondItem="vVw-wN-J5C" secondAttribute="trailing" constant="-286" id="X9w-9E-iYh"/>
+                            <constraint firstAttribute="centerY" secondItem="8xY-fN-CrH" secondAttribute="centerY" multiplier="1.3" id="GOJ-pe-avq"/>
+                            <constraint firstAttribute="centerY" secondItem="X37-z0-gk4" secondAttribute="centerY" multiplier="0.53" id="HEh-Xs-nFN"/>
+                            <constraint firstAttribute="centerX" secondItem="YxK-uZ-ty6" secondAttribute="centerX" id="IIJ-19-3Lv"/>
+                            <constraint firstAttribute="centerX" secondItem="8xY-fN-CrH" secondAttribute="centerX" id="SeF-z5-zx4"/>
                             <constraint firstItem="9mf-1D-ylc" firstAttribute="height" secondItem="gox-R3-0Yt" secondAttribute="height" id="bBB-YP-qE9"/>
-                            <constraint firstAttribute="centerX" secondItem="vVw-wN-J5C" secondAttribute="centerX" id="f6Q-zO-s2m"/>
-                            <constraint firstItem="pEY-C5-hK0" firstAttribute="top" secondItem="vVw-wN-J5C" secondAttribute="bottom" constant="92" id="iXH-uw-jZQ"/>
-                            <constraint firstAttribute="centerX" secondItem="pEY-C5-hK0" secondAttribute="centerX" constant="-0.5" id="lQW-Nq-KDE"/>
+                            <constraint firstAttribute="centerY" secondItem="YxK-uZ-ty6" secondAttribute="centerY" multiplier="0.7" id="cuD-go-560"/>
+                            <constraint firstAttribute="centerX" secondItem="X37-z0-gk4" secondAttribute="centerX" id="fEf-zE-4ui"/>
                             <constraint firstItem="9mf-1D-ylc" firstAttribute="width" secondItem="gox-R3-0Yt" secondAttribute="width" id="nAb-33-Vfs"/>
-                            <constraint firstItem="S31-cK-han" firstAttribute="top" secondItem="pEY-C5-hK0" secondAttribute="bottom" constant="30" id="qCJ-o6-c4i"/>
+                            <constraint firstItem="YxK-uZ-ty6" firstAttribute="leading" secondItem="gox-R3-0Yt" secondAttribute="leadingMargin" constant="37" id="plI-lv-KJ0"/>
                             <constraint firstAttribute="centerX" secondItem="9mf-1D-ylc" secondAttribute="centerX" id="vpO-yA-Iam"/>
                             <constraint firstAttribute="centerY" secondItem="9mf-1D-ylc" secondAttribute="centerY" id="wUl-rl-zMz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YxK-uZ-ty6" secondAttribute="trailing" constant="37" id="zPP-1F-fHi"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="6iP-cz-Ati"/>
                     <connections>
+                        <outlet property="loginButton" destination="YxK-uZ-ty6" id="qbu-QC-hoD"/>
                         <outlet property="movieContainerView" destination="9mf-1D-ylc" id="BDw-dK-SPq"/>
-                        <outlet property="signInButton" destination="vVw-wN-J5C" id="BTr-R9-Zly"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eOz-FA-zdx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -204,7 +222,6 @@
     <resources>
         <image name="icon-lab" width="150" height="150"/>
         <image name="startup-frame" width="456" height="810"/>
-        <image name="startup-space150-logo" width="93" height="26"/>
-        <image name="startup-spacelab-lockup" width="264" height="293"/>
+        <image name="startup-logo-v2" width="313" height="282"/>
     </resources>
 </document>

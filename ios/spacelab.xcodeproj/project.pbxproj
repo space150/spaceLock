@@ -80,6 +80,19 @@
 		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
 		A9BF05421AD2EC8A00628900 /* DIN Condensed Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9BF05401AD2EC8A00628900 /* DIN Condensed Bold.ttf */; };
 		A9BF05431AD2EC8A00628900 /* DINPro-CondLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9BF05411AD2EC8A00628900 /* DINPro-CondLight.ttf */; };
+		A9E055E11AE8A589007C2826 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */; };
+		A9E055E21AE8A58D007C2826 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83C1AC20861007BE266 /* GooglePlus.framework */; };
+		A9E055E31AE8A59E007C2826 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
+		A9E055E41AE8A5A6007C2826 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
+		A9E055E51AE8A5AA007C2826 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
+		A9E055E61AE8A5AF007C2826 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82D1AC20768007BE266 /* MediaPlayer.framework */; };
+		A9E055E71AE8A5B5007C2826 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8271AC20757007BE266 /* CoreMotion.framework */; };
+		A9E055E81AE8A5B8007C2826 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8291AC2075E007BE266 /* CoreGraphics.framework */; };
+		A9E055E91AE8A5BB007C2826 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8251AC20752007BE266 /* CoreLocation.framework */; };
+		A9E055EA1AE8A5BF007C2826 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8331AC2077B007BE266 /* UIKit.framework */; };
+		A9E055EB1AE8A5BF007C2826 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8311AC20775007BE266 /* SystemConfiguration.framework */; };
+		A9E055EC1AE8A5BF007C2826 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82F1AC2076E007BE266 /* Security.framework */; };
+		A9E055ED1AE8A5BF007C2826 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82B1AC20763007BE266 /* CoreText.framework */; };
 		A9F6B3E71AE612410018AE33 /* startup-movie.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A9F6B3E61AE612410018AE33 /* startup-movie.mp4 */; };
 		A9F6B3EF1AE6138D0018AE33 /* VideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F6B3EC1AE6138D0018AE33 /* VideoPlayerView.m */; };
 		A9F6B3F01AE6138D0018AE33 /* VideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F6B3EE1AE6138D0018AE33 /* VideoPlayerViewController.m */; };
@@ -156,7 +169,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3CA37988310B949396AA6619 /* Pods_spacelab_WatchKit_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spacelab_WatchKit_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A90AE1B41AD4467000CFA0F8 /* MMWormhole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMWormhole.h; path = MMWormhole/Source/MMWormhole.h; sourceTree = SOURCE_ROOT; };
 		A90AE1B51AD4467000CFA0F8 /* MMWormhole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMWormhole.m; path = MMWormhole/Source/MMWormhole.m; sourceTree = SOURCE_ROOT; };
 		A922B81F1AC20742007BE266 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -236,8 +248,6 @@
 		A9F6B3EC1AE6138D0018AE33 /* VideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerView.m; sourceTree = "<group>"; };
 		A9F6B3ED1AE6138D0018AE33 /* VideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerViewController.h; sourceTree = "<group>"; };
 		A9F6B3EE1AE6138D0018AE33 /* VideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerViewController.m; sourceTree = "<group>"; };
-		E41D6F384C32891610EE140F /* Pods_LockKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LockKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5E2B76C6BD13FA10BC967FD /* Pods_spacelab.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spacelab.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,7 +255,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9E055E11AE8A589007C2826 /* GoogleOpenSource.framework in Frameworks */,
+				A9E055EA1AE8A5BF007C2826 /* UIKit.framework in Frameworks */,
+				A9E055E51AE8A5AA007C2826 /* Foundation.framework in Frameworks */,
+				A9E055E21AE8A58D007C2826 /* GooglePlus.framework in Frameworks */,
+				A9E055ED1AE8A5BF007C2826 /* CoreText.framework in Frameworks */,
+				A9E055E81AE8A5B8007C2826 /* CoreGraphics.framework in Frameworks */,
+				A9E055EC1AE8A5BF007C2826 /* Security.framework in Frameworks */,
+				A9E055E61AE8A5AF007C2826 /* MediaPlayer.framework in Frameworks */,
+				A9E055E31AE8A59E007C2826 /* AddressBook.framework in Frameworks */,
+				A9E055E91AE8A5BB007C2826 /* CoreLocation.framework in Frameworks */,
 				A969D0811ACC995C009E1FC6 /* LockKit.framework in Frameworks */,
+				A9E055E41AE8A5A6007C2826 /* AssetsLibrary.framework in Frameworks */,
+				A9E055EB1AE8A5BF007C2826 /* SystemConfiguration.framework in Frameworks */,
+				A9E055E71AE8A5B5007C2826 /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,9 +544,6 @@
 				A922B8231AC2074D007BE266 /* Foundation.framework */,
 				A922B8211AC20746007BE266 /* AssetsLibrary.framework */,
 				A922B81F1AC20742007BE266 /* AddressBook.framework */,
-				E5E2B76C6BD13FA10BC967FD /* Pods_spacelab.framework */,
-				3CA37988310B949396AA6619 /* Pods_spacelab_WatchKit_Extension.framework */,
-				E41D6F384C32891610EE140F /* Pods_LockKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

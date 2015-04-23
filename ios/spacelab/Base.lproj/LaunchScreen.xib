@@ -13,30 +13,12 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startup-frame" translatesAutoresizingMaskIntoConstraints="NO" id="R6p-XL-ve0">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startup-spacelab-lockup" translatesAutoresizingMaskIntoConstraints="NO" id="Z7u-by-YKA">
-                    <rect key="frame" x="75" y="123" width="264" height="293"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="264" id="ZB5-G7-UUr"/>
-                        <constraint firstAttribute="height" constant="293" id="xs9-Zn-sNq"/>
-                    </constraints>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startup-space150-logo" translatesAutoresizingMaskIntoConstraints="NO" id="vks-gH-fHU">
-                    <rect key="frame" x="161" y="680" width="93" height="26"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="93" id="3q6-xq-MKl"/>
-                        <constraint firstAttribute="height" constant="26" id="qrf-g0-KFV"/>
-                    </constraints>
-                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="vks-gH-fHU" firstAttribute="top" secondItem="R6p-XL-ve0" secondAttribute="bottom" constant="-56" id="048-tf-jxg"/>
                 <constraint firstItem="R6p-XL-ve0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7aI-ly-7XC"/>
                 <constraint firstAttribute="bottom" secondItem="R6p-XL-ve0" secondAttribute="bottom" id="AiL-wb-PJq"/>
-                <constraint firstItem="R6p-XL-ve0" firstAttribute="top" secondItem="Z7u-by-YKA" secondAttribute="bottom" constant="-416" id="KPc-6x-4zN"/>
                 <constraint firstAttribute="trailing" secondItem="R6p-XL-ve0" secondAttribute="trailing" id="Niy-01-5xM"/>
-                <constraint firstItem="vks-gH-fHU" firstAttribute="centerX" secondItem="R6p-XL-ve0" secondAttribute="centerX" constant="0.5" id="RX4-o4-Hxn"/>
-                <constraint firstItem="Z7u-by-YKA" firstAttribute="centerX" secondItem="R6p-XL-ve0" secondAttribute="centerX" id="ceT-9s-M49"/>
                 <constraint firstItem="R6p-XL-ve0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="enh-QV-7iA"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
@@ -46,7 +28,5 @@
     </objects>
     <resources>
         <image name="startup-frame" width="456" height="810"/>
-        <image name="startup-space150-logo" width="93" height="26"/>
-        <image name="startup-spacelab-lockup" width="264" height="293"/>
     </resources>
 </document>

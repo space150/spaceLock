@@ -49,19 +49,19 @@ class SLLockViewCell: UITableViewCell
         if ( proximity.integerValue == 2
             || proximity.integerValue == 3 )
         {
-            lockStatusLabel.text = "Ready to Unlock"
+            lockStatusLabel.text = "Tap to Unlock"
             lockIconImageView.alpha = 1.0
             outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 153.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
         }
         else if ( proximity.integerValue == 1 )
         {
-            lockStatusLabel.text = "Not in Range"
+            lockStatusLabel.text = "Move Closer"
             lockIconImageView.alpha = 0.8
             outlineLayer.strokeColor = UIColor(red: 153.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
         }
         else
         {
-            lockStatusLabel.text = "Unavailable"
+            lockStatusLabel.text = "Not in Range"
             lockIconImageView.alpha = 0.5
             outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
         }
@@ -107,7 +107,7 @@ class SLLockViewCell: UITableViewCell
     
     func showInProgress()
     {
-        lockStatusLabel.text = "Negotiating"
+        lockStatusLabel.text = "Connecting"
         
         startInProgressAnimation()
     }
@@ -132,7 +132,7 @@ class SLLockViewCell: UITableViewCell
     
     func resetUnlocked()
     {
-        stopInProgressAnimation()
+        //stopInProgressAnimation()
         stopCountdownAnimation()
         
         updateViewState()
@@ -178,6 +178,13 @@ class SLLockViewCell: UITableViewCell
         maskLayer = CAShapeLayer()
         maskLayer.path = path.CGPath
         lockIconImageView.layer.mask = maskLayer
+        
+        var whiteOutlineLayer = CAShapeLayer()
+        whiteOutlineLayer.lineWidth = 10.0
+        whiteOutlineLayer.fillColor = UIColor.clearColor().CGColor
+        whiteOutlineLayer.strokeColor = UIColor(red: 228.0/255.0, green: 228.0/255.0, blue: 228.0/255.0, alpha: 1.0).CGColor
+        whiteOutlineLayer.path = path.CGPath
+        lockIconImageView.layer.addSublayer(whiteOutlineLayer)
         
         outlineLayer = CAShapeLayer()
         outlineLayer.lineWidth = 10.0

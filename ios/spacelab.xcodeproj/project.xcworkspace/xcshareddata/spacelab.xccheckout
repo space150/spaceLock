@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>21DF084D-B4DF-43F1-9C72-37B11847846B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>spacelab</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>F002A2BBDEEC040886A23B543188B7446116F16E</key>
 		<string>github.space150.com:space150/spacelab-lock.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/spacelab.xcodeproj/project.xcworkspace</string>
+	<string>ios/spacelab.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>F002A2BBDEEC040886A23B543188B7446116F16E</key>

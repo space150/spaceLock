@@ -179,6 +179,15 @@ class SLLockViewController: UIViewController,
         return nil
     }
     
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        if ( lock.proximity.integerValue == 2 || lock.proximity.integerValue == 3 )
+        {
+            return true
+        }
+        return false
+    }
+    
     func performUnlock(indexPath: NSIndexPath)
     {
         unlocking = true

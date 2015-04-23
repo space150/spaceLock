@@ -11,7 +11,7 @@ import UIKit
 class SLLoginViewController: UIViewController
 {
     @IBOutlet weak var movieContainerView: UIView!
-    @IBOutlet weak var signInButton: GPPSignInButton!
+    @IBOutlet weak var loginButton: UIButton!
     
     private var playerViewController : VideoPlayerViewController!
 
@@ -19,10 +19,8 @@ class SLLoginViewController: UIViewController
     {
         super.viewDidLoad()
         
-        GPPSignInButton()
-
-        signInButton.style = kGPPSignInButtonStyleWide
-        signInButton.colorScheme = kGPPSignInButtonColorSchemeLight
+        loginButton.layer.cornerRadius = 5.0
+        loginButton.clipsToBounds = true
         
         // add the video for the face animation
         playerViewController = VideoPlayerViewController()
@@ -46,6 +44,11 @@ class SLLoginViewController: UIViewController
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func doLogin(sender: AnyObject)
+    {
+        var signIn = GPPSignIn.sharedInstance()!
+        signIn.authenticate()
+    }
 
     /*
     // MARK: - Navigation
