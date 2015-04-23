@@ -68,8 +68,6 @@ class SLLockViewController: UIViewController,
         super.viewWillDisappear(animated)
         
         discoveryManager.stopDiscovery()
-        
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
     }
     
     override func didReceiveMemoryWarning()
