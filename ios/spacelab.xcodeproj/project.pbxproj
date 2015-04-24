@@ -1,0 +1,1378 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A90AE1B61AD4467000CFA0F8 /* MMWormhole.h in Headers */ = {isa = PBXBuildFile; fileRef = A90AE1B41AD4467000CFA0F8 /* MMWormhole.h */; };
+		A90AE1B71AD4467000CFA0F8 /* MMWormhole.m in Sources */ = {isa = PBXBuildFile; fileRef = A90AE1B51AD4467000CFA0F8 /* MMWormhole.m */; };
+		A922B8201AC20742007BE266 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
+		A922B8221AC20746007BE266 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
+		A922B8241AC2074D007BE266 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
+		A922B8261AC20752007BE266 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8251AC20752007BE266 /* CoreLocation.framework */; };
+		A922B8281AC20757007BE266 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8271AC20757007BE266 /* CoreMotion.framework */; };
+		A922B82A1AC2075E007BE266 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8291AC2075E007BE266 /* CoreGraphics.framework */; };
+		A922B82C1AC20763007BE266 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82B1AC20763007BE266 /* CoreText.framework */; };
+		A922B82E1AC20768007BE266 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82D1AC20768007BE266 /* MediaPlayer.framework */; };
+		A922B8301AC2076E007BE266 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82F1AC2076E007BE266 /* Security.framework */; };
+		A922B8321AC20775007BE266 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8311AC20775007BE266 /* SystemConfiguration.framework */; };
+		A922B8341AC2077B007BE266 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8331AC2077B007BE266 /* UIKit.framework */; };
+		A922B8391AC2083E007BE266 /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
+		A922B83D1AC20861007BE266 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */; };
+		A922B83E1AC20861007BE266 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83C1AC20861007BE266 /* GooglePlus.framework */; };
+		A922B83F1AC20873007BE266 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */; };
+		A922B8401AC20876007BE266 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83C1AC20861007BE266 /* GooglePlus.framework */; };
+		A922B8411AC20881007BE266 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8331AC2077B007BE266 /* UIKit.framework */; };
+		A922B8421AC20884007BE266 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8311AC20775007BE266 /* SystemConfiguration.framework */; };
+		A922B8431AC20886007BE266 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82F1AC2076E007BE266 /* Security.framework */; };
+		A922B8441AC20889007BE266 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82D1AC20768007BE266 /* MediaPlayer.framework */; };
+		A922B8451AC2088B007BE266 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82B1AC20763007BE266 /* CoreText.framework */; };
+		A922B8461AC2088D007BE266 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8291AC2075E007BE266 /* CoreGraphics.framework */; };
+		A922B8471AC20890007BE266 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8271AC20757007BE266 /* CoreMotion.framework */; };
+		A922B8481AC20892007BE266 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8251AC20752007BE266 /* CoreLocation.framework */; };
+		A922B8491AC20895007BE266 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
+		A922B84A1AC20897007BE266 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
+		A922B84B1AC2089A007BE266 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
+		A922B84D1AC20C72007BE266 /* SLLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */; };
+		A94F5F711AC3034400279E9D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5F701AC3034400279E9D /* InterfaceController.swift */; };
+		A94F5F731AC3034400279E9D /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5F721AC3034400279E9D /* NotificationController.swift */; };
+		A94F5F751AC3034400279E9D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A94F5F741AC3034400279E9D /* Images.xcassets */; };
+		A94F5F791AC3034400279E9D /* spacelab WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = A94F5F781AC3034400279E9D /* spacelab WatchKit App.app */; };
+		A94F5F811AC3034400279E9D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A94F5F7F1AC3034400279E9D /* Interface.storyboard */; };
+		A94F5F831AC3034400279E9D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A94F5F821AC3034400279E9D /* Images.xcassets */; };
+		A94F5F861AC3034400279E9D /* spacelab WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A94F5F6B1AC3034400279E9D /* spacelab WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A94F5F901AC3037200279E9D /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
+		A94F5F911AC3037300279E9D /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A922B8361AC2083E007BE266 /* GooglePlus.bundle */; };
+		A94F5F9E1AC3528B00279E9D /* SLLockRowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */; };
+		A95B82B51ACEE32D002F0EE8 /* SLErrorInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95B82B41ACEE32D002F0EE8 /* SLErrorInterfaceController.swift */; };
+		A965CB8B1ACC71C8003C8B94 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
+		A969D0811ACC995C009E1FC6 /* LockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */; };
+		A969D0851ACCA43C009E1FC6 /* EasedValue.h in Headers */ = {isa = PBXBuildFile; fileRef = A969D0831ACCA43C009E1FC6 /* EasedValue.h */; };
+		A969D0861ACCA43C009E1FC6 /* EasedValue.m in Sources */ = {isa = PBXBuildFile; fileRef = A969D0841ACCA43C009E1FC6 /* EasedValue.m */; };
+		A969D08A1ACCC638009E1FC6 /* LKLock.h in Headers */ = {isa = PBXBuildFile; fileRef = A969D0881ACCC638009E1FC6 /* LKLock.h */; };
+		A969D08B1ACCC638009E1FC6 /* LKLock.m in Sources */ = {isa = PBXBuildFile; fileRef = A969D0891ACCC638009E1FC6 /* LKLock.m */; };
+		A9787A3D1ACB6E0F002F54AC /* RFduino.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638A1ABC9DD60022A871 /* RFduino.m */; };
+		A9787A3E1ACB6E0F002F54AC /* RfduinoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */; };
+		A9787A3F1ACB6E18002F54AC /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B763841ABC92760022A871 /* NSData+Conversion.m */; };
+		A9787A421ACB6E36002F54AC /* LKSecurityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9787A401ACB6E36002F54AC /* LKSecurityManager.h */; };
+		A9787A431ACB6E36002F54AC /* LKSecurityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9787A411ACB6E36002F54AC /* LKSecurityManager.m */; };
+		A98D4FC11AE0A02100EF3E72 /* Default-Keychain.plist in Resources */ = {isa = PBXBuildFile; fileRef = A98D4FBE1AE05F9000EF3E72 /* Default-Keychain.plist */; };
+		A99383741ACA1ED200ECA0D0 /* LockKit.h in Headers */ = {isa = PBXBuildFile; fileRef = A99383731ACA1ED200ECA0D0 /* LockKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A993837A1ACA1ED200ECA0D0 /* LockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */; };
+		A99383831ACA1ED300ECA0D0 /* LockKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99383821ACA1ED300ECA0D0 /* LockKitTests.swift */; };
+		A99383861ACA1ED300ECA0D0 /* LockKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */; };
+		A99383871ACA1ED300ECA0D0 /* LockKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A9A1740A1ACA2015003C2E32 /* LKLockRepository.h in Headers */ = {isa = PBXBuildFile; fileRef = A9A174081ACA2015003C2E32 /* LKLockRepository.h */; };
+		A9A1740B1ACA2015003C2E32 /* LKLockRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A174091ACA2015003C2E32 /* LKLockRepository.m */; };
+		A9A174471ACA3097003C2E32 /* LKLockDiscoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */; };
+		A9A174481ACA3097003C2E32 /* LKLockDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */; };
+		A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763501ABC88A80022A871 /* AppDelegate.swift */; };
+		A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
+		A9B763591ABC88A80022A871 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9B763571ABC88A80022A871 /* Main.storyboard */; };
+		A9B7635B1ABC88A80022A871 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9B7635A1ABC88A80022A871 /* Images.xcassets */; };
+		A9B7635E1ABC88A80022A871 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9B7635C1ABC88A80022A871 /* LaunchScreen.xib */; };
+		A9B7636A1ABC88A80022A871 /* spacelabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763691ABC88A80022A871 /* spacelabTests.swift */; };
+		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
+		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
+		A9E055E11AE8A589007C2826 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */; };
+		A9E055E21AE8A58D007C2826 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83C1AC20861007BE266 /* GooglePlus.framework */; };
+		A9E055E31AE8A59E007C2826 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
+		A9E055E41AE8A5A6007C2826 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
+		A9E055E51AE8A5AA007C2826 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
+		A9E055E61AE8A5AF007C2826 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82D1AC20768007BE266 /* MediaPlayer.framework */; };
+		A9E055E71AE8A5B5007C2826 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8271AC20757007BE266 /* CoreMotion.framework */; };
+		A9E055E81AE8A5B8007C2826 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8291AC2075E007BE266 /* CoreGraphics.framework */; };
+		A9E055E91AE8A5BB007C2826 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8251AC20752007BE266 /* CoreLocation.framework */; };
+		A9E055EA1AE8A5BF007C2826 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8331AC2077B007BE266 /* UIKit.framework */; };
+		A9E055EB1AE8A5BF007C2826 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8311AC20775007BE266 /* SystemConfiguration.framework */; };
+		A9E055EC1AE8A5BF007C2826 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82F1AC2076E007BE266 /* Security.framework */; };
+		A9E055ED1AE8A5BF007C2826 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B82B1AC20763007BE266 /* CoreText.framework */; };
+		A9F6B3E71AE612410018AE33 /* startup-movie.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = A9F6B3E61AE612410018AE33 /* startup-movie.mp4 */; };
+		A9F6B3EF1AE6138D0018AE33 /* VideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F6B3EC1AE6138D0018AE33 /* VideoPlayerView.m */; };
+		A9F6B3F01AE6138D0018AE33 /* VideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F6B3EE1AE6138D0018AE33 /* VideoPlayerViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A94F5F7A1AC3034400279E9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A94F5F771AC3034400279E9D;
+			remoteInfo = "spacelab WatchKit App";
+		};
+		A94F5F841AC3034400279E9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A94F5F6A1AC3034400279E9D;
+			remoteInfo = "spacelab WatchKit Extension";
+		};
+		A993837B1ACA1ED200ECA0D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A993836E1ACA1ED200ECA0D0;
+			remoteInfo = LockKit;
+		};
+		A993837D1ACA1ED200ECA0D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9B7634A1ABC88A80022A871;
+			remoteInfo = spacelab;
+		};
+		A99383841ACA1ED300ECA0D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A993836E1ACA1ED200ECA0D0;
+			remoteInfo = LockKit;
+		};
+		A9B763641ABC88A80022A871 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9B7634A1ABC88A80022A871;
+			remoteInfo = spacelab;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A94F5F8D1AC3034400279E9D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A94F5F861AC3034400279E9D /* spacelab WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A99F66051AC9FCDB0052D927 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A99383871ACA1ED300ECA0D0 /* LockKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A90AE1B41AD4467000CFA0F8 /* MMWormhole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MMWormhole.h; path = MMWormhole/Source/MMWormhole.h; sourceTree = SOURCE_ROOT; };
+		A90AE1B51AD4467000CFA0F8 /* MMWormhole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MMWormhole.m; path = MMWormhole/Source/MMWormhole.m; sourceTree = SOURCE_ROOT; };
+		A922B81F1AC20742007BE266 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		A922B8211AC20746007BE266 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		A922B8231AC2074D007BE266 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A922B8251AC20752007BE266 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A922B8271AC20757007BE266 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A922B8291AC2075E007BE266 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A922B82B1AC20763007BE266 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		A922B82D1AC20768007BE266 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		A922B82F1AC2076E007BE266 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A922B8311AC20775007BE266 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A922B8331AC2077B007BE266 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A922B8361AC2083E007BE266 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = "google-plus-ios-sdk/GooglePlus.bundle"; sourceTree = "<group>"; };
+		A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleOpenSource.framework; path = "google-plus-ios-sdk/GoogleOpenSource.framework"; sourceTree = "<group>"; };
+		A922B83C1AC20861007BE266 /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GooglePlus.framework; path = "google-plus-ios-sdk/GooglePlus.framework"; sourceTree = "<group>"; };
+		A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLoginViewController.swift; sourceTree = "<group>"; };
+		A94F5F6B1AC3034400279E9D /* spacelab WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "spacelab WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A94F5F6E1AC3034400279E9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A94F5F6F1AC3034400279E9D /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		A94F5F701AC3034400279E9D /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		A94F5F721AC3034400279E9D /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		A94F5F741AC3034400279E9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A94F5F781AC3034400279E9D /* spacelab WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spacelab WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A94F5F7E1AC3034400279E9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A94F5F801AC3034400279E9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		A94F5F821AC3034400279E9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockRowType.swift; sourceTree = "<group>"; };
+		A95B82B41ACEE32D002F0EE8 /* SLErrorInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLErrorInterfaceController.swift; sourceTree = "<group>"; };
+		A969D0831ACCA43C009E1FC6 /* EasedValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EasedValue.h; sourceTree = "<group>"; };
+		A969D0841ACCA43C009E1FC6 /* EasedValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EasedValue.m; sourceTree = "<group>"; };
+		A969D0871ACCC522009E1FC6 /* LKLockProximity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKLockProximity.h; sourceTree = "<group>"; };
+		A969D0881ACCC638009E1FC6 /* LKLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKLock.h; path = LockKit/LKLock.h; sourceTree = SOURCE_ROOT; };
+		A969D0891ACCC638009E1FC6 /* LKLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKLock.m; path = LockKit/LKLock.m; sourceTree = SOURCE_ROOT; };
+		A9787A401ACB6E36002F54AC /* LKSecurityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKSecurityManager.h; path = LockKit/LKSecurityManager.h; sourceTree = SOURCE_ROOT; };
+		A9787A411ACB6E36002F54AC /* LKSecurityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKSecurityManager.m; path = LockKit/LKSecurityManager.m; sourceTree = SOURCE_ROOT; };
+		A98D4FBE1AE05F9000EF3E72 /* Default-Keychain.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Default-Keychain.plist"; path = "../spacelab/Default-Keychain.plist"; sourceTree = "<group>"; };
+		A993836F1ACA1ED200ECA0D0 /* LockKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LockKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A99383721ACA1ED200ECA0D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A99383731ACA1ED200ECA0D0 /* LockKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LockKit.h; sourceTree = "<group>"; };
+		A99383791ACA1ED200ECA0D0 /* LockKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LockKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A99383811ACA1ED300ECA0D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A99383821ACA1ED300ECA0D0 /* LockKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockKitTests.swift; sourceTree = "<group>"; };
+		A99F66081ACA0EC00052D927 /* spacelab.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = spacelab.entitlements; sourceTree = "<group>"; };
+		A99F66091ACA0EF80052D927 /* spacelab WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "spacelab WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		A9A174081ACA2015003C2E32 /* LKLockRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLockRepository.h; sourceTree = "<group>"; };
+		A9A174091ACA2015003C2E32 /* LKLockRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLockRepository.m; sourceTree = "<group>"; };
+		A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLockDiscoveryManager.h; sourceTree = "<group>"; };
+		A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLockDiscoveryManager.m; sourceTree = "<group>"; };
+		A9B7634B1ABC88A80022A871 /* spacelab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spacelab.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9B7634F1ABC88A80022A871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9B763501ABC88A80022A871 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A9B763531ABC88A80022A871 /* spacelab.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = spacelab.xcdatamodel; sourceTree = "<group>"; };
+		A9B763581ABC88A80022A871 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A9B7635A1ABC88A80022A871 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A9B7635D1ABC88A80022A871 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		A9B763631ABC88A80022A871 /* spacelabTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = spacelabTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9B763681ABC88A80022A871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9B763691ABC88A80022A871 /* spacelabTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spacelabTests.swift; sourceTree = "<group>"; };
+		A9B763801ABC90A30022A871 /* spacelab-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spacelab-Bridging-Header.h"; sourceTree = "<group>"; };
+		A9B763831ABC92760022A871 /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Conversion.h"; path = "spacelab/Extensions/NSData+Conversion.h"; sourceTree = "<group>"; };
+		A9B763841ABC92760022A871 /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Conversion.m"; path = "spacelab/Extensions/NSData+Conversion.m"; sourceTree = "<group>"; };
+		A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockListViewController.swift; sourceTree = "<group>"; };
+		A9B763891ABC9DD60022A871 /* RFduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduino.h; sourceTree = "<group>"; };
+		A9B7638A1ABC9DD60022A871 /* RFduino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFduino.m; sourceTree = "<group>"; };
+		A9B7638B1ABC9DD60022A871 /* RFduinoDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoDelegate.h; sourceTree = "<group>"; };
+		A9B7638C1ABC9DD60022A871 /* RfduinoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RfduinoManager.h; sourceTree = "<group>"; };
+		A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RfduinoManager.m; sourceTree = "<group>"; };
+		A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoManagerDelegate.h; sourceTree = "<group>"; };
+		A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockViewCell.swift; sourceTree = "<group>"; };
+		A9F6B3E61AE612410018AE33 /* startup-movie.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "startup-movie.mp4"; path = "Assets/startup-movie.mp4"; sourceTree = SOURCE_ROOT; };
+		A9F6B3EB1AE6138D0018AE33 /* VideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerView.h; sourceTree = "<group>"; };
+		A9F6B3EC1AE6138D0018AE33 /* VideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerView.m; sourceTree = "<group>"; };
+		A9F6B3ED1AE6138D0018AE33 /* VideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerViewController.h; sourceTree = "<group>"; };
+		A9F6B3EE1AE6138D0018AE33 /* VideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A94F5F681AC3034400279E9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9E055E11AE8A589007C2826 /* GoogleOpenSource.framework in Frameworks */,
+				A9E055EA1AE8A5BF007C2826 /* UIKit.framework in Frameworks */,
+				A9E055E51AE8A5AA007C2826 /* Foundation.framework in Frameworks */,
+				A9E055E21AE8A58D007C2826 /* GooglePlus.framework in Frameworks */,
+				A9E055ED1AE8A5BF007C2826 /* CoreText.framework in Frameworks */,
+				A9E055E81AE8A5B8007C2826 /* CoreGraphics.framework in Frameworks */,
+				A9E055EC1AE8A5BF007C2826 /* Security.framework in Frameworks */,
+				A9E055E61AE8A5AF007C2826 /* MediaPlayer.framework in Frameworks */,
+				A9E055E31AE8A59E007C2826 /* AddressBook.framework in Frameworks */,
+				A9E055E91AE8A5BB007C2826 /* CoreLocation.framework in Frameworks */,
+				A969D0811ACC995C009E1FC6 /* LockKit.framework in Frameworks */,
+				A9E055E41AE8A5A6007C2826 /* AssetsLibrary.framework in Frameworks */,
+				A9E055EB1AE8A5BF007C2826 /* SystemConfiguration.framework in Frameworks */,
+				A9E055E71AE8A5B5007C2826 /* CoreMotion.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A993836B1ACA1ED200ECA0D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A99383761ACA1ED200ECA0D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A993837A1ACA1ED200ECA0D0 /* LockKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9B763481ABC88A80022A871 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A922B83D1AC20861007BE266 /* GoogleOpenSource.framework in Frameworks */,
+				A922B83E1AC20861007BE266 /* GooglePlus.framework in Frameworks */,
+				A922B8341AC2077B007BE266 /* UIKit.framework in Frameworks */,
+				A922B8321AC20775007BE266 /* SystemConfiguration.framework in Frameworks */,
+				A99383861ACA1ED300ECA0D0 /* LockKit.framework in Frameworks */,
+				A922B8301AC2076E007BE266 /* Security.framework in Frameworks */,
+				A922B82E1AC20768007BE266 /* MediaPlayer.framework in Frameworks */,
+				A922B82C1AC20763007BE266 /* CoreText.framework in Frameworks */,
+				A922B82A1AC2075E007BE266 /* CoreGraphics.framework in Frameworks */,
+				A922B8281AC20757007BE266 /* CoreMotion.framework in Frameworks */,
+				A922B8261AC20752007BE266 /* CoreLocation.framework in Frameworks */,
+				A922B8241AC2074D007BE266 /* Foundation.framework in Frameworks */,
+				A922B8221AC20746007BE266 /* AssetsLibrary.framework in Frameworks */,
+				A922B8201AC20742007BE266 /* AddressBook.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9B763601ABC88A80022A871 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A922B83F1AC20873007BE266 /* GoogleOpenSource.framework in Frameworks */,
+				A922B8471AC20890007BE266 /* CoreMotion.framework in Frameworks */,
+				A922B8431AC20886007BE266 /* Security.framework in Frameworks */,
+				A922B84A1AC20897007BE266 /* AssetsLibrary.framework in Frameworks */,
+				A922B8411AC20881007BE266 /* UIKit.framework in Frameworks */,
+				A922B8421AC20884007BE266 /* SystemConfiguration.framework in Frameworks */,
+				A922B8461AC2088D007BE266 /* CoreGraphics.framework in Frameworks */,
+				A922B8481AC20892007BE266 /* CoreLocation.framework in Frameworks */,
+				A922B8451AC2088B007BE266 /* CoreText.framework in Frameworks */,
+				A922B8441AC20889007BE266 /* MediaPlayer.framework in Frameworks */,
+				A922B84B1AC2089A007BE266 /* AddressBook.framework in Frameworks */,
+				A922B8401AC20876007BE266 /* GooglePlus.framework in Frameworks */,
+				A922B8491AC20895007BE266 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A90AE1B31AD4465E00CFA0F8 /* MMWormhole */ = {
+			isa = PBXGroup;
+			children = (
+				A90AE1B41AD4467000CFA0F8 /* MMWormhole.h */,
+				A90AE1B51AD4467000CFA0F8 /* MMWormhole.m */,
+			);
+			name = MMWormhole;
+			sourceTree = "<group>";
+		};
+		A922B8181AC202A5007BE266 /* GooglePlus */ = {
+			isa = PBXGroup;
+			children = (
+				A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */,
+				A922B83C1AC20861007BE266 /* GooglePlus.framework */,
+				A922B8361AC2083E007BE266 /* GooglePlus.bundle */,
+			);
+			name = GooglePlus;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		A922B84E1AC20FD5007BE266 /* Lock List */ = {
+			isa = PBXGroup;
+			children = (
+				A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */,
+				A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */,
+			);
+			name = "Lock List";
+			sourceTree = "<group>";
+		};
+		A94F5F6C1AC3034400279E9D /* spacelab WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A94F5F701AC3034400279E9D /* InterfaceController.swift */,
+				A94F5F9D1AC3528B00279E9D /* SLLockRowType.swift */,
+				A95B82B41ACEE32D002F0EE8 /* SLErrorInterfaceController.swift */,
+				A94F5F721AC3034400279E9D /* NotificationController.swift */,
+				A94F5F741AC3034400279E9D /* Images.xcassets */,
+				A94F5F6D1AC3034400279E9D /* Supporting Files */,
+			);
+			path = "spacelab WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		A94F5F6D1AC3034400279E9D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A99F66091ACA0EF80052D927 /* spacelab WatchKit Extension.entitlements */,
+				A94F5F6E1AC3034400279E9D /* Info.plist */,
+				A94F5F6F1AC3034400279E9D /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A94F5F7C1AC3034400279E9D /* spacelab WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				A94F5F7F1AC3034400279E9D /* Interface.storyboard */,
+				A94F5F821AC3034400279E9D /* Images.xcassets */,
+				A94F5F7D1AC3034400279E9D /* Supporting Files */,
+			);
+			path = "spacelab WatchKit App";
+			sourceTree = "<group>";
+		};
+		A94F5F7D1AC3034400279E9D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A94F5F7E1AC3034400279E9D /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A99383701ACA1ED200ECA0D0 /* LockKit */ = {
+			isa = PBXGroup;
+			children = (
+				A90AE1B31AD4465E00CFA0F8 /* MMWormhole */,
+				A969D0831ACCA43C009E1FC6 /* EasedValue.h */,
+				A969D0841ACCA43C009E1FC6 /* EasedValue.m */,
+				A9B763881ABC9DD60022A871 /* rfduino */,
+				A9B763811ABC914E0022A871 /* Security */,
+				A99383731ACA1ED200ECA0D0 /* LockKit.h */,
+				A969D0881ACCC638009E1FC6 /* LKLock.h */,
+				A969D0891ACCC638009E1FC6 /* LKLock.m */,
+				A969D0871ACCC522009E1FC6 /* LKLockProximity.h */,
+				A9A174081ACA2015003C2E32 /* LKLockRepository.h */,
+				A9A174091ACA2015003C2E32 /* LKLockRepository.m */,
+				A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */,
+				A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */,
+				A99383711ACA1ED200ECA0D0 /* Supporting Files */,
+			);
+			path = LockKit;
+			sourceTree = "<group>";
+		};
+		A99383711ACA1ED200ECA0D0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A98D4FBE1AE05F9000EF3E72 /* Default-Keychain.plist */,
+				A99383721ACA1ED200ECA0D0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A993837F1ACA1ED200ECA0D0 /* LockKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				A99383821ACA1ED300ECA0D0 /* LockKitTests.swift */,
+				A99383801ACA1ED300ECA0D0 /* Supporting Files */,
+			);
+			path = LockKitTests;
+			sourceTree = "<group>";
+		};
+		A99383801ACA1ED300ECA0D0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A99383811ACA1ED300ECA0D0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A9B763421ABC88A80022A871 = {
+			isa = PBXGroup;
+			children = (
+				A99383701ACA1ED200ECA0D0 /* LockKit */,
+				A9B7634D1ABC88A80022A871 /* spacelab */,
+				A94F5F6C1AC3034400279E9D /* spacelab WatchKit Extension */,
+				A94F5F7C1AC3034400279E9D /* spacelab WatchKit App */,
+				A9B763731ABC89E50022A871 /* Frameworks */,
+				A9B763661ABC88A80022A871 /* spacelabTests */,
+				A993837F1ACA1ED200ECA0D0 /* LockKitTests */,
+				A9B7634C1ABC88A80022A871 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A9B7634C1ABC88A80022A871 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9B7634B1ABC88A80022A871 /* spacelab.app */,
+				A9B763631ABC88A80022A871 /* spacelabTests.xctest */,
+				A94F5F6B1AC3034400279E9D /* spacelab WatchKit Extension.appex */,
+				A94F5F781AC3034400279E9D /* spacelab WatchKit App.app */,
+				A993836F1ACA1ED200ECA0D0 /* LockKit.framework */,
+				A99383791ACA1ED200ECA0D0 /* LockKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9B7634D1ABC88A80022A871 /* spacelab */ = {
+			isa = PBXGroup;
+			children = (
+				A9F6B3EA1AE6138D0018AE33 /* VideoPlayer */,
+				A922B8181AC202A5007BE266 /* GooglePlus */,
+				A9B763821ABC91580022A871 /* Controllers */,
+				A9B763501ABC88A80022A871 /* AppDelegate.swift */,
+				A9B763571ABC88A80022A871 /* Main.storyboard */,
+				A9B7635A1ABC88A80022A871 /* Images.xcassets */,
+				A9B7635C1ABC88A80022A871 /* LaunchScreen.xib */,
+				A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */,
+				A9B7634E1ABC88A80022A871 /* Supporting Files */,
+			);
+			path = spacelab;
+			sourceTree = "<group>";
+		};
+		A9B7634E1ABC88A80022A871 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A9F6B3E51AE612360018AE33 /* Movies */,
+				A99F66081ACA0EC00052D927 /* spacelab.entitlements */,
+				A9B763801ABC90A30022A871 /* spacelab-Bridging-Header.h */,
+				A9B7634F1ABC88A80022A871 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A9B763661ABC88A80022A871 /* spacelabTests */ = {
+			isa = PBXGroup;
+			children = (
+				A9B763691ABC88A80022A871 /* spacelabTests.swift */,
+				A9B763671ABC88A80022A871 /* Supporting Files */,
+			);
+			path = spacelabTests;
+			sourceTree = "<group>";
+		};
+		A9B763671ABC88A80022A871 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A9B763681ABC88A80022A871 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A9B763731ABC89E50022A871 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A922B8331AC2077B007BE266 /* UIKit.framework */,
+				A922B8311AC20775007BE266 /* SystemConfiguration.framework */,
+				A922B82F1AC2076E007BE266 /* Security.framework */,
+				A922B82D1AC20768007BE266 /* MediaPlayer.framework */,
+				A922B82B1AC20763007BE266 /* CoreText.framework */,
+				A922B8291AC2075E007BE266 /* CoreGraphics.framework */,
+				A922B8271AC20757007BE266 /* CoreMotion.framework */,
+				A922B8251AC20752007BE266 /* CoreLocation.framework */,
+				A922B8231AC2074D007BE266 /* Foundation.framework */,
+				A922B8211AC20746007BE266 /* AssetsLibrary.framework */,
+				A922B81F1AC20742007BE266 /* AddressBook.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9B763751ABC89F30022A871 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A9B763831ABC92760022A871 /* NSData+Conversion.h */,
+				A9B763841ABC92760022A871 /* NSData+Conversion.m */,
+			);
+			name = Extensions;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		A9B763811ABC914E0022A871 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				A9B763751ABC89F30022A871 /* Extensions */,
+				A9787A401ACB6E36002F54AC /* LKSecurityManager.h */,
+				A9787A411ACB6E36002F54AC /* LKSecurityManager.m */,
+			);
+			name = Security;
+			path = ../spacelab;
+			sourceTree = "<group>";
+		};
+		A9B763821ABC91580022A871 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A922B84C1AC20C72007BE266 /* SLLoginViewController.swift */,
+				A922B84E1AC20FD5007BE266 /* Lock List */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A9B763881ABC9DD60022A871 /* rfduino */ = {
+			isa = PBXGroup;
+			children = (
+				A9B763891ABC9DD60022A871 /* RFduino.h */,
+				A9B7638A1ABC9DD60022A871 /* RFduino.m */,
+				A9B7638B1ABC9DD60022A871 /* RFduinoDelegate.h */,
+				A9B7638C1ABC9DD60022A871 /* RfduinoManager.h */,
+				A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */,
+				A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */,
+			);
+			name = rfduino;
+			path = ../rfduino;
+			sourceTree = "<group>";
+		};
+		A9F6B3E51AE612360018AE33 /* Movies */ = {
+			isa = PBXGroup;
+			children = (
+				A9F6B3E61AE612410018AE33 /* startup-movie.mp4 */,
+			);
+			name = Movies;
+			sourceTree = "<group>";
+		};
+		A9F6B3EA1AE6138D0018AE33 /* VideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				A9F6B3EB1AE6138D0018AE33 /* VideoPlayerView.h */,
+				A9F6B3EC1AE6138D0018AE33 /* VideoPlayerView.m */,
+				A9F6B3ED1AE6138D0018AE33 /* VideoPlayerViewController.h */,
+				A9F6B3EE1AE6138D0018AE33 /* VideoPlayerViewController.m */,
+			);
+			path = VideoPlayer;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A993836C1ACA1ED200ECA0D0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9A174471ACA3097003C2E32 /* LKLockDiscoveryManager.h in Headers */,
+				A9A1740A1ACA2015003C2E32 /* LKLockRepository.h in Headers */,
+				A90AE1B61AD4467000CFA0F8 /* MMWormhole.h in Headers */,
+				A969D08A1ACCC638009E1FC6 /* LKLock.h in Headers */,
+				A969D0851ACCA43C009E1FC6 /* EasedValue.h in Headers */,
+				A99383741ACA1ED200ECA0D0 /* LockKit.h in Headers */,
+				A9787A421ACB6E36002F54AC /* LKSecurityManager.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		A94F5F6A1AC3034400279E9D /* spacelab WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A94F5F8C1AC3034400279E9D /* Build configuration list for PBXNativeTarget "spacelab WatchKit Extension" */;
+			buildPhases = (
+				A94F5F671AC3034400279E9D /* Sources */,
+				A94F5F681AC3034400279E9D /* Frameworks */,
+				A94F5F691AC3034400279E9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A94F5F7B1AC3034400279E9D /* PBXTargetDependency */,
+			);
+			name = "spacelab WatchKit Extension";
+			productName = "spacelab WatchKit Extension";
+			productReference = A94F5F6B1AC3034400279E9D /* spacelab WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit-extension";
+		};
+		A94F5F771AC3034400279E9D /* spacelab WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A94F5F8B1AC3034400279E9D /* Build configuration list for PBXNativeTarget "spacelab WatchKit App" */;
+			buildPhases = (
+				A94F5F761AC3034400279E9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "spacelab WatchKit App";
+			productName = "spacelab WatchKit App";
+			productReference = A94F5F781AC3034400279E9D /* spacelab WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp";
+		};
+		A993836E1ACA1ED200ECA0D0 /* LockKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A99383881ACA1ED300ECA0D0 /* Build configuration list for PBXNativeTarget "LockKit" */;
+			buildPhases = (
+				A993836A1ACA1ED200ECA0D0 /* Sources */,
+				A993836B1ACA1ED200ECA0D0 /* Frameworks */,
+				A993836C1ACA1ED200ECA0D0 /* Headers */,
+				A993836D1ACA1ED200ECA0D0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LockKit;
+			productName = LockKit;
+			productReference = A993836F1ACA1ED200ECA0D0 /* LockKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A99383781ACA1ED200ECA0D0 /* LockKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A993838B1ACA1ED300ECA0D0 /* Build configuration list for PBXNativeTarget "LockKitTests" */;
+			buildPhases = (
+				A99383751ACA1ED200ECA0D0 /* Sources */,
+				A99383761ACA1ED200ECA0D0 /* Frameworks */,
+				A99383771ACA1ED200ECA0D0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A993837C1ACA1ED200ECA0D0 /* PBXTargetDependency */,
+				A993837E1ACA1ED200ECA0D0 /* PBXTargetDependency */,
+			);
+			name = LockKitTests;
+			productName = LockKitTests;
+			productReference = A99383791ACA1ED200ECA0D0 /* LockKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A9B7634A1ABC88A80022A871 /* spacelab */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9B7636D1ABC88A80022A871 /* Build configuration list for PBXNativeTarget "spacelab" */;
+			buildPhases = (
+				A9B763471ABC88A80022A871 /* Sources */,
+				A9B763481ABC88A80022A871 /* Frameworks */,
+				A9B763491ABC88A80022A871 /* Resources */,
+				A94F5F8D1AC3034400279E9D /* Embed App Extensions */,
+				A99F66051AC9FCDB0052D927 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A94F5F851AC3034400279E9D /* PBXTargetDependency */,
+				A99383851ACA1ED300ECA0D0 /* PBXTargetDependency */,
+			);
+			name = spacelab;
+			productName = spacelab;
+			productReference = A9B7634B1ABC88A80022A871 /* spacelab.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9B763621ABC88A80022A871 /* spacelabTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9B763701ABC88A80022A871 /* Build configuration list for PBXNativeTarget "spacelabTests" */;
+			buildPhases = (
+				A9B7635F1ABC88A80022A871 /* Sources */,
+				A9B763601ABC88A80022A871 /* Frameworks */,
+				A9B763611ABC88A80022A871 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9B763651ABC88A80022A871 /* PBXTargetDependency */,
+			);
+			name = spacelabTests;
+			productName = spacelabTests;
+			productReference = A9B763631ABC88A80022A871 /* spacelabTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A9B763431ABC88A80022A871 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = space150;
+				TargetAttributes = {
+					A94F5F6A1AC3034400279E9D = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CH5DCD7T87;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					A94F5F771AC3034400279E9D = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CH5DCD7T87;
+					};
+					A993836E1ACA1ED200ECA0D0 = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CH5DCD7T87;
+					};
+					A99383781ACA1ED200ECA0D0 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = A9B7634A1ABC88A80022A871;
+					};
+					A9B7634A1ABC88A80022A871 = {
+						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = CH5DCD7T87;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					A9B763621ABC88A80022A871 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = A9B7634A1ABC88A80022A871;
+					};
+				};
+			};
+			buildConfigurationList = A9B763461ABC88A80022A871 /* Build configuration list for PBXProject "spacelab" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A9B763421ABC88A80022A871;
+			productRefGroup = A9B7634C1ABC88A80022A871 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A9B7634A1ABC88A80022A871 /* spacelab */,
+				A9B763621ABC88A80022A871 /* spacelabTests */,
+				A94F5F6A1AC3034400279E9D /* spacelab WatchKit Extension */,
+				A94F5F771AC3034400279E9D /* spacelab WatchKit App */,
+				A993836E1ACA1ED200ECA0D0 /* LockKit */,
+				A99383781ACA1ED200ECA0D0 /* LockKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A94F5F691AC3034400279E9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A94F5F751AC3034400279E9D /* Images.xcassets in Resources */,
+				A94F5F901AC3037200279E9D /* GooglePlus.bundle in Resources */,
+				A94F5F791AC3034400279E9D /* spacelab WatchKit App.app in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A94F5F761AC3034400279E9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A94F5F811AC3034400279E9D /* Interface.storyboard in Resources */,
+				A94F5F831AC3034400279E9D /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A993836D1ACA1ED200ECA0D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A99383771ACA1ED200ECA0D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9B763491ABC88A80022A871 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9F6B3E71AE612410018AE33 /* startup-movie.mp4 in Resources */,
+				A9B763591ABC88A80022A871 /* Main.storyboard in Resources */,
+				A98D4FC11AE0A02100EF3E72 /* Default-Keychain.plist in Resources */,
+				A9B7635E1ABC88A80022A871 /* LaunchScreen.xib in Resources */,
+				A922B8391AC2083E007BE266 /* GooglePlus.bundle in Resources */,
+				A9B7635B1ABC88A80022A871 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9B763611ABC88A80022A871 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A94F5F911AC3037300279E9D /* GooglePlus.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A94F5F671AC3034400279E9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A95B82B51ACEE32D002F0EE8 /* SLErrorInterfaceController.swift in Sources */,
+				A965CB8B1ACC71C8003C8B94 /* spacelab.xcdatamodeld in Sources */,
+				A94F5F9E1AC3528B00279E9D /* SLLockRowType.swift in Sources */,
+				A94F5F731AC3034400279E9D /* NotificationController.swift in Sources */,
+				A94F5F711AC3034400279E9D /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A993836A1ACA1ED200ECA0D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9787A3F1ACB6E18002F54AC /* NSData+Conversion.m in Sources */,
+				A9787A3D1ACB6E0F002F54AC /* RFduino.m in Sources */,
+				A9787A3E1ACB6E0F002F54AC /* RfduinoManager.m in Sources */,
+				A969D08B1ACCC638009E1FC6 /* LKLock.m in Sources */,
+				A9A174481ACA3097003C2E32 /* LKLockDiscoveryManager.m in Sources */,
+				A90AE1B71AD4467000CFA0F8 /* MMWormhole.m in Sources */,
+				A9787A431ACB6E36002F54AC /* LKSecurityManager.m in Sources */,
+				A969D0861ACCA43C009E1FC6 /* EasedValue.m in Sources */,
+				A9A1740B1ACA2015003C2E32 /* LKLockRepository.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A99383751ACA1ED200ECA0D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A99383831ACA1ED300ECA0D0 /* LockKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9B763471ABC88A80022A871 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */,
+				A9F6B3F01AE6138D0018AE33 /* VideoPlayerViewController.m in Sources */,
+				A922B84D1AC20C72007BE266 /* SLLoginViewController.swift in Sources */,
+				A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */,
+				A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */,
+				A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */,
+				A9F6B3EF1AE6138D0018AE33 /* VideoPlayerView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9B7635F1ABC88A80022A871 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9B7636A1ABC88A80022A871 /* spacelabTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A94F5F7B1AC3034400279E9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A94F5F771AC3034400279E9D /* spacelab WatchKit App */;
+			targetProxy = A94F5F7A1AC3034400279E9D /* PBXContainerItemProxy */;
+		};
+		A94F5F851AC3034400279E9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A94F5F6A1AC3034400279E9D /* spacelab WatchKit Extension */;
+			targetProxy = A94F5F841AC3034400279E9D /* PBXContainerItemProxy */;
+		};
+		A993837C1ACA1ED200ECA0D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A993836E1ACA1ED200ECA0D0 /* LockKit */;
+			targetProxy = A993837B1ACA1ED200ECA0D0 /* PBXContainerItemProxy */;
+		};
+		A993837E1ACA1ED200ECA0D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9B7634A1ABC88A80022A871 /* spacelab */;
+			targetProxy = A993837D1ACA1ED200ECA0D0 /* PBXContainerItemProxy */;
+		};
+		A99383851ACA1ED300ECA0D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A993836E1ACA1ED200ECA0D0 /* LockKit */;
+			targetProxy = A99383841ACA1ED300ECA0D0 /* PBXContainerItemProxy */;
+		};
+		A9B763651ABC88A80022A871 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9B7634A1ABC88A80022A871 /* spacelab */;
+			targetProxy = A9B763641ABC88A80022A871 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A94F5F7F1AC3034400279E9D /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A94F5F801AC3034400279E9D /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+		A9B763571ABC88A80022A871 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9B763581ABC88A80022A871 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A9B7635C1ABC88A80022A871 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9B7635D1ABC88A80022A871 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A94F5F871AC3034400279E9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "spacelab WatchKit Extension/spacelab WatchKit Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "spacelab WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A94F5F881AC3034400279E9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "spacelab WatchKit Extension/spacelab WatchKit Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				INFOPLIST_FILE = "spacelab WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A94F5F891AC3034400279E9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IBSC_MODULE = spacelab_WatchKit_Extension;
+				INFOPLIST_FILE = "spacelab WatchKit App/Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Debug;
+		};
+		A94F5F8A1AC3034400279E9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				IBSC_MODULE = spacelab_WatchKit_Extension;
+				INFOPLIST_FILE = "spacelab WatchKit App/Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Release;
+		};
+		A99383891ACA1ED300ECA0D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 9;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 9;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LockKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A993838A1ACA1ED300ECA0D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 9;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 9;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				INFOPLIST_FILE = LockKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A993838C1ACA1ED300ECA0D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = LockKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/spacelab.app/spacelab";
+			};
+			name = Debug;
+		};
+		A993838D1ACA1ED300ECA0D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				INFOPLIST_FILE = LockKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/spacelab.app/spacelab";
+			};
+			name = Release;
+		};
+		A9B7636B1ABC88A80022A871 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "spacelab/spacelab-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A9B7636C1ABC88A80022A871 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "spacelab/spacelab-Bridging-Header.h";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A9B7636E1ABC88A80022A871 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = spacelab/spacelab.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				INFOPLIST_FILE = spacelab/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		A9B7636F1ABC88A80022A871 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = spacelab/spacelab.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				INFOPLIST_FILE = spacelab/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		A9B763711ABC88A80022A871 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = spacelabTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/spacelab.app/spacelab";
+			};
+			name = Debug;
+		};
+		A9B763721ABC88A80022A871 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(PROJECT_DIR)/google-plus-ios-sdk",
+				);
+				INFOPLIST_FILE = spacelabTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/spacelab.app/spacelab";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A94F5F8B1AC3034400279E9D /* Build configuration list for PBXNativeTarget "spacelab WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A94F5F891AC3034400279E9D /* Debug */,
+				A94F5F8A1AC3034400279E9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A94F5F8C1AC3034400279E9D /* Build configuration list for PBXNativeTarget "spacelab WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A94F5F871AC3034400279E9D /* Debug */,
+				A94F5F881AC3034400279E9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A99383881ACA1ED300ECA0D0 /* Build configuration list for PBXNativeTarget "LockKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A99383891ACA1ED300ECA0D0 /* Debug */,
+				A993838A1ACA1ED300ECA0D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A993838B1ACA1ED300ECA0D0 /* Build configuration list for PBXNativeTarget "LockKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A993838C1ACA1ED300ECA0D0 /* Debug */,
+				A993838D1ACA1ED300ECA0D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9B763461ABC88A80022A871 /* Build configuration list for PBXProject "spacelab" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9B7636B1ABC88A80022A871 /* Debug */,
+				A9B7636C1ABC88A80022A871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9B7636D1ABC88A80022A871 /* Build configuration list for PBXNativeTarget "spacelab" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9B7636E1ABC88A80022A871 /* Debug */,
+				A9B7636F1ABC88A80022A871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9B763701ABC88A80022A871 /* Build configuration list for PBXNativeTarget "spacelabTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9B763711ABC88A80022A871 /* Debug */,
+				A9B763721ABC88A80022A871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A9B763531ABC88A80022A871 /* spacelab.xcdatamodel */,
+			);
+			currentVersion = A9B763531ABC88A80022A871 /* spacelab.xcdatamodel */;
+			path = spacelab.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A9B763431ABC88A80022A871 /* Project object */;
+}

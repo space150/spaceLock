@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>LockKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Notification - spacelab WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>spacelab WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>spacelab.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>A94F5F771AC3034400279E9D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A993836E1ACA1ED200ECA0D0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A99383781ACA1ED200ECA0D0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A99F65E61AC9FCDA0052D927</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A99F65F01AC9FCDA0052D927</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A9B7634A1ABC88A80022A871</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A9B763621ABC88A80022A871</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
