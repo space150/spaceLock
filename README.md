@@ -8,7 +8,7 @@ This project is a product of spaceLab, space150’s research and development div
 
 * <code>arduino</code> contains the physical lock arduino sketch and library dependencies. The lock itself is running on a RFDuino, other platforms will be supported in the future.
 
-* <code>docs</code> contains an EAGL schematic for a reference implementation of the RFDuino integrated with a selenoid lock. Works with a 12VDC solenoid up to 1 amp.
+* <code>docs</code> contains an EAGL schematic for a reference implementation of the RFDuino integrated with a solenoid lock. Works with a 12VDC solenoid up to 1 amp.
 
 * <code>ios</code> contains the iOS iPhone application with WatchKit extension.
 
