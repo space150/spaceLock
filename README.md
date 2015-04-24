@@ -12,4 +12,10 @@ This project is a product of spaceLab, space150’s research and development div
 
 * <code>ios</code> contains the iOS iPhone application with WatchKit extension.
 
+# Security & Known Issues
 
+This project is more of a "proof of concept" in its current state. A few key items need to be addressed to ensure a secure implementation:
+
+* The AES encryption keys are stored in a plist file within the application bundle. This will in the future be changed so that the keys only reside on a secure server. Once downloaded the application will instead store them in the system Keychain.
+* The arduino lock currently has no way of updating its internal clock to match wall-clock time. This prevents us from verifying the timestamp of the encrypted commands. An addition of a Wifi module and NTP client will be added in the future so that the unlock/lock commands are time-sensitive, this will prevent replay attacks.
+* There are probably many more security issues, if you do find one or have a suggestion, feel free to send a pull request or email to shawn.roske@space150.com.
