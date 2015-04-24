@@ -1,3 +1,4 @@
+
 //
 //  InterfaceController.swift
 //  spacelab WatchKit Extension
@@ -8,39 +9,141 @@
 
 import WatchKit
 import Foundation
+import LockKit
 
-
-class InterfaceController: WKInterfaceController
+class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDelegate
 {
     @IBOutlet weak var table: WKInterfaceTable!
+
+    private var discoveryManager: LKLockDiscoveryManager!
+    private var fetchedResultsController : NSFetchedResultsController!
     
     override func awakeWithContext(context: AnyObject?)
     {
         super.awakeWithContext(context)
         
-        configureTableWithData(["F3", "spacelab", "Roske", "Roske", "Roske"]);
+        discoveryManager = LKLockDiscoveryManager(context: "watchkit-ext")
+        
+        fetchedResultsController = getFetchedResultsController()
+        fetchedResultsController.delegate = self
+        fetchedResultsController.performFetch(nil)
+        
+        configureTableWithLocks()
     }
     
-    func configureTableWithData(array: NSArray)
+    func configureTableWithLocks()
     {
-        table.setNumberOfRows(array.count, withRowType: "lockRowController")
-        println("table.numberOfRows: \(table.numberOfRows)")
-        for i in 0...(table.numberOfRows-1)
+        var count: Int! = fetchedResultsController.fetchedObjects?.count
+        table.setNumberOfRows(count, withRowType: "lockRowController")
+        if ( count > 0 )
         {
-            var row = table.rowControllerAtIndex(i) as SLLockRowType
-            var title = array.objectAtIndex(i) as NSString
-            row.rowTitleLabel.setText(title)
+            for i in 0...(count-1)
+            {
+                configureTableRow(i)
+            }
         }
     }
-
-    override func willActivate() {
-        // This method is called when watch view controller is about to be visible to user
-        super.willActivate()
+    
+    func configureTableRow(index: Int!)
+    {
+        var row = table.rowControllerAtIndex(index) as! SLLockRowType
+        
+        var objects: NSArray = fetchedResultsController.fetchedObjects!
+        var lock: LKLock = objects.objectAtIndex(index) as! LKLock
+        
+        row.setLock(lock)
     }
 
-    override func didDeactivate() {
+    override func willActivate()
+    {
+        // This method is called when watch view controller is about to be visible to user
+        super.willActivate()
+        
+        discoveryManager.startDiscovery()
+    }
+
+    override func didDeactivate()
+    {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+        
+        discoveryManager.stopDiscovery()
+    }
+    
+    // MARK: - NSFetchedResultsController methods
+    
+    func getFetchedResultsController() -> NSFetchedResultsController
+    {
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(),
+            managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext, sectionNameKeyPath: nil,
+            cacheName: nil)
+        return fetchedResultsController
+    }
+    
+    func taskFetchRequest() -> NSFetchRequest
+    {
+        let fetchRequest = NSFetchRequest(entityName: "LKLock")
+        let sortDescriptor = NSSortDescriptor(key: "proximity", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        return fetchRequest
+    }
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController)
+    {
+        // nothing
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
+    {
+        switch type
+        {
+        case .Insert:
+            table.insertRowsAtIndexes(NSIndexSet(index: newIndexPath!.row), withRowType: "lockRowController")
+            configureTableRow(newIndexPath!.row)
+        case .Update:
+            configureTableRow(indexPath!.row)
+        case .Move:
+            table.removeRowsAtIndexes(NSIndexSet(index: indexPath!.row))
+            table.insertRowsAtIndexes(NSIndexSet(index: newIndexPath!.row), withRowType: "lockRowController")
+            configureTableRow(newIndexPath!.row)
+        case .Delete:
+            table.removeRowsAtIndexes(NSIndexSet(index: indexPath!.row))
+        default:
+            return
+        }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController)
+    {
+        // nothing
+    }
+    
+    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int)
+    {
+        var objects: NSArray = fetchedResultsController.fetchedObjects!
+        var lock: LKLock = objects.objectAtIndex(rowIndex) as! LKLock
+        var row = table.rowControllerAtIndex(rowIndex) as! SLLockRowType
+        
+        if ( row.unlockable == true )
+        {
+            row.showInProgress()
+            
+            discoveryManager.openLock(lock, complete: { (success, error) -> Void in
+                if ( success )
+                {
+                    row.showUnlocked()
+                }
+                else
+                {
+                    println("Error opening lock: \(error.localizedDescription)")
+                    
+                    row.resetUnlocked()
+                    
+                    self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
+                }
+                
+            })
+        }
     }
 
 }

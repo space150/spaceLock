@@ -31,7 +31,8 @@
 static const int max_data = 32;
 
 // default NULL (NULL = previous fixed RFduino uuid)
-NSString *customUUID = @"f2c8e796-c022-4fa9-a802-cc16963f362e";
+NSString *customUUID = @"876d7008-890e-4d28-9b19-bfabee9f0e24";
+//NSString *customUUID = NULL;
 
 static CBUUID *service_uuid;
 static CBUUID *send_uuid;
@@ -88,7 +89,7 @@ static void incrementUuid16(CBUUID *uuid, unsigned char amount)
 @synthesize delegate;
 @synthesize rfduinoManager;
 @synthesize peripheral;
-
+@synthesize proximity;
 @synthesize name;
 @synthesize UUID;
 @synthesize advertisementData;
@@ -101,10 +102,35 @@ static void incrementUuid16(CBUUID *uuid, unsigned char amount)
     NSLog(@"rfduino init");
     
     self = [super init];
-    if (self) {
+    if (self)
+    {
+        easedProximity = [[EasedValue alloc] init];
     }
-    
     return self;
+}
+
+- (void)setAdvertisementRSSI:(NSNumber *)newAdvertisementRSSI
+{
+    if ( [advertisementRSSI intValue] != [newAdvertisementRSSI intValue] )
+    {
+        advertisementRSSI = newAdvertisementRSSI;
+        
+        // calculate the proximity based on eased RSSI value
+        easedProximity.value = labs([newAdvertisementRSSI integerValue]);
+        [easedProximity update];
+        NSInteger proximityResult = easedProximity.value * -1.0f;
+        
+        //NSLog(@"rfduino: %@, proximityResult: %d", name, proximityResult);
+        
+        if (proximityResult < -70)
+            self.proximity = RFduinoRangeFar;
+        else if (proximityResult < -55)
+            self.proximity = RFduinoRangeNear;
+        else if (proximityResult < 0)
+            self.proximity = RFduinoRangeImmediate;
+        else
+            self.proximity = RFduinoRangeUnknown;
+    }
 }
 
 - (void)connected

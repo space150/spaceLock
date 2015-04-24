@@ -30,7 +30,7 @@
       "size" : "40x40",
       "idiom" : "watch",
       "scale" : "2x",
-      "filename" : "watchkit-icon@2x.png",
+      "filename" : "icon-80pt.png",
       "role" : "appLauncher",
       "subtype" : "38mm"
     },

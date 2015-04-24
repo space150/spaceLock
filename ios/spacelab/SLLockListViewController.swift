@@ -12,17 +12,19 @@ import LockKit
 class SLLockViewController: UIViewController,
     UITableViewDelegate,
     UITableViewDataSource,
-    RFduinoManagerDelegate,
-    RFduinoDelegate,
-    GPPSignInDelegate
+    NSFetchedResultsControllerDelegate,
+    GPPSignInDelegate,
+    SLLockViewCellDelegate
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerNameLabel: UILabel!
-    @IBOutlet weak var headerEmailLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var logoutButton: UIButton!
     
-    private var rfduinoManager : RFduinoManager!
-    private var connectedRfduino : RFduino!
+    private var fetchedResultsController: NSFetchedResultsController!
+    
+    private var discoveryManager: LKLockDiscoveryManager!
+    private var unlocking:Bool!
     
     private let clientId = "743774015347-4qc7he8nbpccqca59lh004ojr7a94kia.apps.googleusercontent.com";
     private var signIn : GPPSignIn?
@@ -31,15 +33,19 @@ class SLLockViewController: UIViewController,
     {
         super.viewDidLoad()
         
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 120.0
-        
-        rfduinoManager = RFduinoManager.sharedRFduinoManager()
-        rfduinoManager.delegate = self
-        
         configureGooglePlus()
         
-        var repo = LKLockRepository()
+        discoveryManager = LKLockDiscoveryManager(context: "ios-client")
+        
+        unlocking = false
+        
+        fetchedResultsController = getFetchedResultsController()
+        fetchedResultsController.delegate = self
+        fetchedResultsController.performFetch(nil)
+        
+        //var security = LKSecurityManager()
+        //security.generateKeyForLockName("s150-vault")
+        //security.generateKeyForLockName("s150-senate")
     }
     
     override func viewDidAppear(animated: Bool)
@@ -51,6 +57,17 @@ class SLLockViewController: UIViewController,
         {
             performSegueWithIdentifier("showLogin", sender: self)
         }
+        else
+        {
+            discoveryManager.startDiscovery()
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        super.viewWillDisappear(animated)
+        
+        discoveryManager.stopDiscovery()
     }
     
     override func didReceiveMemoryWarning()
@@ -61,133 +78,155 @@ class SLLockViewController: UIViewController,
     
     // MARK: - UITableViewDataSource Methods
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return fetchedResultsController.sections!.count
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return rfduinoManager.rfduinos.count
+        return fetchedResultsController.sections![section].numberOfObjects
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as SLLockViewCell
-        
-        var rfduino = rfduinoManager.rfduinos.objectAtIndex(indexPath.row) as RFduino
-        
-        var rssi = rfduino.advertisementRSSI.intValue;
-        
-        var advertising = "";
-        if ( rfduino.advertisementData != nil ) {
-            advertising = NSString(data: rfduino.advertisementData, encoding: NSUTF8StringEncoding)!
-        }
-        
-        var detail : NSMutableString = NSMutableString(capacity: 100)
-        detail.appendFormat("RSSI: %d dBm", rssi);
-        while ( detail.length < 25 ) {
-            detail.appendString(" ")
-        }
-        detail.appendFormat("Packets: %d\n", rfduino.advertisementPackets)
-        detail.appendFormat("%@", advertising)
-        
-        cell.titleLabel?.text = rfduino.name
-        cell.subtitleLabel?.text = detail
-        
-        if ( rfduino.outOfRange == 0 ) {
-            cell.titleLabel?.textColor = UIColor.blackColor()
-            cell.subtitleLabel?.textColor = UIColor.blackColor()
-        } else {
-            cell.titleLabel?.textColor = UIColor.grayColor()
-            cell.subtitleLabel?.textColor = UIColor.grayColor()
-        }
-        
+        var cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! SLLockViewCell
+        configureCell(cell, atIndexPath: indexPath)
         return cell
+    }
+    
+    func configureCell(cell: SLLockViewCell, atIndexPath indexPath: NSIndexPath)
+    {
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        cell.delegate = self
+        cell.setLock(lock, indexPath: indexPath)
+    }
+    
+    // MARK: - NSFetchedResultsController methods
+    
+    func getFetchedResultsController() -> NSFetchedResultsController
+    {
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext,
+            sectionNameKeyPath: nil, cacheName: nil)
+        return fetchedResultsController
+    }
+    
+    func taskFetchRequest() -> NSFetchRequest
+    {
+        let fetchRequest = NSFetchRequest(entityName: "LKLock")
+        let sortDescriptor = NSSortDescriptor(key: "proximity", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        return fetchRequest
+    }
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController)
+    {
+        if ( !unlocking )
+        {
+            self.tableView.beginUpdates()
+        }
+        
+    }
+
+    func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath?,
+        forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
+    {
+        if ( !unlocking )
+        {
+            switch type
+            {
+            case .Insert:
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .Update:
+                let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath!) as! SLLockViewCell
+                self.configureCell(cell, atIndexPath: indexPath!)
+                self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            case .Move:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .Delete:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            default:
+                return
+            }
+        }
+    }
+
+    func controllerDidChangeContent(controller: NSFetchedResultsController)
+    {
+        if ( !unlocking )
+        {
+            self.tableView.endUpdates()
+        }
     }
     
     // MARK: - UITableViewDelegate Methods
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        var rfduino = rfduinoManager.rfduinos.objectAtIndex(indexPath.row) as RFduino
-        initHandshake(rfduino)
+        performUnlock(indexPath)
     }
     
-    // MARK: - RFduino Manager Delegate Methods
-    
-    func didDiscoverRFduino(rfduino: RFduino!)
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath?
     {
-        //println("didDiscoverRFDuino: \(rfduino)")
-        tableView.reloadData()
-    }
-    
-    func didUpdateDiscoveredRFduino(rfduino: RFduino!)
-    {
-        //println("didUpdateDiscoveredRFduino: \(rfduino)")
-        tableView.reloadData()
-    }
-    
-    func didLoadServiceRFduino(rfduino: RFduino!)
-    {
-        println("didLoadServiceRFduino: \(rfduino)")
-    }
-    
-    func didConnectRFduino(rfduino: RFduino!)
-    {
-        println("didConnectRFduino: \(rfduino)")
-        
-        rfduinoManager.stopScan()
-        
-        connectedRfduino = rfduino
-        rfduino.delegate = self
-    }
-    
-    func didDisconnectRFduino(rfduino: RFduino!)
-    {
-        println("didDisconnectRFduino: \(rfduino)")
-        
-        if ( connectedRfduino != nil )
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        if ( lock.proximity.integerValue == 2 || lock.proximity.integerValue == 3 )
         {
-            connectedRfduino.delegate = nil
+            return indexPath
         }
-        
-        rfduinoManager.startScan()
+        return nil
     }
     
-    // MARK: - RFduino Delegate Methods
-    
-    func didReceive(data: NSData!)
-    {
-        println("received data: \(data)")
-        
-        verifyHandshake(data)
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        if ( lock.proximity.integerValue == 2 || lock.proximity.integerValue == 3 )
+        {
+            return true
+        }
+        return false
     }
     
-    // MARK: - Security methods
-    
-    func initHandshake(rfduino: RFduino!)
+    func performUnlock(indexPath: NSIndexPath)
     {
-        var backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        dispatch_async(backgroundQueue, { () -> Void in
-            if ( rfduino.outOfRange == 0 ) {
-                self.rfduinoManager.connectRFduino(rfduino)
+        unlocking = true
+        
+        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! SLLockViewCell
+
+        cell.showInProgress()
+        
+        self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
+            if ( success )
+            {
+                cell.showUnlocked()
+            }
+            else
+            {
+                println("ERROR opening lock: \(error.localizedDescription)")
+                
+                cell.resetUnlocked()
             }
         })
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        /*
+        var localNotification:UILocalNotification = UILocalNotification()
+        localNotification.alertAction = "Testing"
+        localNotification.alertTitle = "F3"
+        localNotification.alertBody = "UNLOCKING"
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: 20)
+        localNotification.category = "lockNotification"
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        */
     }
     
-    func verifyHandshake(data: NSData!)
+    // MARK: - SLLockViewCellDelegate Methods
+    
+    func lockCompleted()
     {
-        if ( data.length == 16 )
-        {
-            // we got a handshake, descrypt it!
-            var security = SLSecurityManager()
-            var lockId : NSString = security.decryptData(data)
-            println("lockId: \(lockId)")
-            
-            var command = NSString(format: "%@%d", "u", Int(NSDate().timeIntervalSince1970))
-            var data : NSData = security.encryptString(command)
-            
-            connectedRfduino.send(data)
-            
-            // force disconnection, in the future we could listen for the lock status and disconnect later?
-            connectedRfduino.disconnect()
-        }
+        self.unlocking = false
+        tableView.reloadData()
     }
     
     // MARK: - GPPSignInDelegate Methods
@@ -237,12 +276,18 @@ class SLLockViewController: UIViewController,
     {
         if ( signIn?.authentication != nil )
         {
-            var email = signIn?.authentication.userEmail
-            
-            // check to ensure the email is on the space150.com domain!
-            if ( validateEmail(email) == false )
+            var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
+            // first check to see if the domain matches
+            if ( plusUser == nil || plusUser.domain != "space150.com" )
             {
-                signIn?.signOut()
+                // fallback to verifying the email addres? Might want to disable this
+                var email = signIn?.authentication.userEmail
+                
+                // check to ensure the email is on the space150.com domain!
+                if ( validateEmail(email) == false )
+                {
+                    signIn?.signOut()
+                }
             }
         }
         
@@ -250,6 +295,7 @@ class SLLockViewController: UIViewController,
         {
             // if we have a google plus user object
             var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
+            println("domain: \(plusUser.domain), url: \(plusUser.url)")
             if ( plusUser != nil )
             {
                 // use the display name
@@ -278,9 +324,7 @@ class SLLockViewController: UIViewController,
                 headerNameLabel.text = "Unknown"
                 headerImageView.image = nil
             }
-            
-            headerEmailLabel.text = signIn?.authentication.userEmail
-            
+
             // if the login view controller is showing, hide it
             dismissViewControllerAnimated(true, completion: { () -> Void in
                 // nothing
@@ -289,8 +333,7 @@ class SLLockViewController: UIViewController,
         else
         {
             // clear out the header info
-            headerNameLabel.text = ""
-            headerEmailLabel.text = ""
+            headerNameLabel.text = "Unknown"
             headerImageView.image = nil
             
             // present the login view controller
@@ -300,7 +343,7 @@ class SLLockViewController: UIViewController,
     
     func validateEmail(email: NSString!) -> Bool
     {
-        var predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")!
+        var predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")
         return predicate.evaluateWithObject(email)
     }
 

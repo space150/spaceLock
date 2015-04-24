@@ -5,31 +5,40 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
     </dependencies>
     <scenes>
-        <!--Interface Controller-->
+        <!--Locks-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="spacelab_WatchKit_App" customModuleProvider="target">
+                <controller identifier="Main" title="Locks" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="spacelab_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <group width="1" alignment="left" id="Nwr-oB-EoO">
-                            <items>
-                                <label alignment="center" verticalAlignment="center" text="Locks" textAlignment="center" id="KJE-CB-vSE"/>
-                            </items>
-                        </group>
-                        <separator alignment="left" id="zzo-Ji-n6g"/>
                         <table alignment="left" id="Obz-hf-ShK">
                             <items>
                                 <tableRow identifier="lockRowController" id="gLi-cq-tRE" customClass="SLLockRowType" customModule="spacelab_WatchKit_Extension">
-                                    <group key="rootItem" width="1" alignment="left" id="ix2-Po-wPn">
+                                    <group key="rootItem" width="1" height="57" alignment="left" id="ix2-Po-wPn">
                                         <items>
-                                            <imageView width="44" alignment="left" verticalAlignment="center" id="9Sm-iw-K6y"/>
-                                            <label height="38" alignment="left" verticalAlignment="center" text="Name" id="tmY-dY-1M2">
-                                                <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
-                                            </label>
+                                            <group width="30" height="57" alignment="left" id="hOo-sN-7G7">
+                                                <items>
+                                                    <imageView width="23" height="35" alignment="left" image="lock-normal" id="efl-n2-gfQ"/>
+                                                </items>
+                                                <edgeInsets key="margins" left="7" right="0.0" top="9" bottom="0.0"/>
+                                            </group>
+                                            <group height="57" alignment="left" verticalAlignment="center" layout="vertical" spacing="0.0" id="s0Z-n5-5Sc">
+                                                <items>
+                                                    <label alignment="left" text="DOOR NAME" id="aCc-mi-A1T">
+                                                        <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                                    </label>
+                                                    <label alignment="left" text="UNLOCKED!" minimumScaleFactor="0.5" id="NUi-og-K3x">
+                                                        <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                                    </label>
+                                                </items>
+                                                <edgeInsets key="margins" left="7" right="0.0" top="8" bottom="0.0"/>
+                                            </group>
                                         </items>
                                     </group>
                                     <connections>
-                                        <outlet property="rowImage" destination="9Sm-iw-K6y" id="eC2-qd-KYd"/>
-                                        <outlet property="rowTitleLabel" destination="tmY-dY-1M2" id="6zw-xx-I8F"/>
+                                        <outlet property="backgroundGroup" destination="ix2-Po-wPn" id="bHQ-wU-JCH"/>
+                                        <outlet property="doorNameLabel" destination="aCc-mi-A1T" id="MQI-bn-ZqG"/>
+                                        <outlet property="lockImage" destination="efl-n2-gfQ" id="MKp-3r-YBY"/>
+                                        <outlet property="statusLabel" destination="NUi-og-K3x" id="hbL-zE-jbB"/>
                                     </connections>
                                 </tableRow>
                             </items>
@@ -45,30 +54,49 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="345"/>
+            <point key="canvasLocation" x="-325" y="217"/>
+        </scene>
+        <!--Error-->
+        <scene sceneID="ev2-dq-SA1">
+            <objects>
+                <controller identifier="Error" id="tOK-as-QlL" customClass="SLErrorInterfaceController" customModule="spacelab_WatchKit_Extension">
+                    <items>
+                        <label width="0.90000000000000002" height="1" heightAdjustment="-44" alignment="center" text="Error Message" textAlignment="center" numberOfLines="5" minimumScaleFactor="0.5" id="0vq-C4-F2V"/>
+                        <button width="1" alignment="center" verticalAlignment="bottom" title="OK" id="VHm-Fk-ZwU">
+                            <connections>
+                                <action selector="okPressed" destination="tOK-as-QlL" id="0VN-UI-x9M"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="errorLabel" destination="0vq-C4-F2V" id="SV8-wx-adc"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-116" y="218"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
             <objects>
                 <notificationController id="YCC-NB-fut">
                     <items>
-                        <label alignment="left" text="Alert Label" id="IdU-wH-bcW"/>
+                        <label alignment="left" text="Static Alert Label" id="IdU-wH-bcW"/>
                     </items>
-                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <notificationCategory key="notificationCategory" identifier="lockNotification" id="JfB-70-Muf"/>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
                         <segue destination="4sK-HA-Art" kind="relationship" relationship="dynamicNotificationInterface" id="kXh-Jw-8B1"/>
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="220" y="643"/>
+            <point key="canvasLocation" x="-325" y="468"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="ZPc-GJ-vnh">
             <objects>
                 <controller id="4sK-HA-Art" customClass="NotificationController" customModule="spacelab_WatchKit_App" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="468" y="643"/>
+            <point key="canvasLocation" x="-116" y="468"/>
         </scene>
     </scenes>
 </document>
