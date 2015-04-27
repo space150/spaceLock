@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A90AE1B61AD4467000CFA0F8 /* MMWormhole.h in Headers */ = {isa = PBXBuildFile; fileRef = A90AE1B41AD4467000CFA0F8 /* MMWormhole.h */; };
 		A90AE1B71AD4467000CFA0F8 /* MMWormhole.m in Sources */ = {isa = PBXBuildFile; fileRef = A90AE1B51AD4467000CFA0F8 /* MMWormhole.m */; };
+		A90FAE471AEE76F600D622B4 /* Default-Keychain.plist in Resources */ = {isa = PBXBuildFile; fileRef = A98D4FBE1AE05F9000EF3E72 /* Default-Keychain.plist */; };
 		A922B8201AC20742007BE266 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
 		A922B8221AC20746007BE266 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
 		A922B8241AC2074D007BE266 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
@@ -797,6 +798,7 @@
 			files = (
 				A94F5F751AC3034400279E9D /* Images.xcassets in Resources */,
 				A94F5F901AC3037200279E9D /* GooglePlus.bundle in Resources */,
+				A90FAE471AEE76F600D622B4 /* Default-Keychain.plist in Resources */,
 				A94F5F791AC3034400279E9D /* spacelab WatchKit App.app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1052,10 +1054,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 9;
+				DYLIB_CURRENT_VERSION = 10;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1084,10 +1086,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 9;
+				DYLIB_CURRENT_VERSION = 10;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
