@@ -57,10 +57,6 @@ class SLLockViewController: UIViewController,
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
-        
-        //var security = LKSecurityManager()
-        //security.generateKeyForLockName("s150-vault")
-        //security.generateKeyForLockName("s150-senate")
     }
     
     override func viewDidAppear(animated: Bool)
@@ -76,6 +72,9 @@ class SLLockViewController: UIViewController,
         {
             discoveryManager.startDiscovery()
         }
+        
+        //var security = LKSecurityManager()
+        //security.generateKeyForLockName("s150-sl")
     }
     
     override func viewWillDisappear(animated: Bool)
