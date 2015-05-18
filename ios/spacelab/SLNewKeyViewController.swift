@@ -226,26 +226,26 @@ class SLNewKeyViewController: UITableViewController, SLKeyOutputViewCellDelegate
             }
             else
             {
-                // find or update coredata entry
-                var key: LKKey;
-                let fetchRequest = NSFetchRequest(entityName: "LKKey")
-                fetchRequest.predicate = NSPredicate(format: "lockId == %@", lockId)
-                let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
-                if ( fetchResults?.count > 0 )
-                {
-                    key = fetchResults?.first as! LKKey
-                    key.lockName = lockName
-                }
-                else
-                {
-                    key = NSEntityDescription.insertNewObjectForEntityForName("LKKey", inManagedObjectContext: LKLockRepository.sharedInstance().managedObjectContext!!) as! LKKey
-                    key.lockId = lockId
-                    key.lockName = lockName
-                }
-                LKLockRepository.sharedInstance().saveContext()
-                
                 // update the UI on the main thread
                 dispatch_async(dispatch_get_main_queue(), {
+             
+                    // find or update coredata entry
+                    var key: LKKey;
+                    let fetchRequest = NSFetchRequest(entityName: "LKKey")
+                    fetchRequest.predicate = NSPredicate(format: "lockId == %@", lockId)
+                    let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
+                    if ( fetchResults?.count > 0 )
+                    {
+                        key = fetchResults?.first as! LKKey
+                        key.lockName = lockName
+                    }
+                    else
+                    {
+                        key = NSEntityDescription.insertNewObjectForEntityForName("LKKey", inManagedObjectContext: LKLockRepository.sharedInstance().managedObjectContext!!) as! LKKey
+                        key.lockId = lockId
+                        key.lockName = lockName
+                    }
+                    LKLockRepository.sharedInstance().saveContext()
                     
                     // display sketch info
                     self.outputLabel.text = NSString(format: "#define LOCK_NAME \"%@\"\nbyte key[] = {\n%@\n};\nchar handshake[] = {\n%@\n};", lockId,

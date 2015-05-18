@@ -182,8 +182,23 @@ class SLKeyListViewController: UITableViewController,
                 }
             }
             
-            // remove coredata entry
+            // remove coredata entries for any locks using the key
+            let fetchRequest = NSFetchRequest(entityName: "LKLock")
+            fetchRequest.predicate = NSPredicate(format: "lockId == %@", key.lockId)
+            let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
+            if let locks = fetchResults   // check for nil and unwrap
+            {
+                for lock in locks as! [LKLock]
+                {
+                    LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(lock)
+                }
+            }
+            
+            // LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(fetchResults[0])
+            
+            // remove coredata entry for the key
             LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(key)
+            
             LKLockRepository.sharedInstance().saveContext()
         }
     }
