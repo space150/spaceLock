@@ -25,6 +25,7 @@
 import WatchKit
 import Foundation
 import LockKit
+import KeychainAccess
 
 class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDelegate
 {
@@ -32,12 +33,16 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
 
     private var discoveryManager: LKLockDiscoveryManager!
     private var fetchedResultsController : NSFetchedResultsController!
+    private var keychain: Keychain!
     
     override func awakeWithContext(context: AnyObject?)
     {
         super.awakeWithContext(context)
         
         discoveryManager = LKLockDiscoveryManager(context: "watchkit-ext")
+        
+        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS)
+            .accessibility(.WhenUnlocked, authenticationPolicy: .UserPresence)
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
@@ -89,9 +94,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     
     func getFetchedResultsController() -> NSFetchedResultsController
     {
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(),
-            managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext, sectionNameKeyPath: nil,
-            cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext!!, sectionNameKeyPath: nil, cacheName: nil)
         return fetchedResultsController
     }
     
@@ -143,21 +146,40 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         {
             row.showInProgress()
             
-            discoveryManager.openLock(lock, complete: { (success, error) -> Void in
-                if ( success )
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                let failable = self.keychain
+                    .authenticationPrompt("Retreive key for lock")
+                    .getDataOrError(lock.lockId)
+                
+                if failable.succeeded
                 {
-                    row.showUnlocked()
+                    self.discoveryManager.openLock(lock, withKey:failable.value!, complete: { (success, error) -> Void in
+                        if ( success )
+                        {
+                            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                            
+                            row.showUnlocked()
+                        }
+                        else
+                        {
+                            println("Error opening lock: \(error.localizedDescription)")
+                            
+                            row.resetUnlocked()
+                            
+                            self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
+                        }
+                    })
+                    
                 }
                 else
                 {
-                    println("Error opening lock: \(error.localizedDescription)")
+                    println("error: \(failable.error?.localizedDescription)")
                     
                     row.resetUnlocked()
                     
-                    self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
+                    self.presentControllerWithName("Error", context: ["segue": "modal", "data": failable.error!])
                 }
-                
-            })
+            }
         }
     }
 

@@ -29,120 +29,46 @@
 
 @interface LKSecurityManager ()
 
-@property (nonatomic, retain) NSDictionary *keys;
-
 @end
 
 @implementation LKSecurityManager
-
-- (id)init
+- (NSData *)generateNewKeyForLockName:(NSString *)lockName
 {
-    self = [super init];
-    if ( self != nil )
+    // generate key
+    NSMutableData* newKey = [NSMutableData dataWithCapacity:kCCBlockSizeAES128];
+    for( unsigned int i = 0 ; i < kCCBlockSizeAES128; i++ )
     {
-        [self loadKeysFromStore];
+        u_int32_t byte = arc4random();
+        [newKey appendBytes:(void*)&byte length:1];
     }
-    return self;
+    
+    return newKey;    
 }
 
-- (void)loadKeysFromStore
+- (NSData *)encryptString:(NSString *)text withKey:(NSData *)keyData
 {
-    self.keys = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default-Keychain" ofType:@"plist"]];
+    NSData *input = [text dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error = nil;
+    NSData *output = [self cryptoOperation:kCCEncrypt key:keyData input:input error:&error];
+    if ( output == nil )
+    {
+        NSLog(@"Unable to encrypt string: %@", [error localizedDescription]);
+        return nil;
+    }
+    return output;
 }
 
-- (void)generateKeyForLockName:(NSString *)lockName
+- (NSString *)decryptData:(NSData *)input withKey:(NSData *)keyData
 {
-    NSMutableDictionary *entry = (NSMutableDictionary *)[[self.keys objectForKey:lockName] mutableCopy];
-    if ( entry != nil )
+    NSError *error = nil;
+    NSData *output = [self cryptoOperation:kCCDecrypt key:keyData input:input error:&error];
+    if ( output == nil )
     {
-        // generate key
-        NSMutableData* newKey = [NSMutableData dataWithCapacity:kCCBlockSizeAES128];
-        for( unsigned int i = 0 ; i < kCCBlockSizeAES128; i++ )
-        {
-            u_int32_t byte = arc4random();
-            [newKey appendBytes:(void*)&byte length:1];
-        }
-        
-        // set the newly generated key
-        [entry setValue:newKey forKey:@"key"];
-        
-        NSMutableDictionary *keys = [self.keys mutableCopy];
-        [keys setValue:entry forKey:lockName];
-        
-        // save it
-        NSError *error;
-        NSString *localizedPath = [[NSBundle mainBundle] pathForResource:@"Default-Keychain" ofType:@"plist"];
-        NSData *xmlData = [NSPropertyListSerialization dataWithPropertyList:keys format:NSPropertyListXMLFormat_v1_0  options:0 error:&error];
-        if (xmlData)
-        {
-            [xmlData writeToFile:localizedPath atomically:YES];
-            NSLog(@"wrote new plist data to: %@", localizedPath);
-        }
-        else
-        {
-            NSLog(@"Error writing plist to file '%@', error = '%@'", localizedPath, [error localizedDescription]);
-        }
-        NSLog(@"wrote new plist data to: %@", localizedPath);
-        
-        [self loadKeysFromStore];
-        
-        // create the handshake and output to console
-        NSData *handshake = [self encryptString:lockName forLockName:lockName];
-        NSLog(@"%@ has a new key: %@", lockName, [newKey hexadecimalString]);
-        NSLog(@"handshake: %@", [handshake hexadecimalString]);
+        NSLog(@"Unable to decrypt string: %@", [error localizedDescription]);
+        return nil;
     }
-    else
-    {
-        NSLog(@"Error - unable to find a keychain entry for lockName: %@", lockName);
-    }
-
-}
-
-
-- (NSData *)encryptString:(NSString *)text forLockName:(NSString *)lockName
-{
-    NSDictionary *keyEntry = [self.keys objectForKey:lockName];
-    if ( keyEntry != nil )
-    {
-        NSData *keyData = (NSData *)[keyEntry objectForKey:@"key"];
-        NSData *input = [text dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error = nil;
-        NSData *output = [self cryptoOperation:kCCEncrypt key:keyData input:input error:&error];
-        if ( output == nil )
-        {
-            NSLog(@"Unable to encrypt string: %@", [error localizedDescription]);
-            return nil;
-        }
-        return output;
-    }
-    else
-    {
-        NSLog(@"unable to encrypt, could not find keychain entry for lockName: %@", lockName);
-    }
-    return nil;
-}
-
-- (NSString *)decryptData:(NSData *)input forLockName:(NSString *)lockName
-{
-    NSDictionary *keyEntry = [self.keys objectForKey:lockName];
-    if ( keyEntry != nil )
-    {
-        NSData *keyData = (NSData *)[keyEntry objectForKey:@"key"];
-        NSError *error = nil;
-        NSData *output = [self cryptoOperation:kCCDecrypt key:keyData input:input error:&error];
-        if ( output == nil )
-        {
-            NSLog(@"Unable to descrypt string: %@", [error localizedDescription]);
-            return nil;
-        }
-        
-        return [NSString stringWithUTF8String:[output bytes]];
-    }
-    else
-    {
-        NSLog(@"unable to decrypt, could not find keychain entry for lockName: %@", lockName);
-    }
-    return nil;
+    
+    return [NSString stringWithUTF8String:[output bytes]];
 }
 
 - (NSData *)cryptoOperation:(CCOperation)operation
