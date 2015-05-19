@@ -47,8 +47,7 @@ class SLShowKeyViewController: UITableViewController,
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS)
-            .accessibility(.AfterFirstUnlock, authenticationPolicy: .UserPresence)
+        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS).accessibility(.WhenUnlocked)
         security = LKSecurityManager()
         
         setupIconImageCircle()
@@ -65,7 +64,10 @@ class SLShowKeyViewController: UITableViewController,
     {
         lockIdLabel.text = key.lockId;
         lockNameLabel.text = key.lockName;
-        iconImageButton.setImage(UIImage(contentsOfFile: key.imageFilename), forState: UIControlState.Normal)
+        if ( key.imageFilename != nil )
+        {
+            iconImageButton.setImage(UIImage(contentsOfFile: key.imageFilename), forState: UIControlState.Normal)
+        }
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             let failable = self.keychain

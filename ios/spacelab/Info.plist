@@ -27,6 +27,7 @@
 			<string>com.space150.ent.spacelab</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>db-8b7gmvm388v2iu4</string>
 				<string>com.space150.ent.spacelab</string>
 			</array>
 		</dict>

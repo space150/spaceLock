@@ -35,7 +35,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         
+        let dbSession = DBSession(appKey: "8b7gmvm388v2iu4", appSecret: "u6brwgkfqen9i6b", root: kDBRootAppFolder)
+        DBSession.setSharedSession(dbSession)
+        
         return true
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
+    {
+        if ( DBSession.sharedSession().handleOpenURL(url) )
+        {
+            if ( DBSession.sharedSession().isLinked() )
+            {
+                println("Dropbox & app linked successfully!")
+            }
+            return true
+        }
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {

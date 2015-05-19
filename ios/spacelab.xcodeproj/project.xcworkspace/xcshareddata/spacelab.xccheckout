@@ -22,7 +22,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</key>
-		<string>../../..ios/LockKit/KeychainAccess/</string>
+		<string>../../..ios/LockKit/KeychainAccess</string>
 		<key>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</key>
 		<string>../../..</string>
 		<key>F002A2BBDEEC040886A23B543188B7446116F16E</key>

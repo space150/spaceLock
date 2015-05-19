@@ -50,8 +50,7 @@ class SLNewKeyViewController: UITableViewController,
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS)
-            .accessibility(.AfterFirstUnlock, authenticationPolicy: .UserPresence)
+        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS).accessibility(.WhenUnlocked)
         security = LKSecurityManager()
         
         sectionCount = 1
@@ -339,7 +338,7 @@ class SLNewKeyViewController: UITableViewController,
         presentViewController(picker, animated: true, completion: nil)
     }
     
-    //MARK: UIImagePickerControllerDelegate Methods
+    //MARK: - UIImagePickerControllerDelegate Methods
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
     {
@@ -354,6 +353,8 @@ class SLNewKeyViewController: UITableViewController,
     {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    // MARK: - Image Manipulation
     
     // image orientation fix from http://stackoverflow.com/a/27083555
     

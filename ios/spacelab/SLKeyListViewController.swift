@@ -40,8 +40,7 @@ class SLKeyListViewController: UITableViewController,
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS)
-            .accessibility(.AfterFirstUnlock, authenticationPolicy: .UserPresence)
+        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS).accessibility(.WhenUnlocked)
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
@@ -220,8 +219,6 @@ class SLKeyListViewController: UITableViewController,
                     LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(lock)
                 }
             }
-            
-            // LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(fetchResults[0])
             
             // remove coredata entry for the key
             LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(key)
