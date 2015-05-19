@@ -51,6 +51,7 @@
 		A96D7B3D1B0A8164008AA0FC /* KeychainAccess.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9D338BF1B0A2356005887FC /* KeychainAccess.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96D7B451B0A8E03008AA0FC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96D7B441B0A8E03008AA0FC /* AudioToolbox.framework */; };
 		A96D7B461B0A8E0B008AA0FC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96D7B441B0A8E03008AA0FC /* AudioToolbox.framework */; };
+		A96D7B4A1B0AAB5B008AA0FC /* SLShowKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96D7B491B0AAB5B008AA0FC /* SLShowKeyViewController.swift */; };
 		A9787A3D1ACB6E0F002F54AC /* RFduino.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638A1ABC9DD60022A871 /* RFduino.m */; };
 		A9787A3E1ACB6E0F002F54AC /* RfduinoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */; };
 		A9787A3F1ACB6E18002F54AC /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B763841ABC92760022A871 /* NSData+Conversion.m */; };
@@ -259,6 +260,7 @@
 		A96D7B341B0A51F8008AA0FC /* LKKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKKey.m; path = LockKit/LKKey.m; sourceTree = SOURCE_ROOT; };
 		A96D7B381B0A7817008AA0FC /* SLKeyOutputViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLKeyOutputViewCell.swift; sourceTree = "<group>"; };
 		A96D7B441B0A8E03008AA0FC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A96D7B491B0AAB5B008AA0FC /* SLShowKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLShowKeyViewController.swift; sourceTree = "<group>"; };
 		A9787A401ACB6E36002F54AC /* LKSecurityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LKSecurityManager.h; path = LockKit/LKSecurityManager.h; sourceTree = SOURCE_ROOT; };
 		A9787A411ACB6E36002F54AC /* LKSecurityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LKSecurityManager.m; path = LockKit/LKSecurityManager.m; sourceTree = SOURCE_ROOT; };
 		A993836F1ACA1ED200ECA0D0 /* LockKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LockKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -700,6 +702,7 @@
 				A96D7B3A1B0A783D008AA0FC /* Table View Cells */,
 				A9D338CC1B0A2472005887FC /* SLKeyListViewController.swift */,
 				A96D7B2D1B0A39A4008AA0FC /* SLNewKeyViewController.swift */,
+				A96D7B491B0AAB5B008AA0FC /* SLShowKeyViewController.swift */,
 			);
 			name = Keys;
 			sourceTree = "<group>";
@@ -1039,6 +1042,7 @@
 			files = (
 				A9AF3CAE1AFAF1240050C138 /* VideoPlayerViewController.m in Sources */,
 				A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */,
+				A96D7B4A1B0AAB5B008AA0FC /* SLShowKeyViewController.swift in Sources */,
 				A96D7B2E1B0A39A4008AA0FC /* SLNewKeyViewController.swift in Sources */,
 				A9D338CF1B0A253C005887FC /* SLKeyViewCell.swift in Sources */,
 				A9D338CD1B0A2472005887FC /* SLKeyListViewController.swift in Sources */,

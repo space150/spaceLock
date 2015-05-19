@@ -10,16 +10,20 @@ import UIKit
 import LockKit
 import KeychainAccess
 
-class SLNewKeyViewController: UITableViewController, SLKeyOutputViewCellDelegate
+class SLNewKeyViewController: UITableViewController,
+    SLKeyOutputViewCellDelegate,
+    UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate
 {
     @IBOutlet weak var lockIdLabel: UITextField!
     @IBOutlet weak var lockNameLabel: UITextField!
-    @IBOutlet weak var generateKeyButton: UIButton!
+    @IBOutlet weak var iconImageButton: UIButton!
     @IBOutlet weak var outputLabel: UILabel!
     
     private var keychain: Keychain!
     private var security: LKSecurityManager!
     private var sectionCount: Int!
+    private var takenImage: UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,15 +40,28 @@ class SLNewKeyViewController: UITableViewController, SLKeyOutputViewCellDelegate
         
         sectionCount = 1
         
-        generateKeyButton.clipsToBounds = true
-        generateKeyButton.layer.cornerRadius = 5.0
-        generateKeyButton.layer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0).CGColor
-        generateKeyButton.layer.borderWidth = 1.0
+        setupIconImageCircle()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func setupIconImageCircle()
+    {
+        var path = UIBezierPath(ovalInRect: iconImageButton.bounds)
+        
+        var maskLayer = CAShapeLayer()
+        maskLayer.path = path.CGPath
+        iconImageButton.layer.mask = maskLayer
+        
+        var outlineLayer = CAShapeLayer()
+        outlineLayer.lineWidth = 10.0
+        outlineLayer.fillColor = UIColor.clearColor().CGColor
+        outlineLayer.strokeColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0).CGColor
+        outlineLayer.path = path.CGPath
+        iconImageButton.layer.addSublayer(outlineLayer)
     }
 
     // MARK: - Table view data source
@@ -228,6 +245,17 @@ class SLNewKeyViewController: UITableViewController, SLKeyOutputViewCellDelegate
             {
                 // update the UI on the main thread
                 dispatch_async(dispatch_get_main_queue(), {
+                    
+                    // save the image to the filesystem
+                    if ( self.takenImage != nil )
+                    {
+                        var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
+                        let success = UIImagePNGRepresentation(self.takenImage)
+                            .writeToFile(path, atomically: true)
+                        if ( success == true ) {
+                            println("saved image to: \(path)")
+                        }
+                    }
              
                     // find or update coredata entry
                     var key: LKKey;
@@ -259,4 +287,163 @@ class SLNewKeyViewController: UITableViewController, SLKeyOutputViewCellDelegate
             }
         }
     }
+    
+    // MARK: - Icon Image Selection
+    
+    @IBAction func iconImageButtonTouched(sender: AnyObject)
+    {
+        var picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = false
+        picker.sourceType = UIImagePickerControllerSourceType.Camera
+        picker.cameraCaptureMode = .Photo
+        presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    //MARK: UIImagePickerControllerDelegate Methods
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
+    {
+        var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        takenImage = RBSquareImageTo(fixImageOrientation(chosenImage), size:CGSize(width: 300.0, height: 300.0))
+        iconImageButton.setImage(takenImage, forState: UIControlState.Normal)
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController)
+    {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // image orientation fix from http://stackoverflow.com/a/27083555
+    
+    private func fixImageOrientation(img:UIImage) -> UIImage
+    {
+        // No-op if the orientation is already correct
+        if (img.imageOrientation == UIImageOrientation.Up) {
+            return img;
+        }
+        // We need to calculate the proper transformation to make the image upright.
+        // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+        var transform:CGAffineTransform = CGAffineTransformIdentity
+        
+        if (img.imageOrientation == UIImageOrientation.Down
+            || img.imageOrientation == UIImageOrientation.DownMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, img.size.width, img.size.height)
+                transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
+        }
+        
+        if (img.imageOrientation == UIImageOrientation.Left
+            || img.imageOrientation == UIImageOrientation.LeftMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, img.size.width, 0)
+                transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
+        }
+        
+        if (img.imageOrientation == UIImageOrientation.Right
+            || img.imageOrientation == UIImageOrientation.RightMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, 0, img.size.height);
+                transform = CGAffineTransformRotate(transform,  CGFloat(-M_PI_2));
+        }
+        
+        if (img.imageOrientation == UIImageOrientation.UpMirrored
+            || img.imageOrientation == UIImageOrientation.DownMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, img.size.width, 0)
+                transform = CGAffineTransformScale(transform, -1, 1)
+        }
+        
+        if (img.imageOrientation == UIImageOrientation.LeftMirrored
+            || img.imageOrientation == UIImageOrientation.RightMirrored) {
+                
+                transform = CGAffineTransformTranslate(transform, img.size.height, 0);
+                transform = CGAffineTransformScale(transform, -1, 1);
+        }
+        
+        
+        // Now we draw the underlying CGImage into a new context, applying the transform
+        // calculated above.
+        var ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height),
+            CGImageGetBitsPerComponent(img.CGImage), 0,
+            CGImageGetColorSpace(img.CGImage),
+            CGImageGetBitmapInfo(img.CGImage));
+        CGContextConcatCTM(ctx, transform)
+        
+        
+        if (img.imageOrientation == UIImageOrientation.Left
+            || img.imageOrientation == UIImageOrientation.LeftMirrored
+            || img.imageOrientation == UIImageOrientation.Right
+            || img.imageOrientation == UIImageOrientation.RightMirrored
+            )
+        {
+            CGContextDrawImage(ctx, CGRectMake(0,0,img.size.height,img.size.width), img.CGImage)
+        } else {
+            CGContextDrawImage(ctx, CGRectMake(0,0,img.size.width,img.size.height), img.CGImage)
+        }
+        
+        // And now we just create a new UIImage from the drawing context
+        var cgimg:CGImageRef = CGBitmapContextCreateImage(ctx)
+        var imgEnd:UIImage = UIImage(CGImage: cgimg)!
+        
+        return imgEnd
+    }
+    
+    // square cropped image from https://gist.github.com/hcatlin/180e81cd961573e3c54d
+    
+    func RBSquareImageTo(image: UIImage, size: CGSize) -> UIImage
+    {
+        return RBResizeImage(RBSquareImage(image), targetSize: size)
+    }
+    
+    func RBSquareImage(image: UIImage) -> UIImage
+    {
+        var originalWidth  = image.size.width
+        var originalHeight = image.size.height
+        
+        var edge: CGFloat
+        if originalWidth > originalHeight {
+            edge = originalHeight
+        } else {
+            edge = originalWidth
+        }
+        
+        var posX = (originalWidth  - edge) / 2.0
+        var posY = (originalHeight - edge) / 2.0
+        
+        var cropSquare = CGRectMake(posX, posY, edge, edge)
+        
+        var imageRef = CGImageCreateWithImageInRect(image.CGImage, cropSquare);
+        return UIImage(CGImage: imageRef, scale: UIScreen.mainScreen().scale, orientation: image.imageOrientation)!
+    }
+    
+    func RBResizeImage(image: UIImage, targetSize: CGSize) -> UIImage
+    {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / image.size.width
+        let heightRatio = targetSize.height / image.size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
+        } else {
+            newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
+        }
+        
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+        
+        // Actually do the resizing to the rect using the ImageContext stuff
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.drawInRect(rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
 }

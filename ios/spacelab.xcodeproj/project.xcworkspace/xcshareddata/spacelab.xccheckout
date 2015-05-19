@@ -10,6 +10,10 @@
 	<string>spacelab</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</key>
+		<string>https://github.com/kishikawakatsumi/KeychainAccess.git</string>
+		<key>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</key>
+		<string>https://github.com/space150/spaceLock.git</string>
 		<key>F002A2BBDEEC040886A23B543188B7446116F16E</key>
 		<string>github.space150.com:space150/spacelab-lock.git</string>
 	</dict>
@@ -17,17 +21,29 @@
 	<string>ios/spacelab.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F002A2BBDEEC040886A23B543188B7446116F16E</key>
+		<key>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</key>
+		<string>../../..ios/LockKit/KeychainAccess/</string>
+		<key>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</key>
 		<string>../../..</string>
+		<key>F002A2BBDEEC040886A23B543188B7446116F16E</key>
+		<string>../../../../spacelab</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.space150.com:space150/spacelab-lock.git</string>
+	<string>https://github.com/space150/spaceLock.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F002A2BBDEEC040886A23B543188B7446116F16E</string>
+	<string>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>KeychainAccess</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
@@ -35,6 +51,14 @@
 			<string>F002A2BBDEEC040886A23B543188B7446116F16E</string>
 			<key>IDESourceControlWCCName</key>
 			<string>spacelab</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</string>
+			<key>IDESourceControlWCCName</key>
+			<string>spaceLock</string>
 		</dict>
 	</array>
 </dict>

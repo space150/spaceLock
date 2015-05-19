@@ -37,6 +37,11 @@ class SLKeyListViewController: UITableViewController,
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
+    }
 
     // MARK: - Table view data source
 
@@ -98,15 +103,17 @@ class SLKeyListViewController: UITableViewController,
     }
     */
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if ( segue.identifier == "showKey" )
+        {
+            let key: LKKey = fetchedResultsController.objectAtIndexPath(self.tableView.indexPathForSelectedRow()!) as! LKKey
+            var controller: SLShowKeyViewController = segue.destinationViewController as! SLShowKeyViewController
+            controller.key = key
+        }
     }
-    */
     
     @IBAction func generateKeyTouched(sender: AnyObject)
     {
