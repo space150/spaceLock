@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>s150-sl</key>
+	<dict>
+		<key>icon</key>
+		<string>icon-lab</string>
+		<key>key</key>
+		<data>zuNZjqSbpNiHKyCOA9mfzQ==</data>
+		<key>name</key>
+		<string>spaceLab</string>
+	</dict>
 	<key>s150-senate</key>
 	<dict>
 		<key>icon</key>

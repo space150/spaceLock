@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A90AE1B61AD4467000CFA0F8 /* MMWormhole.h in Headers */ = {isa = PBXBuildFile; fileRef = A90AE1B41AD4467000CFA0F8 /* MMWormhole.h */; };
 		A90AE1B71AD4467000CFA0F8 /* MMWormhole.m in Sources */ = {isa = PBXBuildFile; fileRef = A90AE1B51AD4467000CFA0F8 /* MMWormhole.m */; };
+		A90FAE471AEE76F600D622B4 /* Default-Keychain.plist in Resources */ = {isa = PBXBuildFile; fileRef = A98D4FBE1AE05F9000EF3E72 /* Default-Keychain.plist */; };
 		A922B8201AC20742007BE266 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
 		A922B8221AC20746007BE266 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8211AC20746007BE266 /* AssetsLibrary.framework */; };
 		A922B8241AC2074D007BE266 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B8231AC2074D007BE266 /* Foundation.framework */; };
@@ -69,7 +70,6 @@
 		A9A1740B1ACA2015003C2E32 /* LKLockRepository.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A174091ACA2015003C2E32 /* LKLockRepository.m */; };
 		A9A174471ACA3097003C2E32 /* LKLockDiscoveryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */; };
 		A9A174481ACA3097003C2E32 /* LKLockDiscoveryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */; };
-		A9AB41B61ACD8BDB00357365 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AB41B51ACD8BDB00357365 /* MBProgressHUD.m */; };
 		A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763501ABC88A80022A871 /* AppDelegate.swift */; };
 		A9B763541ABC88A80022A871 /* spacelab.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B763521ABC88A80022A871 /* spacelab.xcdatamodeld */; };
 		A9B763591ABC88A80022A871 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9B763571ABC88A80022A871 /* Main.storyboard */; };
@@ -78,8 +78,6 @@
 		A9B7636A1ABC88A80022A871 /* spacelabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763691ABC88A80022A871 /* spacelabTests.swift */; };
 		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
 		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
-		A9BF05421AD2EC8A00628900 /* DIN Condensed Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9BF05401AD2EC8A00628900 /* DIN Condensed Bold.ttf */; };
-		A9BF05431AD2EC8A00628900 /* DINPro-CondLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9BF05411AD2EC8A00628900 /* DINPro-CondLight.ttf */; };
 		A9E055E11AE8A589007C2826 /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83B1AC20861007BE266 /* GoogleOpenSource.framework */; };
 		A9E055E21AE8A58D007C2826 /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B83C1AC20861007BE266 /* GooglePlus.framework */; };
 		A9E055E31AE8A59E007C2826 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
@@ -218,8 +216,6 @@
 		A9A174091ACA2015003C2E32 /* LKLockRepository.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLockRepository.m; sourceTree = "<group>"; };
 		A9A174451ACA3097003C2E32 /* LKLockDiscoveryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLockDiscoveryManager.h; sourceTree = "<group>"; };
 		A9A174461ACA3097003C2E32 /* LKLockDiscoveryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLockDiscoveryManager.m; sourceTree = "<group>"; };
-		A9AB41B41ACD8BDB00357365 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = SOURCE_ROOT; };
-		A9AB41B51ACD8BDB00357365 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = SOURCE_ROOT; };
 		A9B7634B1ABC88A80022A871 /* spacelab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spacelab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B7634F1ABC88A80022A871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9B763501ABC88A80022A871 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -241,8 +237,6 @@
 		A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RfduinoManager.m; sourceTree = "<group>"; };
 		A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoManagerDelegate.h; sourceTree = "<group>"; };
 		A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockViewCell.swift; sourceTree = "<group>"; };
-		A9BF05401AD2EC8A00628900 /* DIN Condensed Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DIN Condensed Bold.ttf"; path = "Assets/DIN Condensed Bold.ttf"; sourceTree = SOURCE_ROOT; };
-		A9BF05411AD2EC8A00628900 /* DINPro-CondLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DINPro-CondLight.ttf"; path = "Assets/DINPro-CondLight.ttf"; sourceTree = SOURCE_ROOT; };
 		A9F6B3E61AE612410018AE33 /* startup-movie.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "startup-movie.mp4"; path = "Assets/startup-movie.mp4"; sourceTree = SOURCE_ROOT; };
 		A9F6B3EB1AE6138D0018AE33 /* VideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerView.h; sourceTree = "<group>"; };
 		A9F6B3EC1AE6138D0018AE33 /* VideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPlayerView.m; sourceTree = "<group>"; };
@@ -448,15 +442,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A9AB41B31ACD8BC700357365 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				A9AB41B41ACD8BDB00357365 /* MBProgressHUD.h */,
-				A9AB41B51ACD8BDB00357365 /* MBProgressHUD.m */,
-			);
-			name = MBProgressHUD;
-			sourceTree = "<group>";
-		};
 		A9B763421ABC88A80022A871 = {
 			isa = PBXGroup;
 			children = (
@@ -488,7 +473,6 @@
 			isa = PBXGroup;
 			children = (
 				A9F6B3EA1AE6138D0018AE33 /* VideoPlayer */,
-				A9AB41B31ACD8BC700357365 /* MBProgressHUD */,
 				A922B8181AC202A5007BE266 /* GooglePlus */,
 				A9B763821ABC91580022A871 /* Controllers */,
 				A9B763501ABC88A80022A871 /* AppDelegate.swift */,
@@ -505,7 +489,6 @@
 			isa = PBXGroup;
 			children = (
 				A9F6B3E51AE612360018AE33 /* Movies */,
-				A9BF053F1AD2EC7C00628900 /* Fonts */,
 				A99F66081ACA0EC00052D927 /* spacelab.entitlements */,
 				A9B763801ABC90A30022A871 /* spacelab-Bridging-Header.h */,
 				A9B7634F1ABC88A80022A871 /* Info.plist */,
@@ -590,15 +573,6 @@
 			);
 			name = rfduino;
 			path = ../rfduino;
-			sourceTree = "<group>";
-		};
-		A9BF053F1AD2EC7C00628900 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				A9BF05401AD2EC8A00628900 /* DIN Condensed Bold.ttf */,
-				A9BF05411AD2EC8A00628900 /* DINPro-CondLight.ttf */,
-			);
-			name = Fonts;
 			sourceTree = "<group>";
 		};
 		A9F6B3E51AE612360018AE33 /* Movies */ = {
@@ -824,6 +798,7 @@
 			files = (
 				A94F5F751AC3034400279E9D /* Images.xcassets in Resources */,
 				A94F5F901AC3037200279E9D /* GooglePlus.bundle in Resources */,
+				A90FAE471AEE76F600D622B4 /* Default-Keychain.plist in Resources */,
 				A94F5F791AC3034400279E9D /* spacelab WatchKit App.app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -856,13 +831,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F6B3E71AE612410018AE33 /* startup-movie.mp4 in Resources */,
-				A9BF05421AD2EC8A00628900 /* DIN Condensed Bold.ttf in Resources */,
 				A9B763591ABC88A80022A871 /* Main.storyboard in Resources */,
 				A98D4FC11AE0A02100EF3E72 /* Default-Keychain.plist in Resources */,
 				A9B7635E1ABC88A80022A871 /* LaunchScreen.xib in Resources */,
 				A922B8391AC2083E007BE266 /* GooglePlus.bundle in Resources */,
 				A9B7635B1ABC88A80022A871 /* Images.xcassets in Resources */,
-				A9BF05431AD2EC8A00628900 /* DINPro-CondLight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,7 +896,6 @@
 				A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */,
 				A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */,
 				A9B763511ABC88A80022A871 /* AppDelegate.swift in Sources */,
-				A9AB41B61ACD8BDB00357365 /* MBProgressHUD.m in Sources */,
 				A9F6B3EF1AE6138D0018AE33 /* VideoPlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1082,10 +1054,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 11;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 9;
+				DYLIB_CURRENT_VERSION = 11;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1114,10 +1086,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 11;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 9;
+				DYLIB_CURRENT_VERSION = 11;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
