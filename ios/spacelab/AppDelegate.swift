@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         
-        let dbSession = DBSession(appKey: "8b7gmvm388v2iu4", appSecret: "u6brwgkfqen9i6b", root: kDBRootAppFolder)
+        let dbSession = DBSession(appKey: "APP_KEY_HERE", appSecret: "APP_SECRET_HERE", root: kDBRootAppFolder)
         DBSession.setSharedSession(dbSession)
         
         return true
@@ -48,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             if ( DBSession.sharedSession().isLinked() )
             {
                 println("Dropbox & app linked successfully!")
+                
+                NSNotificationCenter.defaultCenter().postNotificationName("dropbox.link.success", object: self)
             }
             return true
         }

@@ -40,11 +40,12 @@ class SLDropboxSyncViewController: UITableViewController,
         restClient.delegate = self
         
         outputEntries = NSMutableArray()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateSyncButton", name: "dropbox.link.success", object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    func updateSyncButton()
+    {
         if ( DBSession.sharedSession().isLinked() )
         {
             syncButton.setTitle("Perform Sync", forState: UIControlState.Normal)
@@ -195,7 +196,14 @@ class SLDropboxSyncViewController: UITableViewController,
     {
         if ( error != nil )
         {
-            performUpload()
+            println("error loading metadata, code: \(error?.code), error: \(error?.localizedDescription)")
+            if error?.code == 401 {
+                DBSession.sharedSession().unlinkAll()
+                updateSyncButton()
+                syncButton.enabled = true
+                
+                appendEntry("Dropbox not correctly linked, please login!")
+            }
         }
     }
     
@@ -403,7 +411,10 @@ class SLDropboxSyncViewController: UITableViewController,
                 appendEntry("Uploading spaceLock.zip to Dropbox...")
                 
                 // upload it to dropbox
-                restClient.uploadFile("spaceLock.zip", toPath: "/", withParentRev: nil, fromPath: stagingArchive)
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyyMMddHHmmss"
+                let str = dateFormatter.stringFromDate(NSDate())
+                restClient.uploadFile("spaceLock-\(str).zip", toPath: "/", withParentRev: nil, fromPath: stagingArchive)
             }
         }
         else
