@@ -50,8 +50,7 @@ class SLShowKeyViewController: UITableViewController,
     {
         lockIdLabel.text = key.lockId;
         lockNameLabel.text = key.lockName;
-        var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", key.lockId) as! String)
-        iconImageButton.setImage(UIImage(contentsOfFile: path), forState: UIControlState.Normal)
+        iconImageButton.setImage(UIImage(contentsOfFile: key.imageFilename), forState: UIControlState.Normal)
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             let failable = self.keychain

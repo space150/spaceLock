@@ -56,8 +56,7 @@ class SLLockViewCell: UITableViewCell
         lockNameLabel.text = lock.name
         if ( lock.icon != nil )
         {
-            var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lock.lockId) as! String)
-            lockIconImageView.image = UIImage(contentsOfFile: path)
+            lockIconImageView.image = UIImage(contentsOfFile: lock.icon)
         }
         
         updateViewState()

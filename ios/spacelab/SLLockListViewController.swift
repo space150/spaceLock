@@ -139,9 +139,12 @@ class SLLockViewController: UIViewController,
             case .Insert:
                 self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Update:
-                let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath!) as! SLLockViewCell
-                self.configureCell(cell, atIndexPath: indexPath!)
-                self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                if ( self.tableView.cellForRowAtIndexPath(indexPath!) != nil )
+                {
+                    let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath!) as! SLLockViewCell
+                    self.configureCell(cell, atIndexPath: indexPath!)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                }
             case .Move:
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
                 self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)

@@ -269,17 +269,6 @@ class SLNewKeyViewController: UITableViewController,
                 // update the UI on the main thread
                 dispatch_async(dispatch_get_main_queue(), {
                     
-                    // save the image to the filesystem
-                    if ( self.takenImage != nil )
-                    {
-                        var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
-                        let success = UIImagePNGRepresentation(self.takenImage)
-                            .writeToFile(path, atomically: true)
-                        if ( success == true ) {
-                            println("saved image to: \(path)")
-                        }
-                    }
-             
                     // find or update coredata entry
                     var key: LKKey;
                     let fetchRequest = NSFetchRequest(entityName: "LKKey")
@@ -296,6 +285,18 @@ class SLNewKeyViewController: UITableViewController,
                         key.lockId = lockId
                         key.lockName = lockName
                     }
+                    // save the image to the filesystem
+                    if ( self.takenImage != nil )
+                    {
+                        var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
+                        let success = UIImagePNGRepresentation(self.takenImage)
+                            .writeToFile(path, atomically: true)
+                        if ( success == true ) {
+                            println("saved image to: \(path)")
+                            key.imageFilename = path
+                        }
+                    }
+
                     LKLockRepository.sharedInstance().saveContext()
                     
                     // display sketch info
