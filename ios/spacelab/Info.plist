@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.space150.ent.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>com.s150.spacelab.spaceLock</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -27,12 +27,13 @@
 			<string>com.space150.ent.spacelab</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>db-8b7gmvm388v2iu4</string>
 				<string>com.space150.ent.spacelab</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>9</string>
+	<string>14</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

@@ -38,7 +38,7 @@
 - (id)initWithContext:(NSString *)context;
 - (void)startDiscovery;
 - (void)stopDiscovery;
-- (void)openLock:(LKLock *)lock complete:(void (^)(bool success, NSError *error))completionCallback;
-- (void)openLockWithId:(NSString *)lockId complete:(void (^)(bool success, NSError *error))completionCallback;
+- (void)openLock:(LKLock *)lock withKey:(NSData *)key complete:(void (^)(bool success, NSError *error))completionCallback;
+- (void)openLockWithId:(NSString *)lockId withKey:(NSData *)key complete:(void (^)(bool success, NSError *error))completionCallback;
 
 @end

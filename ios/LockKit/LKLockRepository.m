@@ -86,7 +86,7 @@
     // Create the coordinator and store
     //NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"spacelab.sqlite"];
     
-    NSString *containerPath = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.com.s150.ent.spacelab"] path];
+    NSString *containerPath = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.com.s150.spacelab.spaceLock"] path];
     NSString *sqlitePath = [NSString stringWithFormat:@"%@/%@", containerPath, @"spacelab"];
     NSURL *storeURL = [NSURL fileURLWithPath:sqlitePath];
     NSLog(@"storeURL: %@", storeURL);
@@ -95,7 +95,10 @@
     
     NSError *error = nil;
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         // Report any error we got.
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";

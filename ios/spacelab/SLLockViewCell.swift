@@ -54,7 +54,10 @@ class SLLockViewCell: UITableViewCell
         proximity = lock.proximity
         
         lockNameLabel.text = lock.name
-        lockIconImageView.image = UIImage(named: lock.icon)
+        if ( lock.icon != nil )
+        {
+            lockIconImageView.image = UIImage(contentsOfFile: lock.icon)
+        }
         
         updateViewState()
     }
@@ -147,7 +150,7 @@ class SLLockViewCell: UITableViewCell
     
     func resetUnlocked()
     {
-        //stopInProgressAnimation()
+        stopInProgressAnimation()
         stopCountdownAnimation()
         
         updateViewState()

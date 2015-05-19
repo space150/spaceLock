@@ -35,13 +35,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         
-        //registerNotifications()
+        let dbSession = DBSession(appKey: "APP_KEY_HERE", appSecret: "APP_SECRET_HERE", root: kDBRootAppFolder)
+        DBSession.setSharedSession(dbSession)
         
         return true
     }
-
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        return GPPURLHandler.handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
+    {
+        if ( DBSession.sharedSession().handleOpenURL(url) )
+        {
+            if ( DBSession.sharedSession().isLinked() )
+            {
+                println("Dropbox & app linked successfully!")
+                
+                NSNotificationCenter.defaultCenter().postNotificationName("dropbox.link.success", object: self)
+            }
+            return true
+        }
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -67,28 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Saves changes in the application's managed object context before the application terminates.
 
         LKLockRepository.sharedInstance().saveContext()
-    }
-    
-    // MARK: - Notifications
-    
-    func registerNotifications()
-    {
-        var categories = NSMutableSet()
-        
-        var unlockAction = UIMutableUserNotificationAction()
-        unlockAction.title = NSLocalizedString("Unlock", comment: "Unlock Door")
-        unlockAction.identifier = "unlock"
-        unlockAction.activationMode = UIUserNotificationActivationMode.Foreground
-        unlockAction.authenticationRequired = true
-        
-        var doorCategory = UIMutableUserNotificationCategory()
-        doorCategory.setActions([unlockAction], forContext: UIUserNotificationActionContext.Default)
-        doorCategory.identifier = "lockNotification"
-        
-        categories.addObject(doorCategory)
-
-        var settings = UIUserNotificationSettings(forTypes: (.Alert | .Badge | .Sound), categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
     }
 
 }

@@ -36,9 +36,20 @@
     
     NSUInteger          dataLength  = [self length];
     NSMutableString     *hexString  = [NSMutableString stringWithCapacity:(dataLength * 2)];
+    [hexString appendString:@"\t"];
     
-    for (int i = 0; i < dataLength; ++i)
-        [hexString appendString:[NSString stringWithFormat:@"0x%02lx, ", (unsigned long)dataBuffer[i]]];
+    for ( int i = 0; i < dataLength; ++i )
+    {
+        [hexString appendString:[NSString stringWithFormat:@"0x%02lx", (unsigned long)dataBuffer[i]]];
+        if ( i != dataLength -1 )
+        {
+            [hexString appendString:@", "];
+            
+            if ( i > 0 && (i+1) % 4 == 0 )
+                [hexString appendString:@"\n\t"];
+        }
+
+    }
     
     return [NSString stringWithString:hexString];
 }

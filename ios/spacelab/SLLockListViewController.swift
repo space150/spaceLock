@@ -23,17 +23,16 @@
 
 import UIKit
 import LockKit
+import KeychainAccess
+import AudioToolbox
 
 class SLLockViewController: UIViewController,
     UITableViewDelegate,
     UITableViewDataSource,
     NSFetchedResultsControllerDelegate,
-    GPPSignInDelegate,
     SLLockViewCellDelegate
 {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var headerNameLabel: UILabel!
-    @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var logoutButton: UIButton!
     
     private var fetchedResultsController: NSFetchedResultsController!
@@ -41,44 +40,29 @@ class SLLockViewController: UIViewController,
     private var discoveryManager: LKLockDiscoveryManager!
     private var unlocking:Bool!
     
-    private let clientId = "ENTER YOUR CLIENT ID HERE";
-    private var signIn : GPPSignIn?
+    private var keychain: Keychain!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        configureGooglePlus()
-        
         discoveryManager = LKLockDiscoveryManager(context: "ios-client")
         
         unlocking = false
         
+        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS)
+            .accessibility(.AfterFirstUnlock, authenticationPolicy: .UserPresence)
+        
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
-        
-        // When setting up the Arduino lock there are some helper functions to generate the appropriate keys
-        // These will generate the keys and output the configuration to the console that can be copy/pasted 
-        // into the arduino sketch
-        //var security = LKSecurityManager()
-        //security.generateKeyForLockName("s150-vault")
-        //security.generateKeyForLockName("s150-senate")
     }
     
     override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(animated)
         
-        var success: Bool? = signIn?.trySilentAuthentication()
-        if ( success == false )
-        {
-            performSegueWithIdentifier("showLogin", sender: self)
-        }
-        else
-        {
-            discoveryManager.startDiscovery()
-        }
+        discoveryManager.startDiscovery()
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -124,7 +108,7 @@ class SLLockViewController: UIViewController,
     
     func getFetchedResultsController() -> NSFetchedResultsController
     {
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext,
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext!!,
             sectionNameKeyPath: nil, cacheName: nil)
         return fetchedResultsController
     }
@@ -143,7 +127,6 @@ class SLLockViewController: UIViewController,
         {
             self.tableView.beginUpdates()
         }
-        
     }
 
     func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath?,
@@ -156,9 +139,12 @@ class SLLockViewController: UIViewController,
             case .Insert:
                 self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Update:
-                let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath!) as! SLLockViewCell
-                self.configureCell(cell, atIndexPath: indexPath!)
-                self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                if ( self.tableView.cellForRowAtIndexPath(indexPath!) != nil )
+                {
+                    let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath!) as! SLLockViewCell
+                    self.configureCell(cell, atIndexPath: indexPath!)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                }
             case .Move:
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
                 self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
@@ -204,6 +190,17 @@ class SLLockViewController: UIViewController,
         return false
     }
     
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+    {
+        if editingStyle == UITableViewCellEditingStyle.Delete
+        {
+            // remove coredata entry
+            let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+            LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(lock)
+            LKLockRepository.sharedInstance().saveContext()
+        }
+    }
+    
     func performUnlock(indexPath: NSIndexPath)
     {
         unlocking = true
@@ -213,30 +210,44 @@ class SLLockViewController: UIViewController,
 
         cell.showInProgress()
         
-        self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
-            if ( success )
+        // fetch the key from the keychain
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            let failable = self.keychain
+                .authenticationPrompt("Retreive key for lock")
+                .getDataOrError(lock.lockId)
+            
+            if failable.succeeded
             {
-                cell.showUnlocked()
+                self.discoveryManager.openLock(lock, withKey:failable.value!, complete: { (success, error) -> Void in
+                    if ( success )
+                    {
+                        dispatch_async(dispatch_get_main_queue(), {
+                            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                            cell.showUnlocked()
+                        })
+                    }
+                    else
+                    {
+                        println("ERROR opening lock: \(error.localizedDescription)")
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
+                            cell.resetUnlocked()
+                        })
+                    }
+                })
+                
             }
             else
             {
-                println("ERROR opening lock: \(error.localizedDescription)")
+                println("error: \(failable.error?.localizedDescription)")
                 
-                cell.resetUnlocked()
+                dispatch_async(dispatch_get_main_queue(), {
+                    cell.resetUnlocked()
+                })
             }
-        })
+        }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        /*
-        var localNotification:UILocalNotification = UILocalNotification()
-        localNotification.alertAction = "Testing"
-        localNotification.alertTitle = "F3"
-        localNotification.alertBody = "UNLOCKING"
-        localNotification.fireDate = NSDate(timeIntervalSinceNow: 20)
-        localNotification.category = "lockNotification"
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-        */
     }
     
     // MARK: - SLLockViewCellDelegate Methods
@@ -247,122 +258,4 @@ class SLLockViewController: UIViewController,
         tableView.reloadData()
     }
     
-    // MARK: - GPPSignInDelegate Methods
-    
-    func configureGooglePlus()
-    {
-        signIn = GPPSignIn.sharedInstance()
-        signIn?.clientID = clientId
-        
-        signIn?.shouldFetchGooglePlusUser = true
-        signIn?.shouldFetchGoogleUserID = true
-        signIn?.shouldFetchGoogleUserEmail = true
-        
-        signIn?.scopes = [ kGTLAuthScopePlusLogin ];  // "https://www.googleapis.com/auth/plus.login" scope
-        //signIn.scopes = @[ @"profile" ];            // "profile" scope
-
-        signIn?.delegate = self;
-    }
-    
-    @IBAction func doLogout(sender: AnyObject)
-    {
-        signIn?.signOut()
-        checkAuthState()
-    }
-    
-    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!)
-    {
-        if ( error != nil )
-        {
-            println("google+ connect failure - finishedWithAuth: \(error.localizedDescription)")
-        }
-        
-        checkAuthState()
-    }
-    
-    func didDisconnectWithError(error: NSError!)
-    {
-        if ( error != nil )
-        {
-            println("google+ connect failure - didDisconnectWithError: \(error.localizedDescription)")
-        }
-        
-        checkAuthState()
-    }
-    
-    func checkAuthState()
-    {
-        if ( signIn?.authentication != nil )
-        {
-            var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
-            // first check to see if the domain matches
-            if ( plusUser == nil || plusUser.domain != "space150.com" )
-            {
-                // fallback to verifying the email addres? Might want to disable this
-                var email = signIn?.authentication.userEmail
-                
-                // check to ensure the email is on the space150.com domain!
-                if ( validateEmail(email) == false )
-                {
-                    signIn?.signOut()
-                }
-            }
-        }
-        
-        if ( signIn?.authentication != nil )
-        {
-            // if we have a google plus user object
-            var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
-            println("domain: \(plusUser.domain), url: \(plusUser.url)")
-            if ( plusUser != nil )
-            {
-                // use the display name
-                headerNameLabel.text = plusUser.displayName
-                
-                // and avatar image
-                var backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-                dispatch_async(backgroundQueue, { () -> Void in
-                    if ( plusUser?.image.url != nil )
-                    {
-                        var avatarUrl = NSURL(string: plusUser.image.url)!
-                        var avatarData = NSData(contentsOfURL: avatarUrl)
-                        if ( avatarData != nil )
-                        {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.headerImageView.image = UIImage(data: avatarData!)
-                            })
-                        }
-                        
-                    }
-                })
-            }
-            else
-            {
-                // otherwise clear out the existing info
-                headerNameLabel.text = "Unknown"
-                headerImageView.image = nil
-            }
-
-            // if the login view controller is showing, hide it
-            dismissViewControllerAnimated(true, completion: { () -> Void in
-                // nothing
-            })
-        }
-        else
-        {
-            // clear out the header info
-            headerNameLabel.text = "Unknown"
-            headerImageView.image = nil
-            
-            // present the login view controller
-            performSegueWithIdentifier("showLogin", sender: self)
-        }
-    }
-    
-    func validateEmail(email: NSString!) -> Bool
-    {
-        var predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")
-        return predicate.evaluateWithObject(email)
-    }
-
 }

@@ -25,6 +25,7 @@
 
 #import "LKSecurityManager.h"
 #import "LKLockRepository.h"
+#import "LKKey.h"
 #import "LKLock.h"
 #import "LKLockProximity.h"
 
@@ -45,7 +46,7 @@
     NSString *instanceContext;
     MMWormhole *wormhole;
     NSTimer *handshakeTimer;
-    NSDictionary *keys;
+    NSData *keyData;
 }
 
 @property (copy) void (^openCompletionCallback)(bool, NSError *);
@@ -60,9 +61,7 @@
     if ( self != nil )
     {
         instanceContext = context;
-        
-        keys = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default-Keychain" ofType:@"plist"]];
-        
+    
         self.rfduinoManager = [RFduinoManager sharedRFduinoManager];
         [self.rfduinoManager stopScan];
         self.rfduinoManager.delegate = self;
@@ -192,13 +191,14 @@
     }
 }
 
-- (void)openLock:(LKLock *)lock complete:(void (^)(bool success, NSError *error))completionCallback
+- (void)openLock:(LKLock *)lock withKey:(NSData *)key complete:(void (^)(bool success, NSError *error))completionCallback
 {
-    [self openLockWithId:lock.lockId complete:completionCallback];
+    [self openLockWithId:lock.lockId withKey:key complete:completionCallback];
 }
 
-- (void)openLockWithId:(NSString *)lockId complete:(void (^)(bool success, NSError *error))completionCallback
+- (void)openLockWithId:(NSString *)lockId withKey:(NSData *)key complete:(void (^)(bool success, NSError *error))completionCallback
 {
+    keyData = key;
     self.openCompletionCallback = completionCallback;
     
     // find the rfduino!
@@ -214,11 +214,16 @@
     {
         [self initHandshake:foundRFDuino];
     }
-    else if ( self.openCompletionCallback != nil )
+    else
     {
-        self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
-                                                            code:42
-                                                        userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unable to find active Lock with that lockId!", nil)}]);
+        keyData = nil;
+        
+        if ( self.openCompletionCallback != nil )
+        {
+            self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
+                                                                code:42
+                                                            userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Unable to find active Lock with that lockId!", nil)}]);
+        }
     }
 }
 
@@ -238,6 +243,8 @@
     }
     else
     {
+        keyData = nil;
+        
         if ( self.openCompletionCallback != nil )
         {
             self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
@@ -249,6 +256,8 @@
 
 - (void)handshakeTimeout:(NSTimer *)timer
 {
+    keyData = nil;
+    
     if ( self.openCompletionCallback != nil )
     {
         self.openCompletionCallback(NO, [NSError errorWithDomain:kErrorDomain
@@ -287,18 +296,20 @@
             LKLock *lock = (LKLock *)[results objectAtIndex:0];
         
             LKSecurityManager *security = [[LKSecurityManager alloc] init];
-            NSString *lockId = [security decryptData:data forLockName:lock.lockId];
+            NSString *lockId = [security decryptData:data withKey:keyData];
             NSLog(@"lockId: %@, lock: %@", lockId, lock.lockId);
             
             // verify the lock id!
             if ( lockId != nil && [lockId isEqualToString:lock.lockId] )
             {
                 NSString *command = [NSString stringWithFormat:@"%@%d", @"u", (int)[[NSDate date] timeIntervalSince1970]];
-                NSData *data = [security encryptString:command forLockName:lock.lockId];
+                NSData *data = [security encryptString:command withKey:keyData];
                 
                 [connectedRFduino send:data];
                 
-                // force disconnection, in thetu fure we could listen for the lock status and disconnect later?
+                keyData = nil;
+                
+                // force disconnection, in the future we could listen for the lock status and disconnect later?
                 [connectedRFduino disconnect];
                 
                 if ( self.openCompletionCallback != nil )
@@ -309,6 +320,8 @@
             }
             else
             {
+                keyData = nil;
+                
                 [connectedRFduino disconnect];
                 
                 if ( self.openCompletionCallback != nil )
@@ -321,6 +334,8 @@
         }
         else
         {
+            keyData = nil;
+            
             [connectedRFduino disconnect];
             
             if ( self.openCompletionCallback != nil )
@@ -330,6 +345,10 @@
                                                                 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"No connected lock", nil)}]);
             }
         }
+    }
+    else
+    {
+        keyData = nil;
     }
 }
 
@@ -403,32 +422,46 @@
         NSLog(@"ERROR: lock has no advertisement data/lock Id!");
         return;
     }
-    
+
     NSManagedObjectContext *context = [[LKLockRepository sharedInstance] managedObjectContext];
     
+    LKKey *key = nil;
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+    [request setEntity:[NSEntityDescription entityForName:@"LKKey" inManagedObjectContext:context]];
     [request setPredicate:[NSPredicate predicateWithFormat:@"lockId == %@", lockId]];
     
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
-    if ( results != nil && [results count] == 0 )
+    if ( results != nil && [results count] > 0 )
     {
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
-        LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
-
-        // find this lock entry in the plist data
-        NSDictionary *entry = (NSDictionary *)[keys objectForKey:lockId];
-        lock.lockId = lockId;
-        lock.name = [entry objectForKey:@"name"];
-        lock.icon = [entry objectForKey:@"icon"];
+        key = (LKKey *)[results firstObject];
+    }
+    
+    if ( key != nil )
+    {
+        request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"lockId == %@", key.lockId]];
         
-        lock.uuid = rfduino.UUID;
-        lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
-        lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
-        lock.lastActionAt = [NSDate date];
-        
-        [[LKLockRepository sharedInstance] saveContext];
+        error = nil;
+        results = [context executeFetchRequest:request error:&error];
+        if ( results != nil && [results count] == 0 )
+        {
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"LKLock" inManagedObjectContext:context];
+            LKLock *lock = (LKLock *)[[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
+            
+            // move over the key lookup info
+            lock.lockId = key.lockId;
+            lock.name = key.lockName;
+            lock.icon = key.imageFilename;
+            
+            lock.uuid = rfduino.UUID;
+            lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
+            lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
+            lock.lastActionAt = [NSDate date];
+            
+            [[LKLockRepository sharedInstance] saveContext];
+        }
     }
 }
 
