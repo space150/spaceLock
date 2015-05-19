@@ -283,6 +283,7 @@
                         <outlet property="lockIdLabel" destination="Ty9-qk-HUC" id="EjS-YR-5YK"/>
                         <outlet property="lockNameLabel" destination="iKx-4G-lyp" id="GRt-eg-7PB"/>
                         <outlet property="outputLabel" destination="q5A-Rz-gdB" id="Nbr-Rw-5Tl"/>
+                        <outlet property="saveButton" destination="ql6-BN-nED" id="EiV-i4-9nR"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bej-eQ-9su" userLabel="First Responder" sceneMemberID="firstResponder"/>

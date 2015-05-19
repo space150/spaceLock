@@ -189,6 +189,11 @@ class SLKeyListViewController: UITableViewController,
                 }
             }
             
+            // delete image
+            var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", key.lockId) as! String)
+            let fileManager = NSFileManager.defaultManager()
+            fileManager.removeItemAtPath(path, error: nil)
+            
             // remove coredata entries for any locks using the key
             let fetchRequest = NSFetchRequest(entityName: "LKLock")
             fetchRequest.predicate = NSPredicate(format: "lockId == %@", key.lockId)

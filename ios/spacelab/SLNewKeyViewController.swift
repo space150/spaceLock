@@ -19,6 +19,7 @@ class SLNewKeyViewController: UITableViewController,
     @IBOutlet weak var lockNameLabel: UITextField!
     @IBOutlet weak var iconImageButton: UIButton!
     @IBOutlet weak var outputLabel: UILabel!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     private var keychain: Keychain!
     private var security: LKSecurityManager!
@@ -168,6 +169,8 @@ class SLNewKeyViewController: UITableViewController,
 
     @IBAction func generateKeyTouched(sender: AnyObject)
     {
+        saveButton.enabled = false
+        
         let lockId = lockIdLabel.text
         let lockName = lockNameLabel.text
         
@@ -194,7 +197,7 @@ class SLNewKeyViewController: UITableViewController,
         {
             let alertController = UIAlertController(title: "A key with that ID already exists!", message: "Are you positive you would like to generate a new key? DOING SO WILL DESTROY THE EXISTING KEY!", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-                // nothing
+                self.saveButton.enabled = true
             }
             alertController.addAction(cancelAction)
             let OKAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
