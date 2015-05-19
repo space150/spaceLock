@@ -213,7 +213,7 @@ class SLNewKeyViewController: UITableViewController,
         {
             let alertController = UIAlertController(title: "Invalid", message: "Lock ID and Name are required", preferredStyle: .Alert)
             let okAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
-                // nothing
+                self.saveButton.enabled = true
             }
             alertController.addAction(okAction)
             self.presentViewController(alertController, animated: true) {
