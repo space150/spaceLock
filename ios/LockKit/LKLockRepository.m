@@ -86,7 +86,7 @@
     // Create the coordinator and store
     //NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"spacelab.sqlite"];
     
-    NSString *containerPath = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.com.s150.ent.spacelab"] path];
+    NSString *containerPath = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.com.s150.spacelab.spaceLock"] path];
     NSString *sqlitePath = [NSString stringWithFormat:@"%@/%@", containerPath, @"spacelab"];
     NSURL *storeURL = [NSURL fileURLWithPath:sqlitePath];
     NSLog(@"storeURL: %@", storeURL);

@@ -7,26 +7,22 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>21DF084D-B4DF-43F1-9C72-37B11847846B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>spacelab</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</key>
 		<string>https://github.com/kishikawakatsumi/KeychainAccess.git</string>
 		<key>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</key>
 		<string>https://github.com/space150/spaceLock.git</string>
-		<key>F002A2BBDEEC040886A23B543188B7446116F16E</key>
-		<string>github.space150.com:space150/spacelab-lock.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/spacelab.xcodeproj</string>
+	<string>ios/spacelab.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</key>
-		<string>../../..ios/LockKit/KeychainAccess</string>
+		<string>../../..ios/LockKit/KeychainAccess/</string>
 		<key>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</key>
 		<string>../../..</string>
-		<key>F002A2BBDEEC040886A23B543188B7446116F16E</key>
-		<string>../../../../spacelab</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/space150/spaceLock.git</string>
@@ -43,14 +39,6 @@
 			<string>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</string>
 			<key>IDESourceControlWCCName</key>
 			<string>KeychainAccess</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F002A2BBDEEC040886A23B543188B7446116F16E</string>
-			<key>IDESourceControlWCCName</key>
-			<string>spacelab</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
