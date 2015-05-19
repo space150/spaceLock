@@ -136,6 +136,26 @@ class SLNewKeyViewController: UITableViewController,
     }
     */
     
+    // MARK: - UITextField Validations
+    
+    @IBAction func lockIdEditingChanged(sender: AnyObject)
+    {
+        checkMaxLength(lockIdLabel, maxLength: 15)
+    }
+    
+    @IBAction func lockNameEditingChanged(sender: AnyObject)
+    {
+        checkMaxLength(lockNameLabel, maxLength: 20)
+    }
+    
+    func checkMaxLength(textField: UITextField!, maxLength: Int)
+    {
+        if (count(textField.text!) > maxLength)
+        {
+            textField.deleteBackward()
+        }
+    }
+    
     // MARK: - SLKeyOutputViewCellDelegate Methods
     
     func doCopy(sender: AnyObject?)
