@@ -79,7 +79,6 @@
 		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
 		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
 		A9D338C81B0A237E005887FC /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D338BF1B0A2356005887FC /* KeychainAccess.framework */; };
-		A9D338CA1B0A23AC005887FC /* KeychainAccess.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = A9D338BF1B0A2356005887FC /* KeychainAccess.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9D338CD1B0A2472005887FC /* SLKeyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D338CC1B0A2472005887FC /* SLKeyListViewController.swift */; };
 		A9D338CF1B0A253C005887FC /* SLKeyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D338CE1B0A253C005887FC /* SLKeyViewCell.swift */; };
 		A9E055E31AE8A59E007C2826 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
@@ -223,16 +222,6 @@
 				A99383871ACA1ED300ECA0D0 /* LockKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A9D338C91B0A23A0005887FC /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				A9D338CA1B0A23AC005887FC /* KeychainAccess.framework in CopyFiles */,
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -853,7 +842,6 @@
 				A993836B1ACA1ED200ECA0D0 /* Frameworks */,
 				A993836C1ACA1ED200ECA0D0 /* Headers */,
 				A993836D1ACA1ED200ECA0D0 /* Resources */,
-				A9D338C91B0A23A0005887FC /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1248,7 +1236,7 @@
 				INFOPLIST_FILE = "spacelab WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "25ea1295-eff3-4ce2-afd5-589f6d6977da";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1257,8 +1245,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "spacelab WatchKit Extension/spacelab WatchKit Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/spacelab/dropbox-ios-sdk-1.3.13",
@@ -1266,7 +1254,7 @@
 				INFOPLIST_FILE = "spacelab WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "25ea1295-eff3-4ce2-afd5-589f6d6977da";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1284,7 +1272,7 @@
 				IBSC_MODULE = spacelab_WatchKit_Extension;
 				INFOPLIST_FILE = "spacelab WatchKit App/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d6c8e2e7-fc3a-4f96-8a04-894f20741fe3";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
@@ -1295,12 +1283,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				IBSC_MODULE = spacelab_WatchKit_Extension;
 				INFOPLIST_FILE = "spacelab WatchKit App/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d6c8e2e7-fc3a-4f96-8a04-894f20741fe3";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
@@ -1496,7 +1484,7 @@
 				INFOPLIST_FILE = spacelab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9400e032-c670-460b-af8a-8a66856ed94b";
 			};
 			name = Debug;
 		};
@@ -1505,8 +1493,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = spacelab/spacelab.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1515,7 +1503,7 @@
 				INFOPLIST_FILE = spacelab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9400e032-c670-460b-af8a-8a66856ed94b";
 			};
 			name = Release;
 		};

@@ -7,7 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>21DF084D-B4DF-43F1-9C72-37B11847846B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>spacelab</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</key>
@@ -16,11 +16,11 @@
 		<string>https://github.com/space150/spaceLock.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/spacelab.xcodeproj/project.xcworkspace</string>
+	<string>ios/spacelab.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>AFADF01AFBA46DFD7A5AFD980110E89E8E63AACD</key>
-		<string>../../..ios/LockKit/KeychainAccess/</string>
+		<string>../../..ios/LockKit/KeychainAccess</string>
 		<key>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</key>
 		<string>../../..</string>
 	</dict>
