@@ -47,6 +47,7 @@
     MMWormhole *wormhole;
     NSTimer *handshakeTimer;
     NSData *keyData;
+    NSData *testData;
 }
 
 @property (copy) void (^openCompletionCallback)(bool, NSError *);
@@ -199,6 +200,7 @@
 - (void)openLockWithId:(NSString *)lockId withKey:(NSData *)key complete:(void (^)(bool success, NSError *error))completionCallback
 {
     keyData = key;
+    testData = key;
     self.openCompletionCallback = completionCallback;
     
     // find the rfduino!
@@ -296,14 +298,15 @@
             LKLock *lock = (LKLock *)[results objectAtIndex:0];
         
             LKSecurityManager *security = [[LKSecurityManager alloc] init];
-            NSString *lockId = [security decryptData:data withKey:keyData];
+            NSLog(@"KEYDATA - %@ TESTDATA - %@", keyData, testData); //! WHY IS keyData BEING NULL HERE?
+            NSString *lockId = [security decryptData:data withKey:testData]; //! keyData
             NSLog(@"lockId: %@, lock: %@", lockId, lock.lockId);
             
             // verify the lock id!
             if ( lockId != nil && [lockId isEqualToString:lock.lockId] )
             {
                 NSString *command = [NSString stringWithFormat:@"%@%d", @"u", (int)[[NSDate date] timeIntervalSince1970]];
-                NSData *data = [security encryptString:command withKey:keyData];
+                NSData *data = [security encryptString:command withKey:testData]; //! keyData
                 
                 [connectedRFduino send:data];
                 
@@ -467,6 +470,7 @@
 
 - (void)updateLock:(RFduino *)rfduino
 {
+    NSLog(@"UPDATE");
     NSString* lockId = [NSString stringWithUTF8String:[rfduino.advertisementData bytes]];
     if ( lockId == nil )
     {
@@ -492,6 +496,17 @@
             lock.proximity = [NSNumber numberWithInt:rfduino.proximity];
             lock.proximityString = [self proximityString:(LKLockProximity)rfduino.proximity];
             lock.lastActionAt = [NSDate date];
+            
+            //! Probably send a message with wormhole here so everyone can listen
+            NSLog(@"Proximity Changed - %@", [self proximityString:(LKLockProximity)rfduino.proximity]);
+            
+            //! Send notification if new proximity is immidiate
+            if ([lock.proximity intValue] == 3 || [lock.proximity intValue] == 2) {
+                //! Wormhole not being picked up in iPhone AppDelegate?
+                [wormhole passMessageObject:@{@"lock": @"Lock"} identifier:@"lockProximityChange"];
+                //! NSNotification style
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"lockProximityChange" object:lock];
+            }
         }
     }
     else
