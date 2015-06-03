@@ -23,7 +23,6 @@
 
 import UIKit
 import LockKit
-import KeychainAccess
 
 class SLNewKeyViewController: UITableViewController,
     SLKeyOutputViewCellDelegate,
@@ -36,7 +35,6 @@ class SLNewKeyViewController: UITableViewController,
     @IBOutlet weak var outputLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
-    private var keychain: Keychain!
     private var security: LKSecurityManager!
     private var sectionCount: Int!
     private var takenImage: UIImage!
@@ -50,7 +48,6 @@ class SLNewKeyViewController: UITableViewController,
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS).accessibility(.WhenUnlocked)
         security = LKSecurityManager()
         
         sectionCount = 1
@@ -264,65 +261,63 @@ class SLNewKeyViewController: UITableViewController,
         let keyData: NSData = security.generateNewKeyForLockName(lockId)!
         let handshakeData: NSData = security.encryptString(lockId, withKey: keyData)
         
-        // save key to the keychain (in a background thread)
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            let error = self.keychain.set(keyData, key: lockId)
-            if ( error != nil )
-            {
-                let alertController = UIAlertController(title: "Unable to save key in keychain!", message: error?.localizedDescription, preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
-                    // nothing
-                }
-                alertController.addAction(okAction)
-                self.presentViewController(alertController, animated: true) {
-                    // nothing
-                }
+        
+        let error = security.saveKey(lockId, key: keyData)
+        if ( error != nil )
+        {
+            let alertController = UIAlertController(title: "Unable to save key in keychain!", message: error?.localizedDescription, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
+                // nothing
             }
-            else
-            {
-                // update the UI on the main thread
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    // find or update coredata entry
-                    var key: LKKey;
-                    let fetchRequest = NSFetchRequest(entityName: "LKKey")
-                    fetchRequest.predicate = NSPredicate(format: "lockId == %@", lockId)
-                    let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
-                    if ( fetchResults?.count > 0 )
-                    {
-                        key = fetchResults?.first as! LKKey
-                        key.lockName = lockName
-                    }
-                    else
-                    {
-                        key = NSEntityDescription.insertNewObjectForEntityForName("LKKey", inManagedObjectContext: LKLockRepository.sharedInstance().managedObjectContext!!) as! LKKey
-                        key.lockId = lockId
-                        key.lockName = lockName
-                    }
-                    // save the image to the filesystem
-                    if ( self.takenImage != nil )
-                    {
-                        var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
-                        let success = UIImagePNGRepresentation(self.takenImage)
-                            .writeToFile(path, atomically: true)
-                        if ( success == true ) {
-                            println("saved image to: \(path)")
-                            key.imageFilename = path
-                        }
-                    }
-
-                    LKLockRepository.sharedInstance().saveContext()
-                    
-                    // display sketch info
-                    self.outputLabel.text = NSString(format: "#define LOCK_NAME \"%@\"\nbyte key[] = {\n%@\n};\nchar handshake[] = {\n%@\n};", lockId,
-                        keyData.hexadecimalString(),
-                        handshakeData.hexadecimalString()) as String
-                    
-                    // update the table view so it displays the sketch info
-                    self.sectionCount = 2
-                    self.tableView.reloadData()
-                })
+            alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true) {
+                // nothing
             }
+        }
+        else
+        {
+            // update the UI on the main thread
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                // find or update coredata entry
+                var key: LKKey;
+                let fetchRequest = NSFetchRequest(entityName: "LKKey")
+                fetchRequest.predicate = NSPredicate(format: "lockId == %@", lockId)
+                let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
+                if ( fetchResults?.count > 0 )
+                {
+                    key = fetchResults?.first as! LKKey
+                    key.lockName = lockName
+                }
+                else
+                {
+                    key = NSEntityDescription.insertNewObjectForEntityForName("LKKey", inManagedObjectContext: LKLockRepository.sharedInstance().managedObjectContext!!) as! LKKey
+                    key.lockId = lockId
+                    key.lockName = lockName
+                }
+                // save the image to the filesystem
+                if ( self.takenImage != nil )
+                {
+                    var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
+                    let success = UIImagePNGRepresentation(self.takenImage)
+                        .writeToFile(path, atomically: true)
+                    if ( success == true ) {
+                        println("saved image to: \(path)")
+                        key.imageFilename = path
+                    }
+                }
+                
+                LKLockRepository.sharedInstance().saveContext()
+                
+                // display sketch info
+                self.outputLabel.text = NSString(format: "#define LOCK_NAME \"%@\"\nbyte key[] = {\n%@\n};\nchar handshake[] = {\n%@\n};", lockId,
+                    keyData.hexadecimalString(),
+                    handshakeData.hexadecimalString()) as String
+                
+                // update the table view so it displays the sketch info
+                self.sectionCount = 2
+                self.tableView.reloadData()
+            })
         }
     }
     

@@ -48,7 +48,6 @@
 		A96D7B351B0A51F8008AA0FC /* LKKey.h in Headers */ = {isa = PBXBuildFile; fileRef = A96D7B331B0A51F8008AA0FC /* LKKey.h */; };
 		A96D7B361B0A51F8008AA0FC /* LKKey.m in Sources */ = {isa = PBXBuildFile; fileRef = A96D7B341B0A51F8008AA0FC /* LKKey.m */; };
 		A96D7B391B0A7817008AA0FC /* SLKeyOutputViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96D7B381B0A7817008AA0FC /* SLKeyOutputViewCell.swift */; };
-		A96D7B3D1B0A8164008AA0FC /* KeychainAccess.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A9D338BF1B0A2356005887FC /* KeychainAccess.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96D7B451B0A8E03008AA0FC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96D7B441B0A8E03008AA0FC /* AudioToolbox.framework */; };
 		A96D7B461B0A8E0B008AA0FC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96D7B441B0A8E03008AA0FC /* AudioToolbox.framework */; };
 		A96D7B4A1B0AAB5B008AA0FC /* SLShowKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96D7B491B0AAB5B008AA0FC /* SLShowKeyViewController.swift */; };
@@ -78,7 +77,6 @@
 		A9B7636A1ABC88A80022A871 /* spacelabTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763691ABC88A80022A871 /* spacelabTests.swift */; };
 		A9B763871ABC92BC0022A871 /* SLLockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B763861ABC92BC0022A871 /* SLLockListViewController.swift */; };
 		A9B9CF7E1AC0DECF00664C8D /* SLLockViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */; };
-		A9D338C81B0A237E005887FC /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D338BF1B0A2356005887FC /* KeychainAccess.framework */; };
 		A9D338CD1B0A2472005887FC /* SLKeyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D338CC1B0A2472005887FC /* SLKeyListViewController.swift */; };
 		A9D338CF1B0A253C005887FC /* SLKeyViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D338CE1B0A253C005887FC /* SLKeyViewCell.swift */; };
 		A9E055E31AE8A59E007C2826 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922B81F1AC20742007BE266 /* AddressBook.framework */; };
@@ -121,20 +119,6 @@
 			remoteGlobalIDString = A94F5F6A1AC3034400279E9D;
 			remoteInfo = "spacelab WatchKit Extension";
 		};
-		A96D7B3B1B0A815B008AA0FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 140F195B1A49D79400B0016A;
-			remoteInfo = "KeychainAccess-iOS";
-		};
-		A96D7B3F1B0A8176008AA0FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 140F195B1A49D79400B0016A;
-			remoteInfo = "KeychainAccess-iOS";
-		};
 		A993837B1ACA1ED200ECA0D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9B763431ABC88A80022A871 /* Project object */;
@@ -163,41 +147,6 @@
 			remoteGlobalIDString = A9B7634A1ABC88A80022A871;
 			remoteInfo = spacelab;
 		};
-		A9D338BE1B0A2356005887FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 140F195C1A49D79400B0016A;
-			remoteInfo = "KeychainAccess-iOS";
-		};
-		A9D338C01B0A2356005887FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 140F19671A49D79500B0016A;
-			remoteInfo = "KeychainAccess-iOSTests";
-		};
-		A9D338C21B0A2356005887FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 140C8F0A1A4EBE3100F85556;
-			remoteInfo = "KeychainAccess-Mac";
-		};
-		A9D338C41B0A2356005887FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 140C8F141A4EBE3100F85556;
-			remoteInfo = "KeychainAccess-MacTests";
-		};
-		A9D338C61B0A236B005887FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 140F195B1A49D79400B0016A;
-			remoteInfo = "KeychainAccess-iOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -218,7 +167,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A96D7B3D1B0A8164008AA0FC /* KeychainAccess.framework in Embed Frameworks */,
 				A99383871ACA1ED300ECA0D0 /* LockKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -303,7 +251,6 @@
 		A9B7638D1ABC9DD60022A871 /* RfduinoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RfduinoManager.m; sourceTree = "<group>"; };
 		A9B7638E1ABC9DD60022A871 /* RFduinoManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFduinoManagerDelegate.h; sourceTree = "<group>"; };
 		A9B9CF7D1AC0DECF00664C8D /* SLLockViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLLockViewCell.swift; sourceTree = "<group>"; };
-		A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KeychainAccess.xcodeproj; path = KeychainAccess/Lib/KeychainAccess.xcodeproj; sourceTree = "<group>"; };
 		A9D338CC1B0A2472005887FC /* SLKeyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLKeyListViewController.swift; sourceTree = "<group>"; };
 		A9D338CE1B0A253C005887FC /* SLKeyViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLKeyViewCell.swift; sourceTree = "<group>"; };
 		A9EBAE541B0AD5A500D027AB /* SLSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLSettingsViewController.swift; sourceTree = "<group>"; };
@@ -350,7 +297,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9D338C81B0A237E005887FC /* KeychainAccess.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +483,6 @@
 		A9AF3CB81AFAF16F0050C138 /* Third Party Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				A9D338B61B0A2336005887FC /* KeychainAccess */,
 				A9B763881ABC9DD60022A871 /* rfduino */,
 				A9AF3CB91AFAF1990050C138 /* EasedValue */,
 				A9AF3CA71AFAF1080050C138 /* MMWormhole */,
@@ -703,25 +648,6 @@
 			path = ../rfduino;
 			sourceTree = "<group>";
 		};
-		A9D338B61B0A2336005887FC /* KeychainAccess */ = {
-			isa = PBXGroup;
-			children = (
-				A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */,
-			);
-			name = KeychainAccess;
-			sourceTree = "<group>";
-		};
-		A9D338B81B0A2356005887FC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A9D338BF1B0A2356005887FC /* KeychainAccess.framework */,
-				A9D338C11B0A2356005887FC /* KeychainAccess-iOSTests.xctest */,
-				A9D338C31B0A2356005887FC /* KeychainAccess.framework */,
-				A9D338C51B0A2356005887FC /* KeychainAccess-MacTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		A9D338CB1B0A244B005887FC /* Keys */ = {
 			isa = PBXGroup;
 			children = (
@@ -811,7 +737,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A96D7B401B0A8176008AA0FC /* PBXTargetDependency */,
 				A94F5F7B1AC3034400279E9D /* PBXTargetDependency */,
 			);
 			name = "spacelab WatchKit Extension";
@@ -846,7 +771,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A9D338C71B0A236B005887FC /* PBXTargetDependency */,
 			);
 			name = LockKit;
 			productName = LockKit;
@@ -885,7 +809,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A96D7B3C1B0A815B008AA0FC /* PBXTargetDependency */,
 				A94F5F851AC3034400279E9D /* PBXTargetDependency */,
 				A99383851ACA1ED300ECA0D0 /* PBXTargetDependency */,
 			);
@@ -928,6 +851,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 						};
 					};
 					A94F5F771AC3034400279E9D = {
@@ -950,6 +876,9 @@
 								enabled = 1;
 							};
 							com.apple.BackgroundModes = {
+                                enabled = 1;
+                            };
+							com.apple.Keychain = {
 								enabled = 1;
 							};
 						};
@@ -971,12 +900,6 @@
 			mainGroup = A9B763421ABC88A80022A871;
 			productRefGroup = A9B7634C1ABC88A80022A871 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = A9D338B81B0A2356005887FC /* Products */;
-					ProjectRef = A9D338B71B0A2356005887FC /* KeychainAccess.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				A9B7634A1ABC88A80022A871 /* spacelab */,
@@ -988,37 +911,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		A9D338BF1B0A2356005887FC /* KeychainAccess.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = KeychainAccess.framework;
-			remoteRef = A9D338BE1B0A2356005887FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		A9D338C11B0A2356005887FC /* KeychainAccess-iOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "KeychainAccess-iOSTests.xctest";
-			remoteRef = A9D338C01B0A2356005887FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		A9D338C31B0A2356005887FC /* KeychainAccess.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = KeychainAccess.framework;
-			remoteRef = A9D338C21B0A2356005887FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		A9D338C51B0A2356005887FC /* KeychainAccess-MacTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "KeychainAccess-MacTests.xctest";
-			remoteRef = A9D338C41B0A2356005887FC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A94F5F691AC3034400279E9D /* Resources */ = {
@@ -1157,16 +1049,6 @@
 			target = A94F5F6A1AC3034400279E9D /* spacelab WatchKit Extension */;
 			targetProxy = A94F5F841AC3034400279E9D /* PBXContainerItemProxy */;
 		};
-		A96D7B3C1B0A815B008AA0FC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "KeychainAccess-iOS";
-			targetProxy = A96D7B3B1B0A815B008AA0FC /* PBXContainerItemProxy */;
-		};
-		A96D7B401B0A8176008AA0FC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "KeychainAccess-iOS";
-			targetProxy = A96D7B3F1B0A8176008AA0FC /* PBXContainerItemProxy */;
-		};
 		A993837C1ACA1ED200ECA0D0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A993836E1ACA1ED200ECA0D0 /* LockKit */;
@@ -1186,11 +1068,6 @@
 			isa = PBXTargetDependency;
 			target = A9B7634A1ABC88A80022A871 /* spacelab */;
 			targetProxy = A9B763641ABC88A80022A871 /* PBXContainerItemProxy */;
-		};
-		A9D338C71B0A236B005887FC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "KeychainAccess-iOS";
-			targetProxy = A9D338C61B0A236B005887FC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

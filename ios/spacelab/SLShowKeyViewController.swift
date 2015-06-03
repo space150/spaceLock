@@ -23,7 +23,6 @@
 
 import UIKit
 import LockKit
-import KeychainAccess
 
 class SLShowKeyViewController: UITableViewController,
     SLKeyOutputViewCellDelegate
@@ -34,7 +33,6 @@ class SLShowKeyViewController: UITableViewController,
     @IBOutlet weak var outputLabel: UILabel!
     
     var key: LKKey!
-    private var keychain: Keychain!
     private var security: LKSecurityManager!
 
     override func viewDidLoad()
@@ -47,7 +45,6 @@ class SLShowKeyViewController: UITableViewController,
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS).accessibility(.WhenUnlocked)
         security = LKSecurityManager()
         
         setupIconImageCircle()
@@ -69,28 +66,22 @@ class SLShowKeyViewController: UITableViewController,
             iconImageButton.setImage(UIImage(contentsOfFile: key.imageFilename), forState: UIControlState.Normal)
         }
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            let failable = self.keychain
-                .authenticationPrompt("Retreive key for display")
-                .getDataOrError(self.key.lockId)
+        var keyData = security.findKey(key.lockId)
+        if keyData != nil
+        {
+            let handshakeData: NSData = self.security.encryptString(self.key.lockId, withKey: keyData)
             
-            if failable.succeeded
-            {
-                let keyData: NSData = failable.value!
-                let handshakeData: NSData = self.security.encryptString(self.key.lockId, withKey: keyData)
-                
-                // update the UI on the main thread
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.outputLabel.text = NSString(format: "#define LOCK_NAME \"%@\"\nbyte key[] = {\n%@\n};\nchar handshake[] = {\n%@\n};", self.key.lockId,
-                        keyData.hexadecimalString(),
-                        handshakeData.hexadecimalString()) as String
-                })
-            }
-            else
-            {
-                println("error: \(failable.error?.localizedDescription)")
-                // Error handling if needed...
-            }
+            // update the UI on the main thread
+            dispatch_async(dispatch_get_main_queue(), {
+                self.outputLabel.text = NSString(format: "#define LOCK_NAME \"%@\"\nbyte key[] = {\n%@\n};\nchar handshake[] = {\n%@\n};", self.key.lockId,
+                    keyData.hexadecimalString(),
+                    handshakeData.hexadecimalString()) as String
+            })
+        }
+        else
+        {
+            println("error: unable to find key")
+            // Error handling if needed...
         }
     }
     

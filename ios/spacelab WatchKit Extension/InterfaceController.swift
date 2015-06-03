@@ -25,7 +25,6 @@
 import WatchKit
 import Foundation
 import LockKit
-import KeychainAccess
 
 class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDelegate
 {
@@ -33,7 +32,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
 
     private var discoveryManager: LKLockDiscoveryManager!
     private var fetchedResultsController : NSFetchedResultsController!
-    private var keychain: Keychain!
+    private var security: LKSecurityManager!
     
     override func awakeWithContext(context: AnyObject?)
     {
@@ -41,8 +40,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         
         discoveryManager = LKLockDiscoveryManager(context: "watchkit-ext")
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS)
-            .accessibility(.WhenUnlocked, authenticationPolicy: .UserPresence)
+        security = LKSecurityManager()
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
@@ -145,40 +143,33 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         if ( row.unlockable == true )
         {
             row.showInProgress()
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                let failable = self.keychain
-                    .authenticationPrompt("Retreive key for lock")
-                    .getDataOrError(lock.lockId)
+
+            var keyData = security.findKey(lock.lockId)
+            if keyData != nil
+            {
+                self.discoveryManager.openLock(lock, withKey:keyData, complete: { (success, error) -> Void in
+                    if ( success )
+                    {
+                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                        
+                        row.showUnlocked()
+                    }
+                    else
+                    {
+                        println("Error opening lock: \(error.localizedDescription)")
+                        
+                        row.resetUnlocked()
+                        
+                        self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
+                    }
+                })
                 
-                if failable.succeeded
-                {
-                    self.discoveryManager.openLock(lock, withKey:failable.value!, complete: { (success, error) -> Void in
-                        if ( success )
-                        {
-                            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                            
-                            row.showUnlocked()
-                        }
-                        else
-                        {
-                            println("Error opening lock: \(error.localizedDescription)")
-                            
-                            row.resetUnlocked()
-                            
-                            self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
-                        }
-                    })
-                    
-                }
-                else
-                {
-                    println("error: \(failable.error?.localizedDescription)")
-                    
-                    row.resetUnlocked()
-                    
-                    self.presentControllerWithName("Error", context: ["segue": "modal", "data": failable.error!])
-                }
+            }
+            else
+            {
+                println("error: unable to find key")
+                
+                row.resetUnlocked()
             }
         }
     }

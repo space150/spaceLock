@@ -29,4 +29,8 @@
 - (NSData *)encryptString:(NSString *)text withKey:(NSData *)keyData;
 - (NSString *)decryptData:(NSData *)input withKey:(NSData *)keyData;
 
+- (NSError *)saveKey:(NSString *)keyName key:(NSData *)keyData;
+- (NSData *)findKey:(NSString *)keyName;
+- (NSError *)deleteKey:(NSString *)keyName;
+
 @end
