@@ -23,7 +23,6 @@
 
 import UIKit
 import LockKit
-import KeychainAccess
 import AudioToolbox
 
 class SLLockViewController: UIViewController,
@@ -40,7 +39,7 @@ class SLLockViewController: UIViewController,
     private var discoveryManager: LKLockDiscoveryManager!
     private var unlocking:Bool!
     
-    private var keychain: Keychain!
+    private var security: LKSecurityManager!
     
     override func viewDidLoad()
     {
@@ -50,8 +49,7 @@ class SLLockViewController: UIViewController,
         
         unlocking = false
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS)
-            .accessibility(.AfterFirstUnlock, authenticationPolicy: .UserPresence)
+        security = LKSecurityManager()
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
@@ -211,40 +209,35 @@ class SLLockViewController: UIViewController,
         cell.showInProgress()
         
         // fetch the key from the keychain
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            let failable = self.keychain
-                .authenticationPrompt("Retreive key for lock")
-                .getDataOrError(lock.lockId)
+        var keyData = security.findKey(lock.lockId)
+        if keyData != nil
+        {
+            self.discoveryManager.openLock(lock, withKey:keyData, complete: { (success, error) -> Void in
+                if ( success )
+                {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                        cell.showUnlocked()
+                    })
+                }
+                else
+                {
+                    println("ERROR opening lock: \(error.localizedDescription)")
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        cell.resetUnlocked()
+                    })
+                }
+            })
             
-            if failable.succeeded
-            {
-                self.discoveryManager.openLock(lock, withKey:failable.value!, complete: { (success, error) -> Void in
-                    if ( success )
-                    {
-                        dispatch_async(dispatch_get_main_queue(), {
-                            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                            cell.showUnlocked()
-                        })
-                    }
-                    else
-                    {
-                        println("ERROR opening lock: \(error.localizedDescription)")
-                        
-                        dispatch_async(dispatch_get_main_queue(), {
-                            cell.resetUnlocked()
-                        })
-                    }
-                })
-                
-            }
-            else
-            {
-                println("error: \(failable.error?.localizedDescription)")
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    cell.resetUnlocked()
-                })
-            }
+        }
+        else
+        {
+            println("error: unable to find key")
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                cell.resetUnlocked()
+            })
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)

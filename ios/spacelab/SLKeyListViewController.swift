@@ -23,12 +23,11 @@
 
 import UIKit
 import LockKit
-import KeychainAccess
 
 class SLKeyListViewController: UITableViewController,
     NSFetchedResultsControllerDelegate
 {
-    private var keychain: Keychain!
+    private var security: LKSecurityManager!
     private var fetchedResultsController: NSFetchedResultsController!
 
     override func viewDidLoad() {
@@ -40,8 +39,8 @@ class SLKeyListViewController: UITableViewController,
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS).accessibility(.WhenUnlocked)
-        
+        security = LKSecurityManager()
+
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
@@ -188,19 +187,10 @@ class SLKeyListViewController: UITableViewController,
         {
             let key: LKKey = fetchedResultsController.objectAtIndexPath(indexPath) as! LKKey
             // remove keychain entry
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                let error = self.keychain.remove(key.lockId)
-                if ( error != nil )
-                {
-                    let alertController = UIAlertController(title: "Unable to remove key in keychain!", message: error?.localizedDescription, preferredStyle: .Alert)
-                    let okAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
-                        // nothing
-                    }
-                    alertController.addAction(okAction)
-                    self.presentViewController(alertController, animated: true) {
-                        // nothing
-                    }
-                }
+            let error = security.deleteKey(key.lockId)
+            if ( error != nil )
+            {
+                println("unable to delete key: \(error.localizedDescription)")
             }
             
             // delete image
