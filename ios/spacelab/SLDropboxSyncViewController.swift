@@ -8,14 +8,13 @@
 
 import UIKit
 import LockKit
-import KeychainAccess
 
 class SLDropboxSyncViewController: UITableViewController,
     DBRestClientDelegate
 {
     @IBOutlet weak var syncButton: UIButton!
     
-    private var keychain: Keychain!
+    private var security: LKSecurityManager!
     private var outputEntries: NSMutableArray!
     private var restClient: DBRestClient!
     
@@ -34,7 +33,7 @@ class SLDropboxSyncViewController: UITableViewController,
         syncButton.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).CGColor
         syncButton.layer.borderWidth = 1.0
         
-        keychain = Keychain(server: "com.s150.spacelab.spaceLock", protocolType: .HTTPS).accessibility(.WhenUnlocked)
+        security = LKSecurityManager()
         
         restClient = DBRestClient(session: DBSession.sharedSession())
         restClient.delegate = self
@@ -265,7 +264,11 @@ class SLDropboxSyncViewController: UITableViewController,
                     appendEntry(" --> Copying to keychain")
                     
                     let keyData = NSData(base64EncodedString: keyEntry["keyData"] as! String, options: NSDataBase64DecodingOptions.allZeros)
-                    self.keychain.set(keyData!, key: lockId)
+                    let error = security.saveKey(lockId, key: keyData!)
+                    if ( error != nil )
+                    {
+                        appendEntry("Error saving key")
+                    }
                     
                     // copy images for new entries over
                     let imagePath: String = stagingFolder.stringByAppendingString("/key-\(lockId).png") as String
@@ -328,8 +331,11 @@ class SLDropboxSyncViewController: UITableViewController,
                 let entry: NSMutableDictionary = NSMutableDictionary()
                 entry["lockId"] = key.lockId
                 entry["lockName"] = key.lockName
-                let keyData = keychain.getData(key.lockId)!
-                entry["keyData"] = keyData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.allZeros)
+                let keyData = security.findKey(key.lockId)
+                if ( keyData != nil )
+                {
+                    entry["keyData"] = keyData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.allZeros)
+                }
                 if ( key.imageFilename != nil )
                 {
                     entry["localImageFilename"] = key.imageFilename

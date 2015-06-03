@@ -32,6 +32,7 @@
 @end
 
 @implementation LKSecurityManager
+
 - (NSData *)generateNewKeyForLockName:(NSString *)lockName
 {
     // generate key
@@ -102,6 +103,92 @@
     }
     
     return output;
+}
+
+- (NSError *)saveKey:(NSString *)keyName key:(NSData *)keyData
+{
+    const id keys[] = { (__bridge id)(kSecClass),
+        (__bridge id)(kSecAttrKeyClass),
+        (__bridge id)(kSecAttrLabel),
+        (__bridge id)(kSecAttrIsPermanent),
+        (__bridge id)(kSecAttrAccessible),
+        (__bridge id)(kSecValueData) };
+    
+    const id values[] = {(__bridge id)(kSecClassKey),
+        (__bridge id)(kSecAttrKeyClassPrivate),
+        keyName,
+        (id)kCFBooleanTrue,
+        (__bridge id)(kSecAttrAccessibleAfterFirstUnlock),
+        keyData };
+    
+    NSDictionary *attributes = [[NSDictionary alloc] initWithObjects:values forKeys:keys count:6];
+    CFTypeRef result;
+    
+    NSError* error = nil;
+    OSStatus osStatus = SecItemAdd((__bridge CFDictionaryRef)attributes, &result);
+    if ( osStatus != noErr )
+    {
+        error = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:osStatus userInfo:nil];
+        NSLog(@"Adding key to keychain failed with OSError %d:%@.", (int)osStatus, error);
+        return error;
+    }
+    return nil;
+}
+
+- (NSData *)findKey:(NSString *)keyName
+{
+    const id keys[] = { (__bridge id)(kSecClass),
+        (__bridge id)(kSecAttrKeyClass),
+        (__bridge id)(kSecAttrLabel),
+        (__bridge id)(kSecReturnData) };
+    
+    const id values[] = { (__bridge id)(kSecClassKey),
+        (__bridge id)(kSecAttrKeyClassPrivate),
+        keyName,
+        (id)kCFBooleanTrue };
+    NSDictionary* query = [[NSDictionary alloc] initWithObjects:values forKeys:keys count:4];
+    CFTypeRef result;
+    
+    NSError* error = nil;
+    OSStatus osStatus = SecItemCopyMatching((__bridge CFDictionaryRef)query, &result);
+    if ((osStatus == noErr) && (result != nil) )
+    {
+        NSData *keyData = (__bridge NSData *)result;
+        return keyData;
+    }
+    else
+    {
+        error = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:osStatus userInfo:nil];
+        NSLog(@"Getting data of key with label “%@” from keychain failed with OSError %d: %@.", keyName, (int) osStatus, error);
+        
+        if ( osStatus == errSecItemNotFound )
+            NSLog(@"Item does not exist in keychain");
+    }
+    
+    return nil;
+}
+
+- (NSError *)deleteKey:(id)keyName
+{
+    const id keys[] = { (__bridge id)(kSecClass),
+        (__bridge id)(kSecAttrKeyClass),
+        (__bridge id)(kSecAttrLabel)};
+    
+    const id values[] = { (__bridge id)(kSecClassKey),
+        (__bridge id)(kSecAttrKeyClassPrivate),
+        keyName };
+    
+    NSDictionary* query = [[NSDictionary alloc] initWithObjects:values forKeys:keys count:3];
+    
+    NSError* error = nil;
+    OSStatus osStatus = SecItemDelete((__bridge CFDictionaryRef)query);
+    if (osStatus != noErr)
+    {
+        error = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:osStatus userInfo:nil];
+        NSLog(@"Deleting key with label “%@” from keychain failed with OSError %d: %@.", keyName, (int)osStatus, error);
+        return error;
+    }
+    return nil;
 }
 
 @end
