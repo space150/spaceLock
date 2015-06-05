@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Doors-->
@@ -61,16 +62,48 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="8kM-oD-cWZ"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbH-tC-vr5">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mZO-cZ-HeX">
+                                        <rect key="frame" x="150" y="195" width="300" height="60"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon-no-results" translatesAutoresizingMaskIntoConstraints="NO" id="YyD-1v-RZb">
+                                                <rect key="frame" x="0.0" y="5" width="50" height="50"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No entries found! Please visit github.com/space150/spaceLock for more information!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dM-UA-G6D">
+                                                <rect key="frame" x="70" y="0.0" width="230" height="60"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="9gA-Ul-kNr"/>
+                                            <constraint firstAttribute="height" constant="60" id="SOv-P7-Y6S"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="mZO-cZ-HeX" secondAttribute="centerY" multiplier="4:3" id="50i-u8-Jlk"/>
+                                    <constraint firstAttribute="centerX" secondItem="mZO-cZ-HeX" secondAttribute="centerX" id="KbJ-0l-zzF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="fbH-tC-vr5" secondAttribute="centerY" id="1Tz-dU-wyZ"/>
                             <constraint firstItem="ol3-4g-NlT" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="5li-Sx-Mdf"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ol3-4g-NlT" secondAttribute="bottom" constant="-49" id="8tj-6x-CsS"/>
+                            <constraint firstItem="fbH-tC-vr5" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="Cfg-td-fJZ"/>
+                            <constraint firstAttribute="centerX" secondItem="fbH-tC-vr5" secondAttribute="centerX" id="XvW-mw-DR2"/>
                             <constraint firstItem="ol3-4g-NlT" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" id="dsd-0Y-QpC"/>
                             <constraint firstAttribute="width" secondItem="ol3-4g-NlT" secondAttribute="width" id="ehM-pd-Cjb"/>
                             <constraint firstAttribute="centerX" secondItem="ol3-4g-NlT" secondAttribute="centerX" id="rgo-0s-HXz"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ol3-4g-NlT" secondAttribute="bottom" id="t4H-4f-xRR"/>
                             <constraint firstAttribute="centerY" secondItem="ol3-4g-NlT" secondAttribute="centerY" id="tBc-w4-XNB"/>
+                            <constraint firstItem="fbH-tC-vr5" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" id="ubd-gc-VZH"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -82,6 +115,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Doors" id="EEy-c2-v7m"/>
                     <connections>
+                        <outlet property="noResultsView" destination="fbH-tC-vr5" id="fHy-tj-vHX"/>
                         <outlet property="tableView" destination="ol3-4g-NlT" id="rTn-SO-rLW"/>
                     </connections>
                 </viewController>
@@ -159,10 +193,40 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="noResultsView" destination="nhE-G4-iy2" id="w1V-BA-dPu"/>
                         <segue destination="Ph8-k5-nZC" kind="show" identifier="generateKey" id="632-wd-Yhj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fG1-Uu-03X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="nhE-G4-iy2">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbz-bj-sGz">
+                            <rect key="frame" x="150" y="139" width="300" height="60"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon-no-results" translatesAutoresizingMaskIntoConstraints="NO" id="ywN-Fd-cBf">
+                                    <rect key="frame" x="0.0" y="5" width="50" height="50"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No entries found! Please visit github.com/space150/spaceLock for more information!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qag-d2-GgK">
+                                    <rect key="frame" x="70" y="0.0" width="230" height="60"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="300" id="L0y-2b-quX"/>
+                                <constraint firstAttribute="height" constant="60" id="Seg-YY-XDJ"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="centerX" secondItem="nbz-bj-sGz" secondAttribute="centerX" id="P6q-lh-Caz"/>
+                        <constraint firstAttribute="centerY" secondItem="nbz-bj-sGz" secondAttribute="centerY" multiplier="4:3" constant="75" id="yC5-lJ-61l"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="1579" y="861"/>
         </scene>
@@ -682,6 +746,7 @@
     <resources>
         <image name="icon-camera" width="150" height="150"/>
         <image name="icon-missing" width="150" height="150"/>
+        <image name="icon-no-results" width="50" height="50"/>
         <image name="tab-bar-config" width="24" height="24"/>
         <image name="tab-bar-keys" width="24" height="24"/>
         <image name="tab-bar-locks" width="24" height="24"/>

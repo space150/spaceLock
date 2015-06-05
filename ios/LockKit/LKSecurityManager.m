@@ -130,9 +130,7 @@
     
     NSDictionary *attributes = [[NSDictionary alloc] initWithObjects:values forKeys:keys count:6];
     CFTypeRef result;
-    
-    NSLog(@"attributes: %@", attributes);
-    
+
     NSError* error = nil;
     OSStatus osStatus = SecItemAdd((__bridge CFDictionaryRef)attributes, &result);
     if ( osStatus != noErr )

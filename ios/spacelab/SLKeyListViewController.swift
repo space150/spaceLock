@@ -27,6 +27,8 @@ import LockKit
 class SLKeyListViewController: UITableViewController,
     NSFetchedResultsControllerDelegate
 {
+    @IBOutlet var noResultsView: UIView!
+    
     private var security: LKSecurityManager!
     private var fetchedResultsController: NSFetchedResultsController!
 
@@ -44,6 +46,17 @@ class SLKeyListViewController: UITableViewController,
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
         fetchedResultsController.performFetch(nil)
+        
+        // setup no results view
+        view.addSubview(noResultsView)
+        
+        noResultsView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        noResultsView.addConstraint(NSLayoutConstraint(item: noResultsView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 100))
+        noResultsView.addConstraint(NSLayoutConstraint(item: noResultsView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 100))
+        view.addConstraint(NSLayoutConstraint(item: noResultsView, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: noResultsView, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 3.0/4.0, constant: 0))
+        
+        noResultsView.hidden = ( fetchedResultsController.fetchedObjects?.count > 0 )
     }
 
     override func didReceiveMemoryWarning() {
@@ -179,6 +192,8 @@ class SLKeyListViewController: UITableViewController,
     func controllerDidChangeContent(controller: NSFetchedResultsController)
     {
         self.tableView.endUpdates()
+        
+        noResultsView.hidden = ( fetchedResultsController.fetchedObjects?.count > 0 )
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)

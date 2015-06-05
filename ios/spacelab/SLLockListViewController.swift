@@ -33,6 +33,7 @@ class SLLockViewController: UIViewController,
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var noResultsView: UIView!
     
     private var fetchedResultsController: NSFetchedResultsController!
     
@@ -159,6 +160,7 @@ class SLLockViewController: UIViewController,
         if ( !unlocking )
         {
             self.tableView.endUpdates()
+            noResultsView.hidden = ( fetchedResultsController.fetchedObjects?.count > 0 )
         }
     }
     
