@@ -37,13 +37,13 @@ class SLDropboxSyncViewController: UITableViewController,
         
         outputEntries = NSMutableArray()
         
-        view.addSubview(linkOverlayView)
+        tableView.addSubview(linkOverlayView)
         
         linkOverlayView.setTranslatesAutoresizingMaskIntoConstraints(false)
         linkOverlayView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 100))
         linkOverlayView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 100))
-        view.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 3.0/4.0, constant: 0))
+        tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterX, relatedBy: .Equal, toItem: tableView, attribute: .CenterX, multiplier: 1, constant: 0))
+        tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterY, relatedBy: .Equal, toItem: tableView, attribute: .CenterY, multiplier: 3.0/4.0, constant: 0))
         
         linkAccountButton.clipsToBounds = true
         linkAccountButton.layer.cornerRadius = 5.0
@@ -58,8 +58,6 @@ class SLDropboxSyncViewController: UITableViewController,
     func updateSyncButton()
     {
         var linked = DBSession.sharedSession().isLinked()
-        println("updateSyncButton: \(linked)")
-        
         linkOverlayView.hidden = linked
         syncButton.enabled = linked
     }
