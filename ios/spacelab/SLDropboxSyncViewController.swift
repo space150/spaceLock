@@ -12,7 +12,9 @@ import LockKit
 class SLDropboxSyncViewController: UITableViewController,
     DBRestClientDelegate
 {
-    @IBOutlet weak var syncButton: UIButton!
+    @IBOutlet var linkOverlayView: UIView!
+    @IBOutlet weak var syncButton: UIBarButtonItem!
+    @IBOutlet weak var linkAccountButton: UIButton!
     
     private var security: LKSecurityManager!
     private var outputEntries: NSMutableArray!
@@ -28,11 +30,6 @@ class SLDropboxSyncViewController: UITableViewController,
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        syncButton.clipsToBounds = true
-        syncButton.layer.cornerRadius = 5.0
-        syncButton.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).CGColor
-        syncButton.layer.borderWidth = 1.0
-        
         security = LKSecurityManager()
         
         restClient = DBRestClient(session: DBSession.sharedSession())
@@ -40,19 +37,31 @@ class SLDropboxSyncViewController: UITableViewController,
         
         outputEntries = NSMutableArray()
         
+        view.addSubview(linkOverlayView)
+        
+        linkOverlayView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        linkOverlayView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 100))
+        linkOverlayView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 100))
+        view.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterY, relatedBy: .Equal, toItem: view, attribute: .CenterY, multiplier: 3.0/4.0, constant: 0))
+        
+        linkAccountButton.clipsToBounds = true
+        linkAccountButton.layer.cornerRadius = 5.0
+        linkAccountButton.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).CGColor
+        linkAccountButton.layer.borderWidth = 1.0
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateSyncButton", name: "dropbox.link.success", object: nil)
+        
+        updateSyncButton()
     }
     
     func updateSyncButton()
     {
-        if ( DBSession.sharedSession().isLinked() )
-        {
-            syncButton.setTitle("Perform Sync", forState: UIControlState.Normal)
-        }
-        else
-        {
-            syncButton.setTitle("Login to Dropbox", forState: UIControlState.Normal)
-        }
+        var linked = DBSession.sharedSession().isLinked()
+        println("updateSyncButton: \(linked)")
+        
+        linkOverlayView.hidden = linked
+        syncButton.enabled = linked
     }
 
     override func didReceiveMemoryWarning() {
@@ -146,6 +155,14 @@ class SLDropboxSyncViewController: UITableViewController,
     
     // MARK: - Syncing
 
+    @IBAction func performLinkTouched(sender: AnyObject)
+    {
+        if ( !DBSession.sharedSession().isLinked() )
+        {
+            DBSession.sharedSession().linkFromController(self)
+        }
+    }
+    
     @IBAction func performSyncTouched(sender: AnyObject)
     {
         if ( !DBSession.sharedSession().isLinked() )

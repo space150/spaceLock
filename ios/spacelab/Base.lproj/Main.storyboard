@@ -403,18 +403,37 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eQE-I4-SQs" id="tER-i5-hnY">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dropbox" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ieb-Zu-MfA">
-                                                    <rect key="frame" x="15" y="19" width="544" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save to Dropbox" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ieb-Zu-MfA">
+                                                    <rect key="frame" x="65" y="19.5" width="494" height="20.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropbox-logo" translatesAutoresizingMaskIntoConstraints="NO" id="S9I-jF-edr">
+                                                    <rect key="frame" x="5" y="0.0" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="CxM-3L-VIE"/>
+                                                        <constraint firstAttribute="width" constant="60" id="bgH-BS-fQb"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="S9I-jF-edr" secondAttribute="centerY" constant="-0.25" id="1NL-rI-78v"/>
                                                 <constraint firstItem="Ieb-Zu-MfA" firstAttribute="top" secondItem="tER-i5-hnY" secondAttribute="topMargin" constant="11" id="2jT-cU-K3N"/>
+                                                <constraint firstItem="Ieb-Zu-MfA" firstAttribute="trailing" secondItem="tER-i5-hnY" secondAttribute="trailingMargin" id="5p5-Ae-9gd"/>
                                                 <constraint firstItem="Ieb-Zu-MfA" firstAttribute="leading" secondItem="tER-i5-hnY" secondAttribute="leadingMargin" constant="7" id="APZ-Am-vpS"/>
+                                                <constraint firstAttribute="centerY" secondItem="Ieb-Zu-MfA" secondAttribute="centerY" id="C8i-eM-0ig"/>
                                                 <constraint firstItem="Ieb-Zu-MfA" firstAttribute="trailing" secondItem="tER-i5-hnY" secondAttribute="trailingMargin" id="S4i-4C-bgR"/>
+                                                <constraint firstItem="S9I-jF-edr" firstAttribute="leading" secondItem="tER-i5-hnY" secondAttribute="leadingMargin" constant="-3" id="cfc-ZQ-vHW"/>
+                                                <constraint firstItem="Ieb-Zu-MfA" firstAttribute="leading" secondItem="S9I-jF-edr" secondAttribute="trailing" id="ePZ-fy-BFj"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="2jT-cU-K3N"/>
+                                                    <exclude reference="APZ-Am-vpS"/>
+                                                    <exclude reference="S4i-4C-bgR"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="0ka-zU-Wnv" kind="show" identifier="showDropbox" id="ft9-Uh-th2"/>
@@ -483,29 +502,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="HYZ-qj-cc5">
-                            <rect key="frame" x="0.0" y="130" width="600" height="60"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2l-ud-RRp">
-                                    <rect key="frame" x="8" y="8" width="584" height="44"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <state key="normal" title="Perform Sync">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="performSyncTouched:" destination="0ka-zU-Wnv" eventType="touchUpInside" id="CBL-ex-7MH"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="a2l-ud-RRp" secondAttribute="bottom" constant="8" id="ERR-Ng-skX"/>
-                                <constraint firstItem="a2l-ud-RRp" firstAttribute="leading" secondItem="HYZ-qj-cc5" secondAttribute="leading" constant="8" id="adP-Mj-FgE"/>
-                                <constraint firstItem="a2l-ud-RRp" firstAttribute="top" secondItem="HYZ-qj-cc5" secondAttribute="top" constant="8" id="qOV-JC-KXA"/>
-                                <constraint firstAttribute="trailing" secondItem="a2l-ud-RRp" secondAttribute="trailing" constant="8" id="xAX-vp-3pi"/>
-                            </constraints>
-                        </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="jF2-K2-dQH">
                             <rect key="frame" x="0.0" y="182" width="600" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -540,12 +536,59 @@
                             <outlet property="delegate" destination="0ka-zU-Wnv" id="ufw-Yi-99N"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Dropbox" id="u1S-pa-JPi"/>
+                    <navigationItem key="navigationItem" title="Dropbox" id="u1S-pa-JPi">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="z10-jY-1ls">
+                            <connections>
+                                <action selector="performSyncTouched:" destination="0ka-zU-Wnv" id="BVK-UV-Tqt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="syncButton" destination="a2l-ud-RRp" id="qGh-a6-3bE"/>
+                        <outlet property="linkAccountButton" destination="fkr-UA-tEa" id="4tK-hC-zc5"/>
+                        <outlet property="linkOverlayView" destination="3y2-nw-feM" id="Fme-2R-JiS"/>
+                        <outlet property="syncButton" destination="z10-jY-1ls" id="aIf-NL-Nsd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZzM-vS-UD0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="3y2-nw-feM">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cYf-jm-lyX">
+                            <rect key="frame" x="150" y="139" width="300" height="100"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dropbox-logo" translatesAutoresizingMaskIntoConstraints="NO" id="L5f-0Q-b6Q">
+                                    <rect key="frame" x="0.0" y="5" width="50" height="50"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Saving to Dropbox will download, merge and upload the keys you have locally with last set of keys you saved to Dropbox." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7n-jm-RcB">
+                                    <rect key="frame" x="53" y="0.0" width="239" height="60"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkr-UA-tEa">
+                                    <rect key="frame" x="14" y="67" width="272" height="30"/>
+                                    <color key="backgroundColor" red="0.87450980389999999" green="0.87450980389999999" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal" title="Link Dropbox Account">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="performLinkTouched:" destination="0ka-zU-Wnv" eventType="touchUpInside" id="tNA-vx-bxj"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="300" id="tbV-lv-vfL"/>
+                                <constraint firstAttribute="height" constant="100" id="vEq-Wc-7He"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="centerY" secondItem="cYf-jm-lyX" secondAttribute="centerY" multiplier="4:3" constant="75" id="1Bm-uK-DCN"/>
+                        <constraint firstAttribute="centerX" secondItem="cYf-jm-lyX" secondAttribute="centerX" id="s9X-de-c9s"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="1488" y="1628"/>
         </scene>
@@ -744,6 +787,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="dropbox-logo" width="85" height="85"/>
         <image name="icon-camera" width="150" height="150"/>
         <image name="icon-missing" width="150" height="150"/>
         <image name="icon-no-results" width="50" height="50"/>
