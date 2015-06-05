@@ -24,7 +24,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.space150.ent.spacelab</string>
+			<string>com.s150.spacelab.spaceLock</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>db-APP_KEY_HERE</string>

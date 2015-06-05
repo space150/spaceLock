@@ -261,6 +261,14 @@ class SLNewKeyViewController: UITableViewController,
         let keyData: NSData = security.generateNewKeyForLockName(lockId)!
         let handshakeData: NSData = security.encryptString(lockId, withKey: keyData)
         
+        // force save by deleting the existing key from the keychain
+        // the user was warned previously about this if the entry exists in coredata
+        // if the key exists without being in coredata just toss it aside anyway!
+        let key = security.findKey(lockId)
+        if ( key != nil )
+        {
+            security.deleteKey(lockId)
+        }
         
         let error = security.saveKey(lockId, key: keyData)
         if ( error != nil )
