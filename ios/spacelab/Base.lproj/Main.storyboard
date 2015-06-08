@@ -554,8 +554,8 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cYf-jm-lyX">
-                            <rect key="frame" x="150" y="139" width="300" height="100"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cYf-jm-lyX">
+                            <rect key="frame" x="150" y="119" width="300" height="100"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dropbox-logo" translatesAutoresizingMaskIntoConstraints="NO" id="L5f-0Q-b6Q">
                                     <rect key="frame" x="0.0" y="5" width="50" height="50"/>
@@ -583,10 +583,9 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="centerY" secondItem="cYf-jm-lyX" secondAttribute="centerY" multiplier="4:3" constant="75" id="1Bm-uK-DCN"/>
-                        <constraint firstAttribute="centerX" secondItem="cYf-jm-lyX" secondAttribute="centerX" id="s9X-de-c9s"/>
+                        <constraint firstAttribute="centerX" secondItem="cYf-jm-lyX" secondAttribute="centerX" id="21Y-Pn-rbZ"/>
+                        <constraint firstAttribute="centerY" secondItem="cYf-jm-lyX" secondAttribute="centerY" multiplier="4:3" constant="75" id="fcC-Xe-W2D"/>
                     </constraints>
                 </view>
             </objects>

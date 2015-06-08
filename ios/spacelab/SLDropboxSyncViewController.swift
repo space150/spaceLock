@@ -32,34 +32,34 @@ class SLDropboxSyncViewController: UITableViewController,
         
         security = LKSecurityManager()
         
-        restClient = DBRestClient(session: DBSession.sharedSession())
-        restClient.delegate = self
-        
         outputEntries = NSMutableArray()
         
         tableView.addSubview(linkOverlayView)
         
         linkOverlayView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        linkOverlayView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 100))
-        linkOverlayView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 100))
+        tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Width, relatedBy: .Equal, toItem: tableView, attribute: .Width, multiplier: 1.0, constant: 100))
+        tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Height, relatedBy: .Equal, toItem: tableView, attribute: .Height, multiplier: 1.0, constant: 100))
         tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterX, relatedBy: .Equal, toItem: tableView, attribute: .CenterX, multiplier: 1, constant: 0))
-        tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterY, relatedBy: .Equal, toItem: tableView, attribute: .CenterY, multiplier: 3.0/4.0, constant: 0))
+        tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterY, relatedBy: .Equal, toItem: tableView, attribute: .CenterY, multiplier: 1, constant: 0))
         
         linkAccountButton.clipsToBounds = true
         linkAccountButton.layer.cornerRadius = 5.0
         linkAccountButton.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).CGColor
         linkAccountButton.layer.borderWidth = 1.0
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateSyncButton", name: "dropbox.link.success", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateDropboxLinkStatus", name: "dropbox.link.success", object: nil)
         
-        updateSyncButton()
+        updateDropboxLinkStatus()
     }
     
-    func updateSyncButton()
+    func updateDropboxLinkStatus()
     {
         var linked = DBSession.sharedSession().isLinked()
         linkOverlayView.hidden = linked
         syncButton.enabled = linked
+        
+        restClient = DBRestClient(session: DBSession.sharedSession())
+        restClient.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -213,8 +213,7 @@ class SLDropboxSyncViewController: UITableViewController,
             println("error loading metadata, code: \(error?.code), error: \(error?.localizedDescription)")
             if error?.code == 401 {
                 DBSession.sharedSession().unlinkAll()
-                updateSyncButton()
-                syncButton.enabled = true
+                updateDropboxLinkStatus()
                 
                 appendEntry("Dropbox not correctly linked, please login!")
             }
