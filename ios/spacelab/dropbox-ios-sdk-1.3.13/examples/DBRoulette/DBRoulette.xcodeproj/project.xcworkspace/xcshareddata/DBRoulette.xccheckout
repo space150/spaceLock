@@ -5,20 +5,20 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>21DF084D-B4DF-43F1-9C72-37B11847846B</string>
+	<string>ED0FC1B9-90A1-40E9-865D-559921110275</string>
 	<key>IDESourceControlProjectName</key>
-	<string>spacelab</string>
+	<string>DBRoulette</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</key>
 		<string>https://github.com/space150/spaceLock.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios/spacelab.xcodeproj</string>
+	<string>ios/spacelab/dropbox-ios-sdk-1.3.13/examples/DBRoulette/DBRoulette.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>C3A4B4EFC9A20EEEB0AB0E47015E3EBE8C908066</key>
-		<string>../../..</string>
+		<string>../../../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/space150/spaceLock.git</string>
