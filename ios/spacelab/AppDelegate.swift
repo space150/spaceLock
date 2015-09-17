@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         {
             if ( DBSession.sharedSession().isLinked() )
             {
-                println("Dropbox & app linked successfully!")
+                print("Dropbox & app linked successfully!")
                 
                 NSNotificationCenter.defaultCenter().postNotificationName("dropbox.link.success", object: self)
             }

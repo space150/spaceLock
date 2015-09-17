@@ -36,7 +36,7 @@ class SLDropboxSyncViewController: UITableViewController,
         
         tableView.addSubview(linkOverlayView)
         
-        linkOverlayView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        linkOverlayView.translatesAutoresizingMaskIntoConstraints = false
         tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Width, relatedBy: .Equal, toItem: tableView, attribute: .Width, multiplier: 1.0, constant: 100))
         tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .Height, relatedBy: .Equal, toItem: tableView, attribute: .Height, multiplier: 1.0, constant: 100))
         tableView.addConstraint(NSLayoutConstraint(item: linkOverlayView, attribute: .CenterX, relatedBy: .Equal, toItem: tableView, attribute: .CenterX, multiplier: 1, constant: 0))
@@ -210,7 +210,7 @@ class SLDropboxSyncViewController: UITableViewController,
     {
         if ( error != nil )
         {
-            println("error loading metadata, code: \(error?.code), error: \(error?.localizedDescription)")
+            print("error loading metadata, code: \(error?.code), error: \(error?.localizedDescription)")
             if error?.code == 401 {
                 DBSession.sharedSession().unlinkAll()
                 updateDropboxLinkStatus()
@@ -253,9 +253,8 @@ class SLDropboxSyncViewController: UITableViewController,
         let manifestPath: String = stagingFolder.stringByAppendingString("/contents.json") as String
         var jsonData = filemanager.contentsAtPath(manifestPath)
         var error: NSError?
-        let keyEntries: NSArray = NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions.allZeros, error: &error) as! NSArray
-        if ( error == nil )
-        {
+        do {
+            let keyEntries: NSArray = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions()) as! NSArray
             // look for new entries
             for keyEntry in keyEntries as! [NSDictionary]
             {
@@ -265,8 +264,8 @@ class SLDropboxSyncViewController: UITableViewController,
                 // see if we have an entry for this key already
                 let fetchRequest = NSFetchRequest(entityName: "LKKey")
                 fetchRequest.predicate = NSPredicate(format: "lockId == %@", lockId)
-                let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
-                if ( fetchResults?.count == 0 )
+                let fetchResults =  try! LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest)
+                if ( fetchResults.count == 0 )
                 {
                     appendEntry("Found new entry: \(lockName)")
                     
@@ -277,7 +276,7 @@ class SLDropboxSyncViewController: UITableViewController,
                     
                     appendEntry(" --> Copying to keychain")
                     
-                    let keyData = NSData(base64EncodedString: keyEntry["keyData"] as! String, options: NSDataBase64DecodingOptions.allZeros)
+                    let keyData = NSData(base64EncodedString: keyEntry["keyData"] as! String, options: NSDataBase64DecodingOptions())
                     let error = security.saveKey(lockId, key: keyData!)
                     if ( error != nil )
                     {
@@ -286,16 +285,16 @@ class SLDropboxSyncViewController: UITableViewController,
                     
                     // copy images for new entries over
                     let imagePath: String = stagingFolder.stringByAppendingString("/key-\(lockId).png") as String
-                    var imageDest = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
-                    var copyError: NSError?
+                    let home = NSHomeDirectory() as NSString
+                    var imageDest = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
                     appendEntry(" --> Copying image for \(lockName)")
-                    if ( filemanager.copyItemAtPath(imagePath, toPath: imageDest, error: &copyError) == false )
-                    {
-                        appendEntry("Error copying image: \(imagePath) -- \(copyError?.localizedDescription)")
-                    }
-                    else
-                    {
+                    do {
+                        try filemanager.copyItemAtPath(imagePath, toPath: imageDest)
                         key.imageFilename = imageDest
+                    } catch let copyError as NSError {
+                        appendEntry("Error copying image: \(imagePath) -- \(copyError.localizedDescription)")
+                    } catch {
+                        
                     }
                 }
                 else
@@ -306,16 +305,16 @@ class SLDropboxSyncViewController: UITableViewController,
             
             appendEntry("Committing changes...")
             LKLockRepository.sharedInstance().saveContext()
-        }
-        else
-        {
-            appendEntry("Error parsing manifest: \(error?.localizedDescription)")
+        } catch let error as NSError {
+            appendEntry("Error parsing manifest: \(error.localizedDescription)")
+        } catch {
+            
         }
         
         // clean up the download directory
-        var cleanupError: NSError?
-        if ( NSFileManager.defaultManager().removeItemAtPath(stagingFolder, error: &cleanupError) == false )
-        {
+        do {
+            try NSFileManager.defaultManager().removeItemAtPath(stagingFolder)
+        } catch _ {
             appendEntry("error removing srcPath: \(stagingFolder)")
         }
         
@@ -335,30 +334,28 @@ class SLDropboxSyncViewController: UITableViewController,
         let entries: NSMutableArray = NSMutableArray()
         // remove coredata entries for any locks using the key
         let fetchRequest = NSFetchRequest(entityName: "LKKey")
-        let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
-        if let keys = fetchResults   // check for nil and unwrap
+        let fetchResults = try! LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest)
+        let keys = fetchResults   // check for nil and unwrap
+        appendEntry("Found \(keys.count) keys:")
+        for key in keys as! [LKKey]
         {
-            appendEntry("Found \(keys.count) keys:")
-            for key in keys as! [LKKey]
+            // collect the keychain data
+            let entry: NSMutableDictionary = NSMutableDictionary()
+            entry["lockId"] = key.lockId
+            entry["lockName"] = key.lockName
+            let keyData = security.findKey(key.lockId)
+            if ( keyData != nil )
             {
-                // collect the keychain data
-                let entry: NSMutableDictionary = NSMutableDictionary()
-                entry["lockId"] = key.lockId
-                entry["lockName"] = key.lockName
-                let keyData = security.findKey(key.lockId)
-                if ( keyData != nil )
-                {
-                    entry["keyData"] = keyData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.allZeros)
-                }
-                if ( key.imageFilename != nil )
-                {
-                    entry["localImageFilename"] = key.imageFilename
-                }
-                
-                appendEntry(" --> Copying data for \(key.lockName)")
-                
-                entries.addObject(entry)
+                entry["keyData"] = keyData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions())
             }
+            if ( key.imageFilename != nil )
+            {
+                entry["localImageFilename"] = key.imageFilename
+            }
+            
+            appendEntry(" --> Copying data for \(key.lockName)")
+            
+            entries.addObject(entry)
         }
         
         let keyEntries: NSArray = entries;
@@ -367,10 +364,9 @@ class SLDropboxSyncViewController: UITableViewController,
         
         // export to JSON
         var jsonError: NSError?
-        let jsonData = NSJSONSerialization.dataWithJSONObject(keyEntries, options: NSJSONWritingOptions.PrettyPrinted, error: &jsonError)
-        if ( jsonData != nil )
-        {
-            let jsonString = NSString(data: jsonData!, encoding: NSUTF8StringEncoding)
+        do {
+            let jsonData = try NSJSONSerialization.dataWithJSONObject(keyEntries, options: NSJSONWritingOptions.PrettyPrinted)
+            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding)
             appendEntry("Generated export manifest")
             
             // create staging folder
@@ -379,23 +375,17 @@ class SLDropboxSyncViewController: UITableViewController,
             appendEntry("Creating staging folder")
             if ( !filemanager.fileExistsAtPath(stagingFolder) )
             {
-                var error: NSError?
-                if ( !filemanager.createDirectoryAtPath(stagingFolder, withIntermediateDirectories: false, attributes: nil, error: &error) )
-                {
-                    appendEntry("error creating staging folder: \(error?.localizedDescription)")
-                }
+                do {
+                    try filemanager.createDirectoryAtPath(stagingFolder, withIntermediateDirectories: false, attributes: nil)
+                } catch let error as NSError {
+                    appendEntry("error creating staging folder: \(error.localizedDescription)")
+                } catch {}
             }
             
             // save JSON
             let jsonPath = stagingFolder.stringByAppendingString("/contents.json")
-            var contentsError: NSError?
             appendEntry("Exporting manifest to file")
-            if ( jsonString?.writeToFile(jsonPath, atomically: true, encoding: NSUTF8StringEncoding, error: &contentsError) == false )
-            {
-                appendEntry("error writing contents.json: \(contentsError?.localizedDescription)")
-            }
-            else
-            {
+            do {
                 // copy images to staging folder
                 appendEntry("Copying images:")
                 for key in keyEntries as! [NSDictionary]
@@ -407,10 +397,11 @@ class SLDropboxSyncViewController: UITableViewController,
                         let imagePath = stagingFolder.stringByAppendingString("/key-\(lockId).png")
                         var copyError: NSError?
                         appendEntry(" --> Copying image for \(lockName)")
-                        if ( filemanager.copyItemAtPath(key["localImageFilename"] as! String, toPath: imagePath, error: &copyError) == false )
-                        {
+                        do {
+                            try filemanager.copyItemAtPath(key["localImageFilename"] as! String, toPath: imagePath)
+                        } catch let error as NSError {
                             appendEntry("error copying image: \(imagePath) -- \(copyError?.localizedDescription)")
-                        }
+                        } catch {}
                     }
                 }
                 
@@ -423,10 +414,11 @@ class SLDropboxSyncViewController: UITableViewController,
                 
                 // remove staging folder
                 var stagingFolderError: NSError?
-                if ( filemanager.removeItemAtPath(stagingFolder, error: &stagingFolderError) == false )
-                {
+                do {
+                    try filemanager.removeItemAtPath(stagingFolder)
+                } catch let error as NSError {
                     appendEntry("error removing staging folder: \(stagingFolderError?.localizedDescription)")
-                }
+                } catch {}
                 
                 appendEntry("Uploading spaceLock.zip to Dropbox...")
                 
@@ -435,12 +427,12 @@ class SLDropboxSyncViewController: UITableViewController,
                 dateFormatter.dateFormat = "yyyyMMddHHmmss"
                 let str = dateFormatter.stringFromDate(NSDate())
                 restClient.uploadFile("spaceLock-\(str).zip", toPath: "/", withParentRev: nil, fromPath: stagingArchive)
-            }
-        }
-        else
-        {
-            appendEntry("error: \(jsonError?.localizedDescription)")
-        }
+            } catch let error as NSError {
+                appendEntry("error writing contents.json: \(error.localizedDescription)")
+            } catch {}
+        } catch let error as NSError {
+            appendEntry("error: \(error.localizedDescription)")
+        } catch {}
     }
     
     func restClient(client: DBRestClient!, uploadedFile destPath: String!, from srcPath: String!)
@@ -448,9 +440,9 @@ class SLDropboxSyncViewController: UITableViewController,
         appendEntry("Completed file upload, DONE.")
         
         // delete the staging zip
-        var error: NSError?
-        if ( NSFileManager.defaultManager().removeItemAtPath(srcPath, error: &error) == false )
-        {
+        do {
+            try NSFileManager.defaultManager().removeItemAtPath(srcPath)
+        } catch _ {
             appendEntry("error removing srcPath: \(srcPath)")
         }
     }

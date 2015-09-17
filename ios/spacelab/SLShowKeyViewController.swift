@@ -80,7 +80,7 @@ class SLShowKeyViewController: UITableViewController,
         }
         else
         {
-            println("error: unable to find key")
+            print("error: unable to find key")
             // Error handling if needed...
         }
     }
@@ -186,7 +186,7 @@ class SLShowKeyViewController: UITableViewController,
         cell.delegate = nil
         
         UIPasteboard.generalPasteboard().string = outputLabel.text
-        println("added: \(outputLabel.text) to the pasteboard")
+        print("added: \(outputLabel.text) to the pasteboard")
     }
     
     // MARK: - UITableViewDelegate Methods

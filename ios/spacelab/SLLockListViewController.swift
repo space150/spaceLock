@@ -54,7 +54,7 @@ class SLLockViewController: UIViewController,
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
-        fetchedResultsController.performFetch(nil)
+        try! fetchedResultsController.performFetch()
     }
     
     override func viewDidAppear(animated: Bool)
@@ -224,7 +224,7 @@ class SLLockViewController: UIViewController,
                 }
                 else
                 {
-                    println("ERROR opening lock: \(error.localizedDescription)")
+                    print("ERROR opening lock: \(error.localizedDescription)")
                     
                     dispatch_async(dispatch_get_main_queue(), {
                         cell.resetUnlocked()
@@ -235,7 +235,7 @@ class SLLockViewController: UIViewController,
         }
         else
         {
-            println("error: unable to find key")
+            print("error: unable to find key")
             
             dispatch_async(dispatch_get_main_queue(), {
                 cell.resetUnlocked()

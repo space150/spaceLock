@@ -45,12 +45,12 @@ class SLKeyListViewController: UITableViewController,
 
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
-        fetchedResultsController.performFetch(nil)
+        try! fetchedResultsController.performFetch()
         
         // setup no results view
         view.addSubview(noResultsView)
         
-        noResultsView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        noResultsView.translatesAutoresizingMaskIntoConstraints = false
         noResultsView.addConstraint(NSLayoutConstraint(item: noResultsView, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .Width, multiplier: 1.0, constant: 100))
         noResultsView.addConstraint(NSLayoutConstraint(item: noResultsView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1.0, constant: 100))
         view.addConstraint(NSLayoutConstraint(item: noResultsView, attribute: .CenterX, relatedBy: .Equal, toItem: view, attribute: .CenterX, multiplier: 1, constant: 0))
@@ -135,7 +135,7 @@ class SLKeyListViewController: UITableViewController,
     {
         if ( segue.identifier == "showKey" )
         {
-            let key: LKKey = fetchedResultsController.objectAtIndexPath(self.tableView.indexPathForSelectedRow()!) as! LKKey
+            let key: LKKey = fetchedResultsController.objectAtIndexPath(self.tableView.indexPathForSelectedRow!) as! LKKey
             var controller: SLShowKeyViewController = segue.destinationViewController as! SLShowKeyViewController
             controller.key = key
         }
@@ -205,24 +205,23 @@ class SLKeyListViewController: UITableViewController,
             let error = security.deleteKey(key.lockId)
             if ( error != nil )
             {
-                println("unable to delete key: \(error.localizedDescription)")
+                print("unable to delete key: \(error.localizedDescription)")
             }
             
             // delete image
-            var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", key.lockId) as! String)
+            let home = NSHomeDirectory() as NSString
+            var path = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", key.lockId) as! String)
             let fileManager = NSFileManager.defaultManager()
-            fileManager.removeItemAtPath(path, error: nil)
+            try! fileManager.removeItemAtPath(path)
             
             // remove coredata entries for any locks using the key
             let fetchRequest = NSFetchRequest(entityName: "LKLock")
             fetchRequest.predicate = NSPredicate(format: "lockId == %@", key.lockId)
-            let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
-            if let locks = fetchResults   // check for nil and unwrap
+            let fetchResults =  try! LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest)
+            let locks = fetchResults   // check for nil and unwrap
+            for lock in locks as! [LKLock]
             {
-                for lock in locks as! [LKLock]
-                {
-                    LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(lock)
-                }
+                LKLockRepository.sharedInstance().managedObjectContext!!.deleteObject(lock)
             }
             
             // remove coredata entry for the key

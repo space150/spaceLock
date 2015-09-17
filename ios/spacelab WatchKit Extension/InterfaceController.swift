@@ -44,7 +44,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
-        fetchedResultsController.performFetch(nil)
+        try! fetchedResultsController.performFetch()
         
         configureTableWithLocks()
     }
@@ -156,7 +156,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
                     }
                     else
                     {
-                        println("Error opening lock: \(error.localizedDescription)")
+                        print("Error opening lock: \(error.localizedDescription)")
                         
                         row.resetUnlocked()
                         
@@ -167,7 +167,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
             }
             else
             {
-                println("error: unable to find key")
+                print("error: unable to find key")
                 
                 row.resetUnlocked()
             }

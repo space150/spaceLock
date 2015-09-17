@@ -161,7 +161,7 @@ class SLNewKeyViewController: UITableViewController,
     
     func checkMaxLength(textField: UITextField!, maxLength: Int)
     {
-        if (count(textField.text!) > maxLength)
+        if (textField.text?.characters.count > maxLength)
         {
             textField.deleteBackward()
         }
@@ -175,7 +175,7 @@ class SLNewKeyViewController: UITableViewController,
         cell.delegate = nil
         
         UIPasteboard.generalPasteboard().string = outputLabel.text
-        println("added: \(outputLabel.text) to the pasteboard")
+       print("added: \(outputLabel.text) to the pasteboard")
     }
     
     // MARK: - UITableViewDelegate Methods
@@ -220,7 +220,7 @@ class SLNewKeyViewController: UITableViewController,
         }
         
         // check to see if this key already exists
-        if ( validateKey(lockId, name: lockName) )
+        if ( validateKey(lockId!, name: lockName!) )
         {
             saveKey()
         }
@@ -245,8 +245,8 @@ class SLNewKeyViewController: UITableViewController,
     {
         let fetchRequest = NSFetchRequest(entityName: "LKKey")
         fetchRequest.predicate = NSPredicate(format: "lockId == %@", id)
-        let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
-        if ( fetchResults?.count == 0 ) {
+        let fetchResults =  try! LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest)
+        if ( fetchResults.count == 0 ) {
             return true
         }
         return false
@@ -290,11 +290,11 @@ class SLNewKeyViewController: UITableViewController,
                 // find or update coredata entry
                 var key: LKKey;
                 let fetchRequest = NSFetchRequest(entityName: "LKKey")
-                fetchRequest.predicate = NSPredicate(format: "lockId == %@", lockId)
-                let fetchResults =  LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest, error: nil)
-                if ( fetchResults?.count > 0 )
+                fetchRequest.predicate = NSPredicate(format: "lockId == %@", lockId!)
+                let fetchResults =  try! LKLockRepository.sharedInstance().managedObjectContext!!.executeFetchRequest(fetchRequest)
+                if ( fetchResults.count > 0 )
                 {
-                    key = fetchResults?.first as! LKKey
+                    key = fetchResults.first as! LKKey
                     key.lockName = lockName
                 }
                 else
@@ -306,11 +306,12 @@ class SLNewKeyViewController: UITableViewController,
                 // save the image to the filesystem
                 if ( self.takenImage != nil )
                 {
-                    var path = NSHomeDirectory().stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
-                    let success = UIImagePNGRepresentation(self.takenImage)
+                    let home = NSHomeDirectory() as NSString
+                    var path = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId!) as! String)
+                    let success = UIImagePNGRepresentation(self.takenImage)!
                         .writeToFile(path, atomically: true)
                     if ( success == true ) {
-                        println("saved image to: \(path)")
+                        print("saved image to: \(path)")
                         key.imageFilename = path
                     }
                 }
@@ -318,7 +319,7 @@ class SLNewKeyViewController: UITableViewController,
                 LKLockRepository.sharedInstance().saveContext()
                 
                 // display sketch info
-                self.outputLabel.text = NSString(format: "#define LOCK_NAME \"%@\"\nbyte key[] = {\n%@\n};\nchar handshake[] = {\n%@\n};", lockId,
+                self.outputLabel.text = NSString(format: "#define LOCK_NAME \"%@\"\nbyte key[] = {\n%@\n};\nchar handshake[] = {\n%@\n};", lockId!,
                     keyData.hexadecimalString(),
                     handshakeData.hexadecimalString()) as String
                 
@@ -343,7 +344,7 @@ class SLNewKeyViewController: UITableViewController,
     
     //MARK: - UIImagePickerControllerDelegate Methods
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
         var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         takenImage = RBSquareImageTo(fixImageOrientation(chosenImage), size:CGSize(width: 300.0, height: 300.0))
@@ -412,7 +413,8 @@ class SLNewKeyViewController: UITableViewController,
         var ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height),
             CGImageGetBitsPerComponent(img.CGImage), 0,
             CGImageGetColorSpace(img.CGImage),
-            CGImageGetBitmapInfo(img.CGImage));
+            CGImageGetBitmapInfo(img.CGImage).rawValue)!
+
         CGContextConcatCTM(ctx, transform)
         
         
@@ -428,8 +430,8 @@ class SLNewKeyViewController: UITableViewController,
         }
         
         // And now we just create a new UIImage from the drawing context
-        var cgimg:CGImageRef = CGBitmapContextCreateImage(ctx)
-        var imgEnd:UIImage = UIImage(CGImage: cgimg)!
+        var cgimg:CGImageRef = CGBitmapContextCreateImage(ctx)!
+        var imgEnd:UIImage = UIImage(CGImage: cgimg)
         
         return imgEnd
     }
@@ -459,7 +461,7 @@ class SLNewKeyViewController: UITableViewController,
         var cropSquare = CGRectMake(posX, posY, edge, edge)
         
         var imageRef = CGImageCreateWithImageInRect(image.CGImage, cropSquare);
-        return UIImage(CGImage: imageRef, scale: UIScreen.mainScreen().scale, orientation: image.imageOrientation)!
+        return UIImage(CGImage: imageRef!, scale: UIScreen.mainScreen().scale, orientation: image.imageOrientation)
     }
     
     func RBResizeImage(image: UIImage, targetSize: CGSize) -> UIImage
