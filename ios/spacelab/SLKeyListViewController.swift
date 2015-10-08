@@ -136,7 +136,7 @@ class SLKeyListViewController: UITableViewController,
         if ( segue.identifier == "showKey" )
         {
             let key: LKKey = fetchedResultsController.objectAtIndexPath(self.tableView.indexPathForSelectedRow!) as! LKKey
-            var controller: SLShowKeyViewController = segue.destinationViewController as! SLShowKeyViewController
+            let controller: SLShowKeyViewController = segue.destinationViewController as! SLShowKeyViewController
             controller.key = key
         }
     }
@@ -184,8 +184,6 @@ class SLKeyListViewController: UITableViewController,
             self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         case .Delete:
             self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-        default:
-            return
         }
     }
     
@@ -210,7 +208,7 @@ class SLKeyListViewController: UITableViewController,
             
             // delete image
             let home = NSHomeDirectory() as NSString
-            var path = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", key.lockId) as! String)
+            let path = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", key.lockId) as String)
             let fileManager = NSFileManager.defaultManager()
             try! fileManager.removeItemAtPath(path)
             

@@ -38,7 +38,7 @@ class SLLockRowType: NSObject
     
     func setLock(lock: LKLock)
     {
-        var components: NSArray = lock.name.uppercaseString.componentsSeparatedByString("-")
+        let components: NSArray = lock.name.uppercaseString.componentsSeparatedByString("-")
         doorNameLabel.setText(components.lastObject as? String)
         proximity = lock.proximity
         

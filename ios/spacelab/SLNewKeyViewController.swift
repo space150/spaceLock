@@ -62,13 +62,13 @@ class SLNewKeyViewController: UITableViewController,
     
     private func setupIconImageCircle()
     {
-        var path = UIBezierPath(ovalInRect: iconImageButton.bounds)
+        let path = UIBezierPath(ovalInRect: iconImageButton.bounds)
         
-        var maskLayer = CAShapeLayer()
+        let maskLayer = CAShapeLayer()
         maskLayer.path = path.CGPath
         iconImageButton.layer.mask = maskLayer
         
-        var outlineLayer = CAShapeLayer()
+        let outlineLayer = CAShapeLayer()
         outlineLayer.lineWidth = 10.0
         outlineLayer.fillColor = UIColor.clearColor().CGColor
         outlineLayer.strokeColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0).CGColor
@@ -307,7 +307,7 @@ class SLNewKeyViewController: UITableViewController,
                 if ( self.takenImage != nil )
                 {
                     let home = NSHomeDirectory() as NSString
-                    var path = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId!) as! String)
+                    let path = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId!) as String)
                     let success = UIImagePNGRepresentation(self.takenImage)!
                         .writeToFile(path, atomically: true)
                     if ( success == true ) {
@@ -334,7 +334,7 @@ class SLNewKeyViewController: UITableViewController,
     
     @IBAction func iconImageButtonTouched(sender: AnyObject)
     {
-        var picker = UIImagePickerController()
+        let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = false
         picker.sourceType = UIImagePickerControllerSourceType.Camera
@@ -346,7 +346,7 @@ class SLNewKeyViewController: UITableViewController,
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
-        var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         takenImage = RBSquareImageTo(fixImageOrientation(chosenImage), size:CGSize(width: 300.0, height: 300.0))
         iconImageButton.setImage(takenImage, forState: UIControlState.Normal)
         
@@ -410,7 +410,7 @@ class SLNewKeyViewController: UITableViewController,
         
         // Now we draw the underlying CGImage into a new context, applying the transform
         // calculated above.
-        var ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height),
+        let ctx:CGContextRef = CGBitmapContextCreate(nil, Int(img.size.width), Int(img.size.height),
             CGImageGetBitsPerComponent(img.CGImage), 0,
             CGImageGetColorSpace(img.CGImage),
             CGImageGetBitmapInfo(img.CGImage).rawValue)!
@@ -430,8 +430,8 @@ class SLNewKeyViewController: UITableViewController,
         }
         
         // And now we just create a new UIImage from the drawing context
-        var cgimg:CGImageRef = CGBitmapContextCreateImage(ctx)!
-        var imgEnd:UIImage = UIImage(CGImage: cgimg)
+        let cgimg:CGImageRef = CGBitmapContextCreateImage(ctx)!
+        let imgEnd:UIImage = UIImage(CGImage: cgimg)
         
         return imgEnd
     }
@@ -445,8 +445,8 @@ class SLNewKeyViewController: UITableViewController,
     
     func RBSquareImage(image: UIImage) -> UIImage
     {
-        var originalWidth  = image.size.width
-        var originalHeight = image.size.height
+        let originalWidth  = image.size.width
+        let originalHeight = image.size.height
         
         var edge: CGFloat
         if originalWidth > originalHeight {
@@ -455,12 +455,12 @@ class SLNewKeyViewController: UITableViewController,
             edge = originalWidth
         }
         
-        var posX = (originalWidth  - edge) / 2.0
-        var posY = (originalHeight - edge) / 2.0
+        let posX = (originalWidth  - edge) / 2.0
+        let posY = (originalHeight - edge) / 2.0
         
-        var cropSquare = CGRectMake(posX, posY, edge, edge)
+        let cropSquare = CGRectMake(posX, posY, edge, edge)
         
-        var imageRef = CGImageCreateWithImageInRect(image.CGImage, cropSquare);
+        let imageRef = CGImageCreateWithImageInRect(image.CGImage, cropSquare);
         return UIImage(CGImage: imageRef!, scale: UIScreen.mainScreen().scale, orientation: image.imageOrientation)
     }
     

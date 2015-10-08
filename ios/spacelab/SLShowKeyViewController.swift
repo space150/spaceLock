@@ -66,7 +66,7 @@ class SLShowKeyViewController: UITableViewController,
             iconImageButton.setImage(UIImage(contentsOfFile: key.imageFilename), forState: UIControlState.Normal)
         }
 
-        var keyData = security.findKey(key.lockId)
+        let keyData = security.findKey(key.lockId)
         if keyData != nil
         {
             let handshakeData: NSData = self.security.encryptString(self.key.lockId, withKey: keyData)
@@ -87,13 +87,13 @@ class SLShowKeyViewController: UITableViewController,
     
     private func setupIconImageCircle()
     {
-        var path = UIBezierPath(ovalInRect: iconImageButton.bounds)
+        let path = UIBezierPath(ovalInRect: iconImageButton.bounds)
         
-        var maskLayer = CAShapeLayer()
+        let maskLayer = CAShapeLayer()
         maskLayer.path = path.CGPath
         iconImageButton.layer.mask = maskLayer
         
-        var outlineLayer = CAShapeLayer()
+        let outlineLayer = CAShapeLayer()
         outlineLayer.lineWidth = 10.0
         outlineLayer.fillColor = UIColor.clearColor().CGColor
         outlineLayer.strokeColor = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1.0).CGColor

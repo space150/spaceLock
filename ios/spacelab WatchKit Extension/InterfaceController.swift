@@ -51,7 +51,7 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     
     func configureTableWithLocks()
     {
-        var count: Int! = fetchedResultsController.fetchedObjects?.count
+        let count: Int! = fetchedResultsController.fetchedObjects?.count
         table.setNumberOfRows(count, withRowType: "lockRowController")
         if ( count > 0 )
         {
@@ -64,10 +64,10 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     
     func configureTableRow(index: Int!)
     {
-        var row = table.rowControllerAtIndex(index) as! SLLockRowType
+        let row = table.rowControllerAtIndex(index) as! SLLockRowType
         
-        var objects: NSArray = fetchedResultsController.fetchedObjects!
-        var lock: LKLock = objects.objectAtIndex(index) as! LKLock
+        let objects: NSArray = fetchedResultsController.fetchedObjects!
+        let lock: LKLock = objects.objectAtIndex(index) as! LKLock
         
         row.setLock(lock)
     }
@@ -124,8 +124,6 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
             configureTableRow(newIndexPath!.row)
         case .Delete:
             table.removeRowsAtIndexes(NSIndexSet(index: indexPath!.row))
-        default:
-            return
         }
     }
     
@@ -136,15 +134,15 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     
     override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int)
     {
-        var objects: NSArray = fetchedResultsController.fetchedObjects!
-        var lock: LKLock = objects.objectAtIndex(rowIndex) as! LKLock
-        var row = table.rowControllerAtIndex(rowIndex) as! SLLockRowType
+        let objects: NSArray = fetchedResultsController.fetchedObjects!
+        let lock: LKLock = objects.objectAtIndex(rowIndex) as! LKLock
+        let row = table.rowControllerAtIndex(rowIndex) as! SLLockRowType
         
         if ( row.unlockable == true )
         {
             row.showInProgress()
 
-            var keyData = security.findKey(lock.lockId)
+            let keyData = security.findKey(lock.lockId)
             if keyData != nil
             {
                 self.discoveryManager.openLock(lock, withKey:keyData, complete: { (success, error) -> Void in

@@ -91,7 +91,7 @@ class SLLockViewController: UIViewController,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! SLLockViewCell
+        let cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! SLLockViewCell
         configureCell(cell, atIndexPath: indexPath)
         return cell
     }
@@ -149,8 +149,6 @@ class SLLockViewController: UIViewController,
                 self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Delete:
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            default:
-                return
             }
         }
     }
@@ -211,7 +209,7 @@ class SLLockViewController: UIViewController,
         cell.showInProgress()
         
         // fetch the key from the keychain
-        var keyData = security.findKey(lock.lockId)
+        let keyData = security.findKey(lock.lockId)
         if keyData != nil
         {
             self.discoveryManager.openLock(lock, withKey:keyData, complete: { (success, error) -> Void in

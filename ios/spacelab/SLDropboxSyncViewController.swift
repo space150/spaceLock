@@ -54,7 +54,7 @@ class SLDropboxSyncViewController: UITableViewController,
     
     func updateDropboxLinkStatus()
     {
-        var linked = DBSession.sharedSession().isLinked()
+        let linked = DBSession.sharedSession().isLinked()
         linkOverlayView.hidden = linked
         syncButton.enabled = linked
         
@@ -246,13 +246,9 @@ class SLDropboxSyncViewController: UITableViewController,
             appendEntry("Error extracting archive!")
         }
         
-        // clean up archive
-        let stagingArchivePath: String = documentsDirectory.stringByAppendingString("/spaceLock.download.zip") as String
-        
         // parse the JSON
         let manifestPath: String = stagingFolder.stringByAppendingString("/contents.json") as String
-        var jsonData = filemanager.contentsAtPath(manifestPath)
-        var error: NSError?
+        let jsonData = filemanager.contentsAtPath(manifestPath)
         do {
             let keyEntries: NSArray = try NSJSONSerialization.JSONObjectWithData(jsonData!, options: NSJSONReadingOptions()) as! NSArray
             // look for new entries
@@ -286,7 +282,7 @@ class SLDropboxSyncViewController: UITableViewController,
                     // copy images for new entries over
                     let imagePath: String = stagingFolder.stringByAppendingString("/key-\(lockId).png") as String
                     let home = NSHomeDirectory() as NSString
-                    var imageDest = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as! String)
+                    let imageDest = home.stringByAppendingPathComponent(NSString(format: "Documents/key-%@.png", lockId) as String)
                     appendEntry(" --> Copying image for \(lockName)")
                     do {
                         try filemanager.copyItemAtPath(imagePath, toPath: imageDest)
@@ -363,76 +359,62 @@ class SLDropboxSyncViewController: UITableViewController,
         appendEntry("Generating staging environment...")
         
         // export to JSON
-        var jsonError: NSError?
-        do {
-            let jsonData = try NSJSONSerialization.dataWithJSONObject(keyEntries, options: NSJSONWritingOptions.PrettyPrinted)
-            let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding)
-            appendEntry("Generated export manifest")
-            
-            // create staging folder
-            let documentsDirectory: AnyObject = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-            let stagingFolder: String = documentsDirectory.stringByAppendingString("/spaceLock.backup") as String
-            appendEntry("Creating staging folder")
-            if ( !filemanager.fileExistsAtPath(stagingFolder) )
+        appendEntry("Generated export manifest")
+        
+        // create staging folder
+        let documentsDirectory: AnyObject = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let stagingFolder: String = documentsDirectory.stringByAppendingString("/spaceLock.backup") as String
+        appendEntry("Creating staging folder")
+        if ( !filemanager.fileExistsAtPath(stagingFolder) )
+        {
+            do {
+                try filemanager.createDirectoryAtPath(stagingFolder, withIntermediateDirectories: false, attributes: nil)
+            } catch let error as NSError {
+                appendEntry("error creating staging folder: \(error.localizedDescription)")
+            } catch {}
+        }
+        
+        // save JSON
+        appendEntry("Exporting manifest to file")
+        // copy images to staging folder
+        appendEntry("Copying images:")
+        for key in keyEntries as! [NSDictionary]
+        {
+            if ( key["localImageFilename"] != nil )
             {
+                let lockId: String = key["lockId"] as! String
+                let lockName: String = key["lockName"] as! String
+                let imagePath = stagingFolder.stringByAppendingString("/key-\(lockId).png")
+                appendEntry(" --> Copying image for \(lockName)")
                 do {
-                    try filemanager.createDirectoryAtPath(stagingFolder, withIntermediateDirectories: false, attributes: nil)
+                    try filemanager.copyItemAtPath(key["localImageFilename"] as! String, toPath: imagePath)
                 } catch let error as NSError {
-                    appendEntry("error creating staging folder: \(error.localizedDescription)")
+                    appendEntry("error copying image: \(imagePath) -- \(error.localizedDescription)")
                 } catch {}
             }
-            
-            // save JSON
-            let jsonPath = stagingFolder.stringByAppendingString("/contents.json")
-            appendEntry("Exporting manifest to file")
-            do {
-                // copy images to staging folder
-                appendEntry("Copying images:")
-                for key in keyEntries as! [NSDictionary]
-                {
-                    if ( key["localImageFilename"] != nil )
-                    {
-                        let lockId: String = key["lockId"] as! String
-                        let lockName: String = key["lockName"] as! String
-                        let imagePath = stagingFolder.stringByAppendingString("/key-\(lockId).png")
-                        var copyError: NSError?
-                        appendEntry(" --> Copying image for \(lockName)")
-                        do {
-                            try filemanager.copyItemAtPath(key["localImageFilename"] as! String, toPath: imagePath)
-                        } catch let error as NSError {
-                            appendEntry("error copying image: \(imagePath) -- \(copyError?.localizedDescription)")
-                        } catch {}
-                    }
-                }
-                
-                // zip it up
-                appendEntry("Archiving staging environment")
-                let stagingArchive: String = documentsDirectory.stringByAppendingString("/spaceLock.zip") as String
-                SSZipArchive.createZipFileAtPath(stagingArchive, withContentsOfDirectory: stagingFolder)
-                
-                appendEntry("Encrypting archive")
-                
-                // remove staging folder
-                var stagingFolderError: NSError?
-                do {
-                    try filemanager.removeItemAtPath(stagingFolder)
-                } catch let error as NSError {
-                    appendEntry("error removing staging folder: \(stagingFolderError?.localizedDescription)")
-                } catch {}
-                
-                appendEntry("Uploading spaceLock.zip to Dropbox...")
-                
-                // upload it to dropbox
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "yyyyMMddHHmmss"
-                let str = dateFormatter.stringFromDate(NSDate())
-                restClient.uploadFile("spaceLock-\(str).zip", toPath: "/", withParentRev: nil, fromPath: stagingArchive)
-            } catch let error as NSError {
-                appendEntry("error writing contents.json: \(error.localizedDescription)")
-            } catch {}
+        }
+        
+        // zip it up
+        appendEntry("Archiving staging environment")
+        let stagingArchive: String = documentsDirectory.stringByAppendingString("/spaceLock.zip") as String
+        SSZipArchive.createZipFileAtPath(stagingArchive, withContentsOfDirectory: stagingFolder)
+        
+        appendEntry("Encrypting archive")
+        
+        // remove staging folder
+        do {
+            try filemanager.removeItemAtPath(stagingFolder)
         } catch let error as NSError {
-            appendEntry("error: \(error.localizedDescription)")
+            appendEntry("error removing staging folder: \(error.localizedDescription)")
         } catch {}
+        
+        appendEntry("Uploading spaceLock.zip to Dropbox...")
+        
+        // upload it to dropbox
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let str = dateFormatter.stringFromDate(NSDate())
+        restClient.uploadFile("spaceLock-\(str).zip", toPath: "/", withParentRev: nil, fromPath: stagingArchive)
     }
     
     func restClient(client: DBRestClient!, uploadedFile destPath: String!, from srcPath: String!)
