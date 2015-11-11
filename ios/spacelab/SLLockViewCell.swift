@@ -86,7 +86,7 @@ class SLLockViewCell: UITableViewCell
     {
         outlineLayer.lineDashPattern = [12, 6]
         
-        var anim = CABasicAnimation(keyPath: "lineDashPhase")
+        let anim = CABasicAnimation(keyPath: "lineDashPhase")
         anim.fromValue = NSNumber(float: 0.0)
         anim.toValue = NSNumber(float: 36.0)
         anim.duration = 1.0
@@ -105,7 +105,7 @@ class SLLockViewCell: UITableViewCell
     
     func startCountdownAnimation()
     {
-        var anim = CABasicAnimation(keyPath: "strokeEnd")
+        let anim = CABasicAnimation(keyPath: "strokeEnd")
         anim.fromValue = NSNumber(float: 1.0)
         anim.toValue = NSNumber(float: 0.0)
         anim.duration = 6.0
@@ -194,7 +194,7 @@ class SLLockViewCell: UITableViewCell
         maskLayer.path = path.CGPath
         lockIconImageView.layer.mask = maskLayer
         
-        var whiteOutlineLayer = CAShapeLayer()
+        let whiteOutlineLayer = CAShapeLayer()
         whiteOutlineLayer.lineWidth = 10.0
         whiteOutlineLayer.fillColor = UIColor.clearColor().CGColor
         whiteOutlineLayer.strokeColor = UIColor(red: 228.0/255.0, green: 228.0/255.0, blue: 228.0/255.0, alpha: 1.0).CGColor

@@ -46,7 +46,7 @@ class NotificationController: WKUserNotificationInterfaceController {
 
     override func didReceiveLocalNotification(localNotification: UILocalNotification, withCompletion completionHandler: ((WKUserNotificationInterfaceType) -> Void))
     {
-        println("didReceiveLocalNotifciation!")
+        print("didReceiveLocalNotifciation!")
         
         // This method is called when a local notification needs to be presented.
         // Implement it if you use a dynamic notification interface.

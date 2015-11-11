@@ -56,14 +56,14 @@ class SLLockViewController: UIViewController,
         
         fetchedResultsController = getFetchedResultsController()
         fetchedResultsController.delegate = self
-        fetchedResultsController.performFetch(nil)
+        try! fetchedResultsController.performFetch()
     }
     
     override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(animated)
         
-        var success: Bool? = signIn?.trySilentAuthentication()
+        let success: Bool? = signIn?.trySilentAuthentication()
         if ( success == false )
         {
             performSegueWithIdentifier("showLogin", sender: self)
@@ -104,7 +104,7 @@ class SLLockViewController: UIViewController,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! SLLockViewCell
+        let cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! SLLockViewCell
         configureCell(cell, atIndexPath: indexPath)
         return cell
     }
@@ -160,8 +160,6 @@ class SLLockViewController: UIViewController,
                 self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Delete:
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            default:
-                return
             }
         }
     }
@@ -216,7 +214,7 @@ class SLLockViewController: UIViewController,
             }
             else
             {
-                println("ERROR opening lock: \(error.localizedDescription)")
+                print("ERROR opening lock: \(error.localizedDescription)")
                 
                 cell.resetUnlocked()
             }
@@ -270,7 +268,7 @@ class SLLockViewController: UIViewController,
     {
         if ( error != nil )
         {
-            println("google+ connect failure - finishedWithAuth: \(error.localizedDescription)")
+            print("google+ connect failure - finishedWithAuth: \(error.localizedDescription)")
         }
         
         checkAuthState()
@@ -280,7 +278,7 @@ class SLLockViewController: UIViewController,
     {
         if ( error != nil )
         {
-            println("google+ connect failure - didDisconnectWithError: \(error.localizedDescription)")
+            print("google+ connect failure - didDisconnectWithError: \(error.localizedDescription)")
         }
         
         checkAuthState()
@@ -290,12 +288,12 @@ class SLLockViewController: UIViewController,
     {
         if ( signIn?.authentication != nil )
         {
-            var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
+            let plusUser: GTLPlusPerson! = signIn?.googlePlusUser
             // first check to see if the domain matches
             if ( plusUser == nil || plusUser.domain != "space150.com" )
             {
                 // fallback to verifying the email addres? Might want to disable this
-                var email = signIn?.authentication.userEmail
+                let email = signIn?.authentication.userEmail
                 
                 // check to ensure the email is on the space150.com domain!
                 if ( validateEmail(email) == false )
@@ -308,20 +306,20 @@ class SLLockViewController: UIViewController,
         if ( signIn?.authentication != nil )
         {
             // if we have a google plus user object
-            var plusUser: GTLPlusPerson! = signIn?.googlePlusUser
-            println("domain: \(plusUser.domain), url: \(plusUser.url)")
+            let plusUser: GTLPlusPerson! = signIn?.googlePlusUser
+            print("domain: \(plusUser.domain), url: \(plusUser.url)")
             if ( plusUser != nil )
             {
                 // use the display name
                 headerNameLabel.text = plusUser.displayName
                 
                 // and avatar image
-                var backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
                 dispatch_async(backgroundQueue, { () -> Void in
                     if ( plusUser?.image.url != nil )
                     {
-                        var avatarUrl = NSURL(string: plusUser.image.url)!
-                        var avatarData = NSData(contentsOfURL: avatarUrl)
+                        let avatarUrl = NSURL(string: plusUser.image.url)!
+                        let avatarData = NSData(contentsOfURL: avatarUrl)
                         if ( avatarData != nil )
                         {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -357,7 +355,7 @@ class SLLockViewController: UIViewController,
     
     func validateEmail(email: NSString!) -> Bool
     {
-        var predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")
+        let predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")
         return predicate.evaluateWithObject(email)
     }
 

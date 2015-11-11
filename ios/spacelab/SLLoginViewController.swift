@@ -59,7 +59,7 @@ class SLLoginViewController: UIViewController
     
     @IBAction func doLogin(sender: AnyObject)
     {
-        var signIn = GPPSignIn.sharedInstance()!
+        let signIn = GPPSignIn.sharedInstance()!
         signIn.authenticate()
     }
 

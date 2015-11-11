@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         return true
     }
 
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return GPPURLHandler.handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
@@ -73,22 +73,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func registerNotifications()
     {
-        var categories = NSMutableSet()
+        let categories = NSMutableSet()
         
-        var unlockAction = UIMutableUserNotificationAction()
+        let unlockAction = UIMutableUserNotificationAction()
         unlockAction.title = NSLocalizedString("Unlock", comment: "Unlock Door")
         unlockAction.identifier = "unlock"
         unlockAction.activationMode = UIUserNotificationActivationMode.Foreground
         unlockAction.authenticationRequired = true
         
-        var doorCategory = UIMutableUserNotificationCategory()
+        let doorCategory = UIMutableUserNotificationCategory()
         doorCategory.setActions([unlockAction], forContext: UIUserNotificationActionContext.Default)
         doorCategory.identifier = "lockNotification"
         
         categories.addObject(doorCategory)
 
-        var settings = UIUserNotificationSettings(forTypes: (.Alert | .Badge | .Sound), categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        //var settings = UIUserNotificationSettings(forTypes: (.Alert | .Badge | .Sound), categories: nil)
+        //UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        UIApplication.sharedApplication().registerUserNotificationSettings(
+            UIUserNotificationSettings(
+                forTypes: [.Alert, .Badge, .Sound],
+                categories: nil
+            )
+            
+        )
+
     }
 
 }
