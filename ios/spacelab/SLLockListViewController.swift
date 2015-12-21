@@ -73,8 +73,8 @@ class SLLockViewController: UIViewController,
             discoveryManager.startDiscovery()
         }
         
-        //var security = LKSecurityManager()
-        //security.generateKeyForLockName("s150-sl")
+        let security = LKSecurityManager()
+        security.generateKeyForLockName("s150-vip")
     }
     
     override func viewWillDisappear(animated: Bool)
