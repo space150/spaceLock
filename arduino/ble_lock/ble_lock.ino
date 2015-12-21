@@ -24,13 +24,18 @@
 //byte key[] = { 0x55, 0xc8, 0x66, 0x1c, 0x7b, 0x58, 0xae, 0xbf, 0x93, 0x73, 0x32, 0x40, 0x54, 0x47, 0xd2, 0xcd };
 //char hello[] = { 0xb3, 0xfe, 0x38, 0xfe, 0x26, 0xbb, 0x64, 0x68, 0x0a, 0x1e, 0x3d, 0x1a, 0x74, 0x78, 0xa3, 0x00 };
 
-#define LOCK_NAME "s150-sl"
-byte key[] = { 0xce, 0xe3, 0x59, 0x8e, 0xa4, 0x9b, 0xa4, 0xd8, 0x87, 0x2b, 0x20, 0x8e, 0x03, 0xd9, 0x9f, 0xcd };
-char hello[] = { 0x8c, 0x25, 0xfb, 0xb9, 0x7b, 0x35, 0x2a, 0x48, 0x82, 0xaa, 0xc9, 0xaa, 0x79, 0x45, 0x4c, 0x40 };
+//#define LOCK_NAME "s150-sl"
+//byte key[] = { 0xce, 0xe3, 0x59, 0x8e, 0xa4, 0x9b, 0xa4, 0xd8, 0x87, 0x2b, 0x20, 0x8e, 0x03, 0xd9, 0x9f, 0xcd };
+//char hello[] = { 0x8c, 0x25, 0xfb, 0xb9, 0x7b, 0x35, 0x2a, 0x48, 0x82, 0xaa, 0xc9, 0xaa, 0x79, 0x45, 0x4c, 0x40 };
 
 //#define LOCK_NAME "s150-vault"
 //byte key[] = { 0x14, 0xbc, 0x28, 0xbc, 0xcf, 0x60, 0xb6, 0x30, 0x74, 0x71, 0x9d, 0x97, 0x4f, 0xa7, 0x92, 0x3e };
 //char hello[] = { 0x73, 0xb1, 0x2c, 0xeb, 0x58, 0x88, 0x08, 0xb5, 0xd6, 0xca, 0x9e, 0x21, 0xad, 0x08, 0x30, 0x65 };
+
+#define LOCK_NAME "s150-vip"
+byte key[] = { 0xb1, 0x5b, 0x42, 0xbf, 0x77, 0x30, 0x3d, 0xc8, 0x9c, 0x96, 0x6f, 0x54, 0x33, 0x73, 0x1a, 0xab };
+char hello[] = { 0x5d, 0xe2, 0x5b, 0xf1, 0xfc, 0x84, 0x2a, 0x42, 0x02, 0xd3, 0xf5, 0x53, 0x69, 0xbb, 0x5a, 0x69 };
+
 
 // END LOCK SPECIFIC CONFIG
 
@@ -56,30 +61,30 @@ int hello_attempts = 0;
 
 AES aes;
 
-void setup() 
+void setup()
 {
   Serial.begin(9600);
-  
+
   // setup the leds for output
   pinMode(LED_PIN_R, OUTPUT);
-  pinMode(LED_PIN_G, OUTPUT);  
+  pinMode(LED_PIN_G, OUTPUT);
   pinMode(LED_PIN_B, OUTPUT);
   pinMode(LOCK_PIN, OUTPUT);
 
   RFduinoBLE.deviceName = "sl-lock";
   RFduinoBLE.advertisementData = LOCK_NAME;
   RFduinoBLE.customUUID = "876d7008-890e-4d28-9b19-bfabee9f0e24";
-  
+
   // start the BLE stack
   RFduinoBLE.begin();
 }
 
-void loop() 
-{  
+void loop()
+{
   attempt_send_hello();
   check_for_unlock_timeout();
   process_current_command();
-    
+
   // switch to lower power mode
   RFduino_ULPDelay(350);
 }
@@ -88,11 +93,11 @@ void loop()
 
 void attempt_send_hello()
 {
-  if ( send_hello == true ) 
+  if ( send_hello == true )
   {
     Serial.print("sending hello, attempt #"); Serial.println(hello_attempts);
     RFduinoBLE.send(hello, 16);
-    
+
     hello_attempts += 1;
     if ( hello_attempts >= MAX_HELLO_ATTEMPTS )
     {
@@ -117,11 +122,11 @@ void process_current_command()
 {
   if ( current_command != COMMAND_NONE)
   {
-    if ( current_command == COMMAND_UNLOCK ) 
+    if ( current_command == COMMAND_UNLOCK )
       unlock_door();
     else if ( current_command == COMMAND_LOCK )
       lock_door();
-    
+
     current_command = COMMAND_NONE;
   }
 }
@@ -130,13 +135,13 @@ void lock_door()
 {
   locked = true;
   last_command_millis = millis();
-  
+
   analogWrite(LED_PIN_R, 255);
   analogWrite(LED_PIN_G, 0);
   analogWrite(LED_PIN_B, 0);
-  
+
   RFduinoBLE.send('l');
-  
+
   digitalWrite(LOCK_PIN, LOW);
 }
 
@@ -144,13 +149,13 @@ void unlock_door()
 {
   locked = false;
   last_command_millis = millis();
-  
+
   analogWrite(LED_PIN_R, 0);
   analogWrite(LED_PIN_G, 255);
   analogWrite(LED_PIN_B, 0);
-  
+
   RFduinoBLE.send('u');
-  
+
   digitalWrite(LOCK_PIN, HIGH);
 }
 
@@ -168,17 +173,17 @@ int decrypt_command(char *data, int len)
   Serial.println("-----------------------------");
   Serial.print("data received, len: "); Serial.println(len);
   Serial.print("data: ");
- 
+
   byte encrypted[len];
   byte decrypted[len];
-  
+
   for (byte i = 0 ; i < len ; i++)
   {
     byte val = (byte)data[i];
     encrypted[i] = val;
     Serial.print( (char)val );
   }
-  
+
   Serial.println(" ");
 
   byte success = aes.set_key( key, 128 );
@@ -188,32 +193,32 @@ int decrypt_command(char *data, int len)
     if ( success == 0 )
     {
       Serial.print("Decrypted string: ");
-      
+
       char command_char;
       String time_string = "";
       for (byte i = 0 ; i < len ; i++)
       {
         byte val = decrypted[i];
         Serial.print( (char)val );
-        
+
         if ( i == 0 )
           command_char = (char)val;
         else
           time_string += (char)val;
       }
-      
+
       Serial.println("");
-      
+
       // convert time string to timestamp
       unsigned int timestamp = time_string.toInt();
-      
+
       Serial.print("Timestamp: "); Serial.println(timestamp);
       Serial.print("Command: "); Serial.println(command_char);
-      
+
       // VERIFY THE TIMESTAMP
       // we will probably need some additional hardware (wifi?) for this
       // TODO
-      
+
       if ( command_char == 'u' || command_char == 'U' )
         return COMMAND_UNLOCK;
       else if ( command_char == 'l' || command_char == 'L' )
@@ -224,33 +229,33 @@ int decrypt_command(char *data, int len)
   }
   else
     Serial.println("failed to set key!");
-  
+
   show_error();
-  
+
   return COMMAND_NONE;
 }
 
 // RFDUINO BLE HANDLERS
 
-void RFduinoBLE_onConnect() 
+void RFduinoBLE_onConnect()
 {
   send_hello = true;
   hello_attempts = 0;
 }
 
-void RFduinoBLE_onDisconnect() 
+void RFduinoBLE_onDisconnect()
 {
   // reset the hello handshake on disconnect, they don't want to talk to us anyway :(
   send_hello = false;
   hello_attempts = 0;
 }
 
-void RFduinoBLE_onReceive(char *data, int len) 
+void RFduinoBLE_onReceive(char *data, int len)
 {
   // once we receive data, the hello handshake probably worked!
   send_hello = false;
   hello_attempts = 0;
-  
-  if ( len >= 16 ) 
+
+  if ( len >= 16 )
     current_command = decrypt_command(data, len);
 }
