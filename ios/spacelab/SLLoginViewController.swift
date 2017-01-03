@@ -28,7 +28,7 @@ class SLLoginViewController: UIViewController
     @IBOutlet weak var movieContainerView: UIView!
     @IBOutlet weak var loginButton: UIButton!
     
-    private var playerViewController : VideoPlayerViewController!
+    fileprivate var playerViewController : VideoPlayerViewController!
 
     override func viewDidLoad()
     {
@@ -41,12 +41,12 @@ class SLLoginViewController: UIViewController
         playerViewController = VideoPlayerViewController()
         playerViewController.playOnLoad = true
         playerViewController.loopPlayback = true
-        playerViewController.URL = NSBundle.mainBundle().URLForResource("startup-movie.mp4", withExtension: nil)
+        playerViewController.url = Bundle.main.url(forResource: "startup-movie.mp4", withExtension: nil)
         playerViewController.view.frame = movieContainerView.frame
         movieContainerView.addSubview(playerViewController.view)
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
     }
@@ -57,7 +57,7 @@ class SLLoginViewController: UIViewController
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func doLogin(sender: AnyObject)
+    @IBAction func doLogin(_ sender: AnyObject)
     {
         let signIn = GPPSignIn.sharedInstance()!
         signIn.authenticate()

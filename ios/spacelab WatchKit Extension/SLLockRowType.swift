@@ -32,38 +32,38 @@ class SLLockRowType: NSObject
     @IBOutlet weak var lockImage: WKInterfaceImage!
     
     var unlockable: Bool!
-    private var proximity: NSNumber!
-    private var lockTimer: NSTimer!
-    private var lockTimerSecondsRemaining: Int!
+    fileprivate var proximity: NSNumber!
+    fileprivate var lockTimer: Timer!
+    fileprivate var lockTimerSecondsRemaining: Int!
     
-    func setLock(lock: LKLock)
+    func setLock(_ lock: LKLock)
     {
-        let components: NSArray = lock.name.uppercaseString.componentsSeparatedByString("-")
-        doorNameLabel.setText(components.lastObject as? String)
+        let components: [String] = lock.name.uppercased().components(separatedBy: "-")
+        doorNameLabel.setText(components.last as String!)
         proximity = lock.proximity
         
         updateViewState()
     }
     
-    private func updateViewState()
+    fileprivate func updateViewState()
     {
-        if ( proximity.integerValue == 2
-            || proximity.integerValue == 3 )
+        if ( proximity.intValue == 2
+            || proximity.intValue == 3 )
         {
             statusLabel.setText("Tap to Unlock")
             backgroundGroup.setBackgroundColor(UIColor(red: 102.0/255.0, green: 153.0/255.0, blue: 102.0/255.0, alpha: 1.0))
-            doorNameLabel.setTextColor(UIColor.whiteColor())
-            statusLabel.setTextColor(UIColor.whiteColor())
+            doorNameLabel.setTextColor(UIColor.white)
+            statusLabel.setTextColor(UIColor.white)
             lockImage.setImageNamed("lock-normal")
             
             unlockable = true
         }
-        else if ( proximity.integerValue == 1 )
+        else if ( proximity.intValue == 1 )
         {
             statusLabel.setText("Move Closer")
             backgroundGroup.setBackgroundColor(UIColor(red: 49.0/255.0, green: 49.0/255.0, blue: 51.0/255.0, alpha: 1.0))
-            doorNameLabel.setTextColor(UIColor.whiteColor())
-            statusLabel.setTextColor(UIColor.whiteColor())
+            doorNameLabel.setTextColor(UIColor.white)
+            statusLabel.setTextColor(UIColor.white)
             lockImage.setImageNamed("lock-normal")
             
             unlockable = false
@@ -104,7 +104,7 @@ class SLLockRowType: NSObject
     {
         lockTimerSecondsRemaining = 7
         
-        lockTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("timerTicked"), userInfo: nil, repeats: true)
+        lockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SLLockRowType.timerTicked), userInfo: nil, repeats: true)
     }
     
     func resetUnlocked()

@@ -1,3 +1,5 @@
+#include <RFduinoBLE.h>
+
 //  Copyright (c) 2015 space150, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and

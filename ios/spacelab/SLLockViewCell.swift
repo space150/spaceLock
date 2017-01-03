@@ -28,7 +28,7 @@ import Darwin
 
 @objc protocol SLLockViewCellDelegate
 {
-    optional func lockCompleted()
+    @objc optional func lockCompleted()
 }
 
 class SLLockViewCell: UITableViewCell
@@ -39,16 +39,16 @@ class SLLockViewCell: UITableViewCell
     
     var delegate: SLLockViewCellDelegate?
     
-    private var proximity: NSNumber!
-    private var indexPath: NSIndexPath!
-    private var lockTimer: NSTimer!
-    private var lockTimerSecondsRemaining: Int!
+    fileprivate var proximity: NSNumber!
+    fileprivate var indexPath: IndexPath!
+    fileprivate var lockTimer: Timer!
+    fileprivate var lockTimerSecondsRemaining: Int!
     
-    private var maskLayer: CAShapeLayer!
-    private var outlineLayer: CAShapeLayer!
-    private var path: UIBezierPath!
+    fileprivate var maskLayer: CAShapeLayer!
+    fileprivate var outlineLayer: CAShapeLayer!
+    fileprivate var path: UIBezierPath!
     
-    func setLock(lock: LKLock, indexPath newIndexPath: NSIndexPath)
+    func setLock(_ lock: LKLock, indexPath newIndexPath: IndexPath)
     {
         indexPath = newIndexPath
         proximity = lock.proximity
@@ -59,26 +59,26 @@ class SLLockViewCell: UITableViewCell
         updateViewState()
     }
     
-    private func updateViewState()
+    fileprivate func updateViewState()
     {
-        if ( proximity.integerValue == 2
-            || proximity.integerValue == 3 )
+        if ( proximity.intValue == 2
+            || proximity.intValue == 3 )
         {
             lockStatusLabel.text = "Tap to Unlock"
             lockIconImageView.alpha = 1.0
-            outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 153.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
+            outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 153.0/255.0, blue: 102.0/255.0, alpha: 1.0).cgColor
         }
-        else if ( proximity.integerValue == 1 )
+        else if ( proximity.intValue == 1 )
         {
             lockStatusLabel.text = "Move Closer"
             lockIconImageView.alpha = 0.8
-            outlineLayer.strokeColor = UIColor(red: 153.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
+            outlineLayer.strokeColor = UIColor(red: 153.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).cgColor
         }
         else
         {
             lockStatusLabel.text = "Not in Range"
             lockIconImageView.alpha = 0.5
-            outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).CGColor
+            outlineLayer.strokeColor = UIColor(red: 102.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1.0).cgColor
         }
     }
     
@@ -87,18 +87,18 @@ class SLLockViewCell: UITableViewCell
         outlineLayer.lineDashPattern = [12, 6]
         
         let anim = CABasicAnimation(keyPath: "lineDashPhase")
-        anim.fromValue = NSNumber(float: 0.0)
-        anim.toValue = NSNumber(float: 36.0)
+        anim.fromValue = NSNumber(value: 0.0 as Float)
+        anim.toValue = NSNumber(value: 36.0 as Float)
         anim.duration = 1.0
         anim.repeatCount = 10000
-        outlineLayer.addAnimation(anim, forKey: "lineDashPhase")
+        outlineLayer.add(anim, forKey: "lineDashPhase")
     }
     
     func stopInProgressAnimation()
     {
-        if ( outlineLayer.animationForKey("lineDashPhase") != nil )
+        if ( outlineLayer.animation(forKey: "lineDashPhase") != nil )
         {
-            outlineLayer.removeAnimationForKey("lineDashPhase")
+            outlineLayer.removeAnimation(forKey: "lineDashPhase")
         }
         outlineLayer.lineDashPattern = nil
     }
@@ -106,17 +106,17 @@ class SLLockViewCell: UITableViewCell
     func startCountdownAnimation()
     {
         let anim = CABasicAnimation(keyPath: "strokeEnd")
-        anim.fromValue = NSNumber(float: 1.0)
-        anim.toValue = NSNumber(float: 0.0)
+        anim.fromValue = NSNumber(value: 1.0 as Float)
+        anim.toValue = NSNumber(value: 0.0 as Float)
         anim.duration = 6.0
-        outlineLayer.addAnimation(anim, forKey: "strokeEnd")
+        outlineLayer.add(anim, forKey: "strokeEnd")
     }
     
     func stopCountdownAnimation()
     {
-        if ( outlineLayer.animationForKey("strokeEnd") != nil )
+        if ( outlineLayer.animation(forKey: "strokeEnd") != nil )
         {
-            outlineLayer.removeAnimationForKey("strokeEnd")
+            outlineLayer.removeAnimation(forKey: "strokeEnd")
         }
     }
     
@@ -142,7 +142,7 @@ class SLLockViewCell: UITableViewCell
         
         startCountdownAnimation()
         
-        lockTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("timerTicked"), userInfo: nil, repeats: true)
+        lockTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SLLockViewCell.timerTicked), userInfo: nil, repeats: true)
     }
     
     func resetUnlocked()
@@ -186,30 +186,30 @@ class SLLockViewCell: UITableViewCell
         setupIconCircle()
     }
     
-    private func setupIconCircle()
+    fileprivate func setupIconCircle()
     {
-        path = UIBezierPath(ovalInRect: lockIconImageView.bounds)
+        path = UIBezierPath(ovalIn: lockIconImageView.bounds)
         
         maskLayer = CAShapeLayer()
-        maskLayer.path = path.CGPath
+        maskLayer.path = path.cgPath
         lockIconImageView.layer.mask = maskLayer
         
         let whiteOutlineLayer = CAShapeLayer()
         whiteOutlineLayer.lineWidth = 10.0
-        whiteOutlineLayer.fillColor = UIColor.clearColor().CGColor
-        whiteOutlineLayer.strokeColor = UIColor(red: 228.0/255.0, green: 228.0/255.0, blue: 228.0/255.0, alpha: 1.0).CGColor
-        whiteOutlineLayer.path = path.CGPath
+        whiteOutlineLayer.fillColor = UIColor.clear.cgColor
+        whiteOutlineLayer.strokeColor = UIColor(red: 228.0/255.0, green: 228.0/255.0, blue: 228.0/255.0, alpha: 1.0).cgColor
+        whiteOutlineLayer.path = path.cgPath
         lockIconImageView.layer.addSublayer(whiteOutlineLayer)
         
         outlineLayer = CAShapeLayer()
         outlineLayer.lineWidth = 10.0
-        outlineLayer.fillColor = UIColor.clearColor().CGColor
-        outlineLayer.strokeColor = UIColor.blackColor().CGColor
-        outlineLayer.path = path.CGPath
+        outlineLayer.fillColor = UIColor.clear.cgColor
+        outlineLayer.strokeColor = UIColor.black.cgColor
+        outlineLayer.path = path.cgPath
         lockIconImageView.layer.addSublayer(outlineLayer)
     }
 
-    override func setSelected(selected: Bool, animated: Bool)
+    override func setSelected(_ selected: Bool, animated: Bool)
     {
         super.setSelected(selected, animated: animated)
 

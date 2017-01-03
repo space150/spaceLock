@@ -30,12 +30,12 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
 {
     @IBOutlet weak var table: WKInterfaceTable!
 
-    private var discoveryManager: LKLockDiscoveryManager!
-    private var fetchedResultsController : NSFetchedResultsController!
+    fileprivate var discoveryManager: LKLockDiscoveryManager!
+    fileprivate var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>!
     
-    override func awakeWithContext(context: AnyObject?)
+    override func awake(withContext context: Any?)
     {
-        super.awakeWithContext(context)
+        super.awake(withContext: context)
         
         discoveryManager = LKLockDiscoveryManager(context: "watchkit-ext")
         
@@ -59,12 +59,12 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
         }
     }
     
-    func configureTableRow(index: Int!)
+    func configureTableRow(_ index: Int!)
     {
-        let row = table.rowControllerAtIndex(index) as! SLLockRowType
+        let row = table.rowController(at: index) as! SLLockRowType
         
-        let objects: NSArray = fetchedResultsController.fetchedObjects!
-        let lock: LKLock = objects.objectAtIndex(index) as! LKLock
+        let objects: NSArray = fetchedResultsController.fetchedObjects! as NSArray
+        let lock: LKLock = objects.object(at: index) as! LKLock
         
         row.setLock(lock)
     }
@@ -87,72 +87,72 @@ class InterfaceController: WKInterfaceController, NSFetchedResultsControllerDele
     
     // MARK: - NSFetchedResultsController methods
     
-    func getFetchedResultsController() -> NSFetchedResultsController
+    func getFetchedResultsController() -> NSFetchedResultsController<NSFetchRequestResult>
     {
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(),
-            managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext, sectionNameKeyPath: nil,
+            managedObjectContext: (LKLockRepository.sharedInstance() as AnyObject).managedObjectContext, sectionNameKeyPath: nil,
             cacheName: nil)
         return fetchedResultsController
     }
     
-    func taskFetchRequest() -> NSFetchRequest
+    func taskFetchRequest() -> NSFetchRequest<NSFetchRequestResult>
     {
-        let fetchRequest = NSFetchRequest(entityName: "LKLock")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "LKLock")
         let sortDescriptor = NSSortDescriptor(key: "proximity", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         return fetchRequest
     }
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController)
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
     {
         // nothing
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?)
     {
         switch type
         {
-        case .Insert:
-            table.insertRowsAtIndexes(NSIndexSet(index: newIndexPath!.row), withRowType: "lockRowController")
+        case .insert:
+            table.insertRows(at: IndexSet(integer: newIndexPath!.row), withRowType: "lockRowController")
             configureTableRow(newIndexPath!.row)
-        case .Update:
+        case .update:
             configureTableRow(indexPath!.row)
-        case .Move:
-            table.removeRowsAtIndexes(NSIndexSet(index: indexPath!.row))
-            table.insertRowsAtIndexes(NSIndexSet(index: newIndexPath!.row), withRowType: "lockRowController")
+        case .move:
+            table.removeRows(at: IndexSet(integer: indexPath!.row))
+            table.insertRows(at: IndexSet(integer: newIndexPath!.row), withRowType: "lockRowController")
             configureTableRow(newIndexPath!.row)
-        case .Delete:
-            table.removeRowsAtIndexes(NSIndexSet(index: indexPath!.row))
+        case .delete:
+            table.removeRows(at: IndexSet(integer: indexPath!.row))
         }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController)
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
     {
         // nothing
     }
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int)
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int)
     {
-        let objects: NSArray = fetchedResultsController.fetchedObjects!
-        let lock: LKLock = objects.objectAtIndex(rowIndex) as! LKLock
-        let row = table.rowControllerAtIndex(rowIndex) as! SLLockRowType
+        let objects: NSArray = fetchedResultsController.fetchedObjects! as NSArray
+        let lock: LKLock = objects.object(at: rowIndex) as! LKLock
+        let row = table.rowController(at: rowIndex) as! SLLockRowType
         
         if ( row.unlockable == true )
         {
             row.showInProgress()
             
-            discoveryManager.openLock(lock, complete: { (success, error) -> Void in
+            discoveryManager.open(lock, complete: { (success, error) -> Void in
                 if ( success )
                 {
                     row.showUnlocked()
                 }
                 else
                 {
-                    print("Error opening lock: \(error.localizedDescription)")
+                    print("Error opening lock: \(error?.localizedDescription)")
                     
                     row.resetUnlocked()
                     
-                    self.presentControllerWithName("Error", context: ["segue": "modal", "data": error])
+                    self.presentController(withName: "Error", context: ["segue": "modal", "data": error])
                 }
                 
             })

@@ -31,18 +31,19 @@ class SLLockViewController: UIViewController,
     GPPSignInDelegate,
     SLLockViewCellDelegate
 {
-    @IBOutlet weak var tableView: UITableView!
+
+   @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerNameLabel: UILabel!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var logoutButton: UIButton!
     
-    private var fetchedResultsController: NSFetchedResultsController!
+    fileprivate var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
     
-    private var discoveryManager: LKLockDiscoveryManager!
-    private var unlocking:Bool!
+    fileprivate var discoveryManager: LKLockDiscoveryManager!
+    fileprivate var unlocking:Bool!
     
-    private let clientId = "743774015347-4qc7he8nbpccqca59lh004ojr7a94kia.apps.googleusercontent.com";
-    private var signIn : GPPSignIn?
+    fileprivate let clientId = "743774015347-4qc7he8nbpccqca59lh004ojr7a94kia.apps.googleusercontent.com";
+    fileprivate var signIn : GPPSignIn?
     
     override func viewDidLoad()
     {
@@ -59,14 +60,14 @@ class SLLockViewController: UIViewController,
         try! fetchedResultsController.performFetch()
     }
     
-    override func viewDidAppear(animated: Bool)
+    override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
         
         let success: Bool? = signIn?.trySilentAuthentication()
         if ( success == false )
         {
-            performSegueWithIdentifier("showLogin", sender: self)
+            performSegue(withIdentifier: "showLogin", sender: self)
         }
         else
         {
@@ -74,10 +75,10 @@ class SLLockViewController: UIViewController,
         }
         
         let security = LKSecurityManager()
-        security.generateKeyForLockName("s150-vip")
+        security.generateKey(forLockName: "s150-vip")
     }
     
-    override func viewWillDisappear(animated: Bool)
+    override func viewWillDisappear(_ animated: Bool)
     {
         super.viewWillDisappear(animated)
         
@@ -92,48 +93,48 @@ class SLLockViewController: UIViewController,
     
     // MARK: - UITableViewDataSource Methods
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    func numberOfSections(in tableView: UITableView) -> Int
     {
         return fetchedResultsController.sections!.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return fetchedResultsController.sections![section].numberOfObjects
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell:SLLockViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell") as! SLLockViewCell
+        let cell:SLLockViewCell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! SLLockViewCell
         configureCell(cell, atIndexPath: indexPath)
         return cell
     }
     
-    func configureCell(cell: SLLockViewCell, atIndexPath indexPath: NSIndexPath)
+    func configureCell(_ cell: SLLockViewCell, atIndexPath indexPath: IndexPath)
     {
-        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
+        let lock: LKLock = fetchedResultsController.object(at: indexPath) as! LKLock
         cell.delegate = self
         cell.setLock(lock, indexPath: indexPath)
     }
     
     // MARK: - NSFetchedResultsController methods
     
-    func getFetchedResultsController() -> NSFetchedResultsController
+    func getFetchedResultsController() -> NSFetchedResultsController<NSFetchRequestResult>
     {
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: LKLockRepository.sharedInstance().managedObjectContext,
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: taskFetchRequest(), managedObjectContext: (LKLockRepository.sharedInstance() as AnyObject).managedObjectContext,
             sectionNameKeyPath: nil, cacheName: nil)
         return fetchedResultsController
     }
     
-    func taskFetchRequest() -> NSFetchRequest
+    func taskFetchRequest() -> NSFetchRequest<NSFetchRequestResult>
     {
-        let fetchRequest = NSFetchRequest(entityName: "LKLock")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "LKLock")
         let sortDescriptor = NSSortDescriptor(key: "proximity", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         return fetchRequest
     }
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController)
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
     {
         if ( !unlocking )
         {
@@ -142,29 +143,29 @@ class SLLockViewController: UIViewController,
         
     }
 
-    func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath?,
-        forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?)
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange object: Any, at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?)
     {
         if ( !unlocking )
         {
             switch type
             {
-            case .Insert:
-                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            case .Update:
-                let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath!) as! SLLockViewCell
+            case .insert:
+                self.tableView.insertRows(at: [newIndexPath!], with: .fade)
+            case .update:
+                let cell: SLLockViewCell = self.tableView.cellForRow(at: indexPath!) as! SLLockViewCell
                 self.configureCell(cell, atIndexPath: indexPath!)
-                self.tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            case .Move:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            case .Delete:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self.tableView.reloadRows(at: [indexPath!], with: .fade)
+            case .move:
+                self.tableView.deleteRows(at: [indexPath!], with: .fade)
+                self.tableView.insertRows(at: [newIndexPath!], with: .fade)
+            case .delete:
+                self.tableView.deleteRows(at: [indexPath!], with: .fade)
             }
         }
     }
 
-    func controllerDidChangeContent(controller: NSFetchedResultsController)
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
     {
         if ( !unlocking )
         {
@@ -174,53 +175,53 @@ class SLLockViewController: UIViewController,
     
     // MARK: - UITableViewDelegate Methods
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         performUnlock(indexPath)
     }
     
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath?
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?
     {
-        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
-        if ( lock.proximity.integerValue == 2 || lock.proximity.integerValue == 3 )
+        let lock: LKLock = fetchedResultsController.object(at: indexPath) as! LKLock
+        if ( lock.proximity.intValue == 2 || lock.proximity.intValue == 3 )
         {
             return indexPath
         }
         return nil
     }
     
-    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
-        if ( lock.proximity.integerValue == 2 || lock.proximity.integerValue == 3 )
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        let lock: LKLock = fetchedResultsController.object(at: indexPath) as! LKLock
+        if ( lock.proximity.intValue == 2 || lock.proximity.intValue == 3 )
         {
             return true
         }
         return false
     }
     
-    func performUnlock(indexPath: NSIndexPath)
+    func performUnlock(_ indexPath: IndexPath)
     {
         unlocking = true
         
-        let lock: LKLock = fetchedResultsController.objectAtIndexPath(indexPath) as! LKLock
-        let cell: SLLockViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! SLLockViewCell
+        let lock: LKLock = fetchedResultsController.object(at: indexPath) as! LKLock
+        let cell: SLLockViewCell = self.tableView.cellForRow(at: indexPath) as! SLLockViewCell
 
         cell.showInProgress()
         
-        self.discoveryManager.openLock(lock, complete: { (success, error) -> Void in
+        self.discoveryManager.open(lock, complete: { (success, error) -> Void in
             if ( success )
             {
                 cell.showUnlocked()
             }
             else
             {
-                print("ERROR opening lock: \(error.localizedDescription)")
+                print("ERROR opening lock: \(error?.localizedDescription)")
                 
                 cell.resetUnlocked()
             }
         })
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
         /*
         var localNotification:UILocalNotification = UILocalNotification()
@@ -258,14 +259,13 @@ class SLLockViewController: UIViewController,
         signIn?.delegate = self;
     }
     
-    @IBAction func doLogout(sender: AnyObject)
+    @IBAction func doLogout(_ sender: AnyObject)
     {
         signIn?.signOut()
         checkAuthState()
     }
     
-    func finishedWithAuth(auth: GTMOAuth2Authentication!, error: NSError!)
-    {
+    func finished(withAuth auth: GTMOAuth2Authentication!, error: Error!)    {
         if ( error != nil )
         {
             print("google+ connect failure - finishedWithAuth: \(error.localizedDescription)")
@@ -274,7 +274,7 @@ class SLLockViewController: UIViewController,
         checkAuthState()
     }
     
-    func didDisconnectWithError(error: NSError!)
+    func didDisconnectWithError(_ error: NSError!)
     {
         if ( error != nil )
         {
@@ -296,7 +296,7 @@ class SLLockViewController: UIViewController,
                 let email = signIn?.authentication.userEmail
                 
                 // check to ensure the email is on the space150.com domain!
-                if ( validateEmail(email) == false )
+                if ( validateEmail(email as NSString!) == false )
                 {
                     signIn?.signOut()
                 }
@@ -314,15 +314,15 @@ class SLLockViewController: UIViewController,
                 headerNameLabel.text = plusUser.displayName
                 
                 // and avatar image
-                let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-                dispatch_async(backgroundQueue, { () -> Void in
+                let backgroundQueue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default)
+                backgroundQueue.async(execute: { () -> Void in
                     if ( plusUser?.image.url != nil )
                     {
-                        let avatarUrl = NSURL(string: plusUser.image.url)!
-                        let avatarData = NSData(contentsOfURL: avatarUrl)
+                        let avatarUrl = URL(string: plusUser.image.url)!
+                        let avatarData = try? Data(contentsOf: avatarUrl)
                         if ( avatarData != nil )
                         {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            DispatchQueue.main.async(execute: { () -> Void in
                                 self.headerImageView.image = UIImage(data: avatarData!)
                             })
                         }
@@ -338,7 +338,7 @@ class SLLockViewController: UIViewController,
             }
 
             // if the login view controller is showing, hide it
-            dismissViewControllerAnimated(true, completion: { () -> Void in
+            dismiss(animated: true, completion: { () -> Void in
                 // nothing
             })
         }
@@ -349,14 +349,14 @@ class SLLockViewController: UIViewController,
             headerImageView.image = nil
             
             // present the login view controller
-            performSegueWithIdentifier("showLogin", sender: self)
+            performSegue(withIdentifier: "showLogin", sender: self)
         }
     }
     
-    func validateEmail(email: NSString!) -> Bool
+    func validateEmail(_ email: NSString!) -> Bool
     {
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z\\._%+-]+@space150.com")
-        return predicate.evaluateWithObject(email)
+        return predicate.evaluate(with: email)
     }
 
 }
