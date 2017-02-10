@@ -1,5 +1,3 @@
-#include <RFduinoBLE.h>
-
 //  Copyright (c) 2015 space150, Inc.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -17,8 +15,8 @@
 //  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 //  THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+#include <SimbleeBLE.h>
 #include <AES.h>
-#include <RFduinoBLE.h>
 
 // LOCK SPECIFIC CONFIG
 
@@ -73,12 +71,13 @@ void setup()
   pinMode(LED_PIN_B, OUTPUT);
   pinMode(LOCK_PIN, OUTPUT);
 
-  RFduinoBLE.deviceName = "sl-lock";
-  RFduinoBLE.advertisementData = LOCK_NAME;
-  RFduinoBLE.customUUID = "876d7008-890e-4d28-9b19-bfabee9f0e24";
+  SimbleeBLE.deviceName = "sl-lock";
+  SimbleeBLE.advertisementData = LOCK_NAME;
+  SimbleeBLE.customUUID = "876d7008-890e-4d28-9b19-bfabee9f0e24";
 
   // start the BLE stack
-  RFduinoBLE.begin();
+  SimbleeBLE.begin();
+  Serial.println("Starting to listen");
 }
 
 void loop()
@@ -88,7 +87,7 @@ void loop()
   process_current_command();
 
   // switch to lower power mode
-  RFduino_ULPDelay(350);
+  Simblee_ULPDelay(350);
 }
 
 // COMMAND HANDLERS
@@ -98,7 +97,7 @@ void attempt_send_hello()
   if ( send_hello == true )
   {
     Serial.print("sending hello, attempt #"); Serial.println(hello_attempts);
-    RFduinoBLE.send(hello, 16);
+    SimbleeBLE.send(hello, 16);
 
     hello_attempts += 1;
     if ( hello_attempts >= MAX_HELLO_ATTEMPTS )
@@ -142,7 +141,7 @@ void lock_door()
   analogWrite(LED_PIN_G, 0);
   analogWrite(LED_PIN_B, 0);
 
-  RFduinoBLE.send('l');
+  SimbleeBLE.send('l');
 
   digitalWrite(LOCK_PIN, LOW);
 }
@@ -156,7 +155,7 @@ void unlock_door()
   analogWrite(LED_PIN_G, 255);
   analogWrite(LED_PIN_B, 0);
 
-  RFduinoBLE.send('u');
+  SimbleeBLE.send('u');
 
   digitalWrite(LOCK_PIN, HIGH);
 }
@@ -237,27 +236,42 @@ int decrypt_command(char *data, int len)
   return COMMAND_NONE;
 }
 
-// RFDUINO BLE HANDLERS
+// Simblee BLE HANDLERS
 
-void RFduinoBLE_onConnect()
+void SimbleeBLE_onConnect()
 {
   send_hello = true;
   hello_attempts = 0;
+  Serial.println("Recieved connect");
 }
 
-void RFduinoBLE_onDisconnect()
+void SimbleeBLE_onDisconnect()
 {
   // reset the hello handshake on disconnect, they don't want to talk to us anyway :(
   send_hello = false;
   hello_attempts = 0;
+  Serial.println("Recieved disconnect");
 }
 
-void RFduinoBLE_onReceive(char *data, int len)
+void SimbleeBLE_onReceive(char *data, int len)
 {
   // once we receive data, the hello handshake probably worked!
   send_hello = false;
   hello_attempts = 0;
 
+  Serial.println("Recieved data");
+
   if ( len >= 16 )
     current_command = decrypt_command(data, len);
+}
+
+void SimbleeBLE_onAdvertisement(bool start)
+{
+  // turn the green led on if we start advertisement, and turn it
+  // off if we stop advertisement
+  Serial.println("Advertisement");
+ /*   if (start)
+    digitalWrite(advertisement_led, HIGH);
+  else
+    digitalWrite(advertisement_led, LOW); */
 }
