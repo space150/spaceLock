@@ -17,12 +17,13 @@
 
 #include <SimbleeBLE.h>
 #include <AES.h>
+#include <TimeLib.h>
 
 // LOCK SPECIFIC CONFIG
 
-//#define LOCK_NAME "s150-senate"
-//byte key[] = { 0x55, 0xc8, 0x66, 0x1c, 0x7b, 0x58, 0xae, 0xbf, 0x93, 0x73, 0x32, 0x40, 0x54, 0x47, 0xd2, 0xcd };
-//char hello[] = { 0xb3, 0xfe, 0x38, 0xfe, 0x26, 0xbb, 0x64, 0x68, 0x0a, 0x1e, 0x3d, 0x1a, 0x74, 0x78, 0xa3, 0x00 };
+#define LOCK_NAME "s150-senate"
+byte key[] = { 0x55, 0xc8, 0x66, 0x1c, 0x7b, 0x58, 0xae, 0xbf, 0x93, 0x73, 0x32, 0x40, 0x54, 0x47, 0xd2, 0xcd };
+char hello[] = { 0xb3, 0xfe, 0x38, 0xfe, 0x26, 0xbb, 0x64, 0x68, 0x0a, 0x1e, 0x3d, 0x1a, 0x74, 0x78, 0xa3, 0x00 };
 
 //#define LOCK_NAME "s150-sl"
 //byte key[] = { 0xce, 0xe3, 0x59, 0x8e, 0xa4, 0x9b, 0xa4, 0xd8, 0x87, 0x2b, 0x20, 0x8e, 0x03, 0xd9, 0x9f, 0xcd };
@@ -32,9 +33,9 @@
 //byte key[] = { 0x14, 0xbc, 0x28, 0xbc, 0xcf, 0x60, 0xb6, 0x30, 0x74, 0x71, 0x9d, 0x97, 0x4f, 0xa7, 0x92, 0x3e };
 //char hello[] = { 0x73, 0xb1, 0x2c, 0xeb, 0x58, 0x88, 0x08, 0xb5, 0xd6, 0xca, 0x9e, 0x21, 0xad, 0x08, 0x30, 0x65 };
 
-#define LOCK_NAME "s150-vip"
-byte key[] = { 0xb1, 0x5b, 0x42, 0xbf, 0x77, 0x30, 0x3d, 0xc8, 0x9c, 0x96, 0x6f, 0x54, 0x33, 0x73, 0x1a, 0xab };
-char hello[] = { 0x5d, 0xe2, 0x5b, 0xf1, 0xfc, 0x84, 0x2a, 0x42, 0x02, 0xd3, 0xf5, 0x53, 0x69, 0xbb, 0x5a, 0x69 };
+//#define LOCK_NAME "s150-vip"
+//byte key[] = { 0xb1, 0x5b, 0x42, 0xbf, 0x77, 0x30, 0x3d, 0xc8, 0x9c, 0x96, 0x6f, 0x54, 0x33, 0x73, 0x1a, 0xab };
+//char hello[] = { 0x5d, 0xe2, 0x5b, 0xf1, 0xfc, 0x84, 0x2a, 0x42, 0x02, 0xd3, 0xf5, 0x53, 0x69, 0xbb, 0x5a, 0x69 };
 
 
 // END LOCK SPECIFIC CONFIG
@@ -56,13 +57,16 @@ int current_command = COMMAND_LOCK;
 
 #define MAX_HELLO_ATTEMPTS 10
 
+bool has_received_timestamp = false;
 bool send_hello = false;
+
 int hello_attempts = 0;
 
 AES aes;
 
 void setup()
 {
+  
   Serial.begin(9600);
 
   // setup the leds for output
@@ -217,13 +221,25 @@ int decrypt_command(char *data, int len)
       Serial.print("Command: "); Serial.println(command_char);
 
       // VERIFY THE TIMESTAMP
-      // we will probably need some additional hardware (wifi?) for this
-      // TODO
-
-      if ( command_char == 'u' || command_char == 'U' )
-        return COMMAND_UNLOCK;
-      else if ( command_char == 'l' || command_char == 'L' )
-        return COMMAND_LOCK;
+      // 
+      // FIXME: This learns the time from the first BT handshake we get. 
+      // This is categorically bad and should be changed before deployment
+      // or bad things will happen.
+      //
+      if ( !has_received_timestamp ) {
+        Serial.println("---------------------BEGIN TIME SET--------------------------");
+        Serial.println("set time from " + String(now()) + " to " + String(timestamp));
+        has_received_timestamp = true;
+        setTime(timestamp);
+        Serial.println("confirm timestamp is " + String(now()) );
+        Serial.println("----------------------END TIME SET---------------------------");
+      }
+      if ( verify_timestamp(timestamp) ) {
+        if ( command_char == 'u' || command_char == 'U' )
+          return COMMAND_UNLOCK;
+        else if ( command_char == 'l' || command_char == 'L' )
+          return COMMAND_LOCK;
+      }
     }
     else
       Serial.println("failed to decrypt string!");
@@ -234,6 +250,13 @@ int decrypt_command(char *data, int len)
   show_error();
 
   return COMMAND_NONE;
+}
+
+bool verify_timestamp(unsigned int timestamp) {
+  if (abs(timestamp - now()) < 6000) {
+    return true;
+  }
+  return false;
 }
 
 // Simblee BLE HANDLERS
